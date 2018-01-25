@@ -2,9 +2,13 @@ package com.intellij.lang.graql.completion;
 
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.lang.graql.psi.GraqlIdentifierExpr;
+import com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * @author github.com/BFergerson
@@ -18,6 +22,12 @@ public class GraqlCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
                         //todo: smarter?
+                        List<GraqlIdentifierExpr> identifiers = GraqlPsiImplUtil.findIdentifiers(
+                                parameters.getEditor().getProject());
+                        for (GraqlIdentifierExpr identifier : identifiers) {
+                            resultSet.addElement(LookupElementBuilder.create(identifier.getText()));
+                        }
+
                         resultSet.addElement(LookupElementBuilder.create("id"));
                         resultSet.addElement(LookupElementBuilder.create("sub"));
                         resultSet.addElement(LookupElementBuilder.create("key"));
