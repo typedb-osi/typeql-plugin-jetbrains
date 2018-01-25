@@ -1,0 +1,162 @@
+{
+    parserClass="com.intellij.lang.graql.parser.GraqlParser"
+    parserUtilClass="com.intellij.lang.parser.GeneratedParserUtilBase"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Graql"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.intellij.lang.graql.psi"
+    psiImplPackage="com.intellij.lang.graql.psi.impl"
+    psiImplUtilClass="com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil"
+
+    elementTypeHolderClass="com.intellij.lang.graql.psi.GraqlTokenTypes"
+    elementTypeClass="com.intellij.lang.graql.psi.GraqlElementType"
+    tokenTypeClass="com.intellij.lang.graql.psi.GraqlTokenType"
+
+    tokens=[
+        id                  = 'id'
+        sub                 = 'sub'
+        key                 = 'key'
+        has                 = 'has'
+        plays               = 'plays'
+        relates             = 'relates'
+        role                = 'role'
+        relationship        = 'relationship'
+        entity              = 'entity'
+        attribute           = 'attribute'
+        datatype            = 'datatype'
+        long                = 'long'
+        double              = 'double'
+        string              = 'string'
+        date                = 'date'
+        boolean             = 'boolean'
+        via                 = 'via'
+        isa                 = 'isa'
+        commit              = 'commit'
+        define              = 'define'
+        insert              = 'insert'
+        match               = 'match'
+        rule                = 'rule'
+        when                = 'when'
+        then                = 'then'
+        get                 = 'get'
+        compute             = 'compute'
+        cluster             = 'cluster'
+        in                  = 'in'
+        member              = 'member'
+        label               = 'label'
+        is-abstract         = 'is-abstract'
+        as                  = 'as'
+        delete              = 'delete'
+        aggregate           = 'aggregate'
+        ask                 = 'ask'
+        count               = 'count'
+        sum                 = 'sum'
+        max                 = 'max'
+        min                 = 'min'
+        mean                = 'mean'
+        median              = 'median'
+        group               = 'group'
+        of                  = 'of'
+        std                 = 'std'
+
+        space               = 'regexp:\s+'
+        single_line_comment = 'regexp:#.*'
+        number_literal      = 'regexp:\d+(\.\d*)?'
+        string_literal      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+
+        not_equal           = '!='
+        colon               = ':'
+        semicolon           = ';'
+        comma               = ','
+        LPAREN              = '('
+        RPAREN              = ')'
+        LBRACE              = '{'
+        RBRACE              = '}'
+        identifier          = 'regexp:[a-zA-Z_0-9-]*'
+        variable            = 'regexp:\$[a-zA-Z0-9_]*'
+    ]
+}
+
+GraqlFile ::= !<<eof>> (DefineExpression | InsertExpression | MatchExpression | ComputeExpression | DeleteExpression | AggregateExpression)*
+
+DefineExpression ::= define (Statements*) | (id literal_expr Expression) semicolon?
+InsertExpression ::= insert Statements*
+MatchExpression ::= match (Statements | InsertExpression)* get? VarField? semicolon?
+ComputeExpression ::= compute (mean | count | cluster | max | min | std) (in | of) (identifier_expr comma?)* (in identifier_expr)? semicolon? member? semicolon?
+DeleteExpression ::= delete VarField semicolon?
+AggregateExpression ::= aggregate AggregateTypeExpr semicolon?
+
+AggregateTypeExpr ::= AggregateType | AggregateTypeWithVar | LPAREN? AggregateTypeWithVar* RPAREN?
+AggregateType ::= (ask | count)
+AggregateTypeWithVar ::= (sum | max | min | mean | median | group) VarField? (as identifier_expr comma?)?
+
+private Statements ::= !<<eof>> Expression (comma | semicolon)?
+
+Expression ::=
+    SubExpression
+    | IsaExpression
+    | KeyExpression
+    | PlaysExpression
+    | RelatesExpression
+    | HasValueExpression
+    | HasExpression
+    | CommitExpression
+    | RelationExpression
+    | RuleExpression
+    | LabelExpression
+    | AttributeExpression
+    | EqualityExpression
+
+SubExpressions ::=
+    EntityExpression
+    | AttributeExpression
+    | RelationshipExpression
+    | RoleExpression
+
+EntitySubExpressions ::=
+    RelatesExpression
+
+SubExpression ::= (VarField | RelationField | identifier_expr) "is-abstract"? sub ((thing_expr comma? DatatypeExpression?) | SubExpressions*)
+IsaExpression ::= (VarField | RelationField | identifier_expr)? isa (VarField | RelationField | identifier_expr) comma? HasValueExpression? semicolon?
+KeyExpression ::= identifier_expr? key identifier_expr
+PlaysExpression ::= (VarField | identifier_expr)? plays identifier_expr
+RelatesExpression ::= (VarField | identifier_expr)? relates (VarField | RelationField | identifier_expr)
+CommitExpression ::= commit
+RelationExpression ::= Var RelationField
+LabelExpression ::= (VarField | RelationField | identifier_expr) label string_literal
+WhenThenExpression ::= when LBRACE (RelationStatement | IsaExpression)* RBRACE comma? then LBRACE (RelationStatement | IsaExpression)* RBRACE
+HasExpression ::= (VarField | identifier_expr)? has identifier_expr
+HasValueExpression ::= (VarField | identifier_expr)? has identifier_expr (VarField | literal_expr) (as VarField)?
+EqualityExpression ::= VarField not_equal VarField semicolon
+
+
+AttributeExpression ::= (identifier_expr | attribute) comma? DatatypeExpression
+EntityExpression ::= entity comma? EntitySubExpressions*
+RelationshipExpression ::= relationship comma? RelatesExpression*
+RuleExpression ::= rule comma? WhenThenExpression
+RoleExpression ::= role
+DatatypeExpression ::= datatype Literal
+
+Var ::= VARIABLE { name="variable" }
+VarList ::= Var comma?
+VarField ::= Var | (LPAREN VarList* RPAREN)
+
+Relation ::= identifier_expr colon (VARIABLE comma?)*
+RelationList ::= Relation comma?
+RelationField ::= (LPAREN RelationList* RPAREN)
+RelationStatement ::= (LPAREN RelationList* RPAREN) semicolon
+
+literal_expr ::= number_literal | string_literal
+identifier_expr ::= identifier | string_literal {mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
+    implements="com.intellij.lang.graql.psi.GraqlNamedElement" methods=[getName setName getNameIdentifier]}
+
+thing_expr ::= entity | identifier_expr | relationship | role | attribute
+
+Literal ::=
+    'string'
+    | 'boolean'
+    | 'double'
+    | 'long'
+    | 'date'
