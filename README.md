@@ -1,5 +1,5 @@
 # IntelliJ-Graql-Plugin
-Basic support for the Graql language
+Basic support for the Graql language (http://grakn.ai)
 
 ## Features
 - Syntax highlighting
