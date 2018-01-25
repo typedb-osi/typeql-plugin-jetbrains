@@ -2,7 +2,7 @@
 Basic support for the Graql language (http://grakn.ai)
 
 ## Features
-- Syntax highlighting
+- Syntax highlighting/validation
 - Find usages support
 - Basic code completion
 
