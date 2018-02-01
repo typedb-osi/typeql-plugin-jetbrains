@@ -1,0 +1,128 @@
+{
+    parserClass="com.intellij.lang.graql.parser.GraqlParser"
+    parserUtilClass="com.intellij.lang.parser.GeneratedParserUtilBase"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Graql"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.intellij.lang.graql.psi"
+    psiImplPackage="com.intellij.lang.graql.psi.impl"
+    psiImplUtilClass="com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil"
+
+    elementTypeHolderClass="com.intellij.lang.graql.psi.GraqlTokenTypes"
+    elementTypeClass="com.intellij.lang.graql.psi.GraqlElementType"
+    tokenTypeClass="com.intellij.lang.graql.psi.GraqlTokenType"
+
+    tokens=[
+        id                  = 'id'
+        sub                 = 'sub'
+        role                = 'role'
+        relationship        = 'relationship'
+        entity              = 'entity'
+        attribute           = 'attribute'
+        via                 = 'via'
+        commit              = 'commit'
+        define              = 'define'
+        insert              = 'insert'
+        match               = 'match'
+        rule                = 'rule'
+        get                 = 'get'
+        compute             = 'compute'
+        cluster             = 'cluster'
+        member              = 'member'
+        label               = 'label'
+        as                  = 'as'
+        delete              = 'delete'
+        aggregate           = 'aggregate'
+        ask                 = 'ask'
+        of                  = 'of'
+        by                  = 'by'
+        asc                 = 'asc'
+        desc                = 'desc'
+        contains            = 'contains'
+        distinct            = 'distinct'
+        from                = 'from'
+        limit               = 'limit'
+        offset              = 'offset'
+        order               = 'order'
+        regex               = 'regex'
+        select              = 'select'
+        to                  = 'to'
+        val                 = 'val'
+        datatype            = 'datatype'
+        long                = 'long'
+        double              = 'double'
+        string              = 'string'
+        date                = 'date'
+        boolean             = 'boolean'
+        true                = 'true'
+        false               = 'false'
+        has                 = 'has'
+        is-abstract         = 'is-abstract'
+        isa                 = 'isa'
+        key                 = 'key'
+        plays               = 'plays'
+        relates             = 'relates'
+        when                = 'when'
+        then                = 'then'
+        count               = 'count'
+        group               = 'group'
+        max                 = 'max'
+        min                 = 'min'
+        mean                = 'mean'
+        median              = 'median'
+        std                 = 'std'
+        sum                 = 'sum'
+        and                 = 'and'
+        concat              = 'concat'
+        do                  = 'do'
+        else                = 'else'
+        elseif              = 'elseif'
+        for                 = 'for'
+        if                  = 'if'
+        in                  = 'in'
+        noescp              = 'noescp'
+        not                 = 'not'
+        null                = 'null'
+
+        space               = 'regexp:\s+'
+        single_line_comment = 'regexp:#.*'
+        number_literal      = 'regexp:\d+(\.\d*)?'
+        string_literal      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+
+        not_equal           = '!='
+        colon               = ':'
+        semicolon           = ';'
+        comma               = ','
+        LPAREN              = '('
+        RPAREN              = ')'
+        LBRACE              = '{'
+        RBRACE              = '}'
+        identifier          = 'regexp:[a-zA-Z_0-9-]*'
+        variable            = 'regexp:\$[a-zA-Z0-9_]*'
+    ]
+}
+
+GraqlFile ::= !<<eof>> (Query)*
+
+Query ::=
+    GetQuery
+    | AggregateQuery
+    | DefineQuery
+    | UndefineQuery
+    | InsertQuery
+    | DeleteQuery
+    | ComputeQuery
+
+Answer ::= 'something'
+Variable ::= 'something'
+VariablePattern ::= 'something'
+VariablePatternProperty ::= 'something'
+
+AttributeValue ::=
+    'long'
+    | 'double'
+    | 'string'
+    | 'boolean'
+    | 'date'
