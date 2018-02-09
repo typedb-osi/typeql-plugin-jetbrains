@@ -9,9 +9,9 @@ import com.intellij.psi.PsiFileFactory;
  */
 public class GraqlElementFactory {
 
-    public static GraqlIdentifierExpr createIdentifier(Project project, String name) {
+    public static GraqlIdentifier createIdentifier(Project project, String name) {
         final GraqlFile file = createFile(project, name);
-        return (GraqlIdentifierExpr) file.getFirstChild().getChildren()[0].getChildren()[0].getChildren()[0];
+        return (GraqlIdentifier) file.getFirstChild().getChildren()[0].getChildren()[0].getChildren()[0];
     }
 
     private static GraqlFile createFile(Project project, String text) {

@@ -21,7 +21,7 @@ public class GraqlFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getName() {
-        return "Graql file";
+        return "Graql";
     }
 
     @NotNull

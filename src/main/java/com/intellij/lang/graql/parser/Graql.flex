@@ -25,18 +25,28 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+DATATYPE=(long|double|string|boolean|date)
+ORDER=(asc|desc)
+BOOLEAN=(true|false)
+STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
+REGEX="/"([^\\\/]+)"/"
+INTEGER=([-+]?[0-9]+)
 SPACE=[ \t\n\x0B\f\r]+
 SINGLE_LINE_COMMENT=#.*
-NUMBER_LITERAL=[0-9]+(\.[0-9]*)?
-STRING_LITERAL=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
-IDENTIFIER=[a-zA-Z_0-9-]*
-VARIABLE=\$[a-zA-Z0-9_]*
+ID=[a-zA-Z_0-9-]*
+VARIABLE=\$[a-zA-Z0-9_-]*
 
 %%
 <YYINITIAL> {
   {WHITE_SPACE}              { return WHITE_SPACE; }
 
-  "id"                       { return ID; }
+  ":"                        { return COLON; }
+  ";"                        { return SEMICOLON; }
+  ","                        { return COMMA; }
+  "("                        { return LPAREN; }
+  ")"                        { return RPAREN; }
+  "{"                        { return LBRACE; }
+  "}"                        { return RBRACE; }
   "sub"                      { return SUB; }
   "key"                      { return KEY; }
   "has"                      { return HAS; }
@@ -67,7 +77,7 @@ VARIABLE=\$[a-zA-Z0-9_]*
   "in"                       { return IN; }
   "member"                   { return MEMBER; }
   "label"                    { return LABEL; }
-  "is-abstract"              { return IS_ABSTRACT; }
+  "is-abstract"              { return IS-ABSTRACT; }
   "as"                       { return AS; }
   "delete"                   { return DELETE; }
   "aggregate"                { return AGGREGATE; }
@@ -81,20 +91,27 @@ VARIABLE=\$[a-zA-Z0-9_]*
   "group"                    { return GROUP; }
   "of"                       { return OF; }
   "std"                      { return STD; }
-  "!="                       { return NOT_EQUAL; }
-  ":"                        { return COLON; }
-  ";"                        { return SEMICOLON; }
-  ","                        { return COMMA; }
-  "("                        { return LPAREN; }
-  ")"                        { return RPAREN; }
-  "{"                        { return LBRACE; }
-  "}"                        { return RBRACE; }
+  "val"                      { return VAL; }
+  "contains"                 { return CONTAINS; }
+  "or"                       { return OR; }
+  "UNDEFINE"                 { return UNDEFINE; }
+  "MEMBERS"                  { return MEMBERS; }
+  "SIZE"                     { return SIZE; }
+  "REAL"                     { return REAL; }
+  "DATETIME"                 { return DATETIME; }
+  "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
+  "PATH"                     { return PATH; }
+  "DEGREES"                  { return DEGREES; }
 
+  {DATATYPE}                 { return DATATYPE; }
+  {ORDER}                    { return ORDER; }
+  {BOOLEAN}                  { return BOOLEAN; }
+  {STRING}                   { return STRING; }
+  {REGEX}                    { return REGEX; }
+  {INTEGER}                  { return INTEGER; }
   {SPACE}                    { return SPACE; }
   {SINGLE_LINE_COMMENT}      { return SINGLE_LINE_COMMENT; }
-  {NUMBER_LITERAL}           { return NUMBER_LITERAL; }
-  {STRING_LITERAL}           { return STRING_LITERAL; }
-  {IDENTIFIER}               { return IDENTIFIER; }
+  {ID}                       { return ID; }
   {VARIABLE}                 { return VARIABLE; }
 
 }

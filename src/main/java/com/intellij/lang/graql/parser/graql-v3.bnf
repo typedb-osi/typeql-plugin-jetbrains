@@ -1,0 +1,205 @@
+{
+    parserClass="com.intellij.lang.graql.parser.GraqlParser"
+    parserUtilClass="com.intellij.lang.parser.GeneratedParserUtilBase"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Graql"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.intellij.lang.graql.psi"
+    psiImplPackage="com.intellij.lang.graql.psi.impl"
+    psiImplUtilClass="com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil"
+
+    elementTypeHolderClass="com.intellij.lang.graql.psi.GraqlTokenTypes"
+    elementTypeClass="com.intellij.lang.graql.psi.GraqlElementType"
+    tokenTypeClass="com.intellij.lang.graql.psi.GraqlTokenType"
+
+    tokens=[
+     colon               = ':'
+            semicolon           = ';'
+            comma               = ','
+            LPAREN              = '('
+            RPAREN              = ')'
+            LBRACE              = '{'
+            RBRACE              = '}'
+          sub                 = 'sub'
+          key                 = 'key'
+          has                 = 'has'
+          plays               = 'plays'
+          relates             = 'relates'
+          role                = 'role'
+          relationship        = 'relationship'
+          entity              = 'entity'
+          attribute           = 'attribute'
+          datatype            = 'datatype'
+          long                = 'long'
+          double              = 'double'
+          string              = 'string'
+          date                = 'date'
+          boolean             = 'boolean'
+          via                 = 'via'
+          isa                 = 'isa'
+          commit              = 'commit'
+          define              = 'define'
+          insert              = 'insert'
+          match               = 'match'
+          rule                = 'rule'
+          when                = 'when'
+          then                = 'then'
+          get                 = 'get'
+          compute             = 'compute'
+          cluster             = 'cluster'
+          in                  = 'in'
+          member              = 'member'
+          label               = 'label'
+          is-abstract         = 'is-abstract'
+          as                  = 'as'
+          delete              = 'delete'
+          aggregate           = 'aggregate'
+          ask                 = 'ask'
+          count               = 'count'
+          sum                 = 'sum'
+          max                 = 'max'
+          min                 = 'min'
+          mean                = 'mean'
+          median              = 'median'
+          group               = 'group'
+          of                  = 'of'
+          std                 = 'std'
+          val                 = 'val'
+          contains            = 'contains'
+          or                  = 'or'
+
+
+
+
+    DATATYPE            = "regexp:(long|double|string|boolean|date)";
+    ORDER               = 'regexp:(asc|desc)' ;
+    BOOLEAN             = 'regexp:(true|false)' ;
+    STRING              = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    REGEX               = "regexp:/([^\\\/]+)/"
+    INTEGER             = "regexp:([-+]?\d+)"
+    space               = 'regexp:\s+'
+    single_line_comment = 'regexp:#.*'
+    ID = 'regexp:[a-zA-Z_0-9-]*'
+    VARIABLE            = 'regexp:\$[a-zA-Z0-9_-]*'
+    ]
+}
+
+GraqlFile ::= !<<eof>> (query)*
+
+query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery //| computeQuery ;
+
+matchPart ::= MATCH patterns                        // matchBase
+    | matchPart 'limit' INTEGER              ';'    // matchLimit
+    | matchPart 'offset' INTEGER             ';'    // matchOffset
+    | matchPart 'order' 'by' VARIABLE ORDER? ';'    // matchOrderBy
+    ;
+
+getQuery ::= matchPart 'get' (VARIABLE (',' VARIABLE)*)? ';' ;
+insertQuery ::= matchPart? INSERT varPatterns ;
+defineQuery ::= DEFINE varPatterns ;
+undefineQuery ::= UNDEFINE varPatterns ;
+deleteQuery ::= matchPart 'delete' variables? ';' ;
+aggregateQuery ::= matchPart 'aggregate' aggregate ';' ;
+//computeQuery ::= 'compute' computeMethod ;
+
+variables ::= VARIABLE (',' VARIABLE)* ;
+
+//computeMethod ::= min | max | median | mean | std | sum | count | path | paths | cluster | degrees ;
+//
+//min ::= MIN         'of' ofList         ('in' inList)? ';' ;
+//max ::= MAX         'of' ofList         ('in' inList)? ';' ;
+//median ::= MEDIAN   'of' ofList         ('in' inList)? ';' ;
+//mean ::= MEAN       'of' ofList         ('in' inList)? ';' ;
+//std ::= STD         'of' ofList         ('in' inList)? ';' ;
+//sum ::= SUM         'of' ofList         ('in' inList)? ';' ;
+//degrees ::= DEGREES ('of' ofList)?      ('in' inList)? ';' ;
+//cluster ::= CLUSTER ('of' id    )?      ('in' inList)? ';' clusterParam* ;
+//path ::= PATH       'from' id 'to' id   ('in' inList)? ';' ;
+//paths ::= PATHS     'from' id 'to' id   ('in' inList)? ';' ;
+//count ::= COUNT                         ('in' inList)? ';' ;
+
+clusterParam ::= MEMBERS ';'    // clusterMembers
+   | SIZE INTEGER ';'           // clusterSize
+   ;
+
+ofList ::= labelList ;
+inList ::= labelList ;
+labelList ::= label (',' label)* ;
+
+aggregate ::= identifier argument*      // customAgg
+    | '(' namedAgg (',' namedAgg)* ')'  // selectAgg
+    ;
+argument ::= VARIABLE  // variableArgument
+    | aggregate        // aggregateArgument
+    ;
+namedAgg ::= aggregate 'as' identifier ;
+
+patterns ::= (pattern ';')+ ;
+pattern ::= varPattern  // varPatternCase
+    | orPattern         // orPattern
+    | andPattern        // andPattern
+    ;
+andPattern ::= '{' patterns '}'
+orPattern ::= (varPattern|andPattern) 'or' (varPattern|andPattern)
+
+varPatterns ::= (varPattern ';')+ ;
+varPattern ::= variable? property (','? property)* ;
+
+property ::= 'isa' variable             // isa
+    | 'sub' variable                    // sub
+    | 'relates' variable                // relates
+    | 'plays' variable                  // plays
+    | 'id' id                           // propId
+    | 'label' label                     // propLabel
+    | 'val' predicate                   // propValue
+    | 'when' '{' patterns '}'           // propWhen
+    | 'then' '{' varPatterns '}'        // propThen
+    | 'has' label predicate             // propHas
+    | 'has' variable                    // propResource
+    | 'key' variable                    // propKey
+    | '(' casting (',' casting)* ')'    // propRel
+    | 'is-abstract'                     // isAbstract
+    | 'datatype' DATATYPE               // propDatatype
+    | 'regex' REGEX                     // propRegex
+    | '!=' variable                     // propNeq
+    ;
+
+casting ::= variable (':' VARIABLE)?
+    | variable VARIABLE
+
+variable ::= label | VARIABLE ;
+
+predicate ::= '='? value                // predicateEq
+    | '='? VARIABLE                      // predicateVariable
+    | '!=' valueOrVar                   // predicateNeq
+    | '>' valueOrVar                    // predicateGt
+    | '>=' valueOrVar                   // predicateGte
+    | '<' valueOrVar                    // predicateLt
+    | '<=' valueOrVar                   // predicateLte
+    | 'contains' (STRING | VARIABLE)    // predicateContains
+    | REGEX                             // predicateRegex
+    ;
+valueOrVar ::= VARIABLE // valueVariable
+    | value             // valuePrimitive
+    ;
+value ::= STRING   // valueString
+   | INTEGER  // valueInteger
+   | REAL     // valueReal
+   | BOOLEAN  // valueBoolean
+   | DATE     // valueDate
+   | DATETIME // valueDateTime
+   ;
+
+label ::= identifier | IMPLICIT_IDENTIFIER;
+id ::= identifier ;
+
+// Some keywords can also be used as identifiers
+identifier ::= ID | STRING
+    | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
+    | DEGREES | MEMBERS | SIZE {
+    mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
+    implements="com.intellij.lang.graql.psi.GraqlNamedElement"
+    methods=[getName setName getNameIdentifier]
+}

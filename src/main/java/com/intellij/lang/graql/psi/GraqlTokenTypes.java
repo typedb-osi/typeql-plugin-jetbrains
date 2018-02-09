@@ -8,90 +8,88 @@ import com.intellij.lang.graql.psi.impl.*;
 
 public interface GraqlTokenTypes {
 
-  IElementType AGGREGATE_EXPRESSION = new GraqlElementType("AGGREGATE_EXPRESSION");
-  IElementType AGGREGATE_TYPE = new GraqlElementType("AGGREGATE_TYPE");
-  IElementType AGGREGATE_TYPE_EXPR = new GraqlElementType("AGGREGATE_TYPE_EXPR");
-  IElementType AGGREGATE_TYPE_WITH_VAR = new GraqlElementType("AGGREGATE_TYPE_WITH_VAR");
-  IElementType ATTRIBUTE_EXPRESSION = new GraqlElementType("ATTRIBUTE_EXPRESSION");
-  IElementType COMMIT_EXPRESSION = new GraqlElementType("COMMIT_EXPRESSION");
-  IElementType COMPUTE_EXPRESSION = new GraqlElementType("COMPUTE_EXPRESSION");
-  IElementType DATATYPE_EXPRESSION = new GraqlElementType("DATATYPE_EXPRESSION");
-  IElementType DEFINE_EXPRESSION = new GraqlElementType("DEFINE_EXPRESSION");
-  IElementType DELETE_EXPRESSION = new GraqlElementType("DELETE_EXPRESSION");
-  IElementType ENTITY_EXPRESSION = new GraqlElementType("ENTITY_EXPRESSION");
-  IElementType ENTITY_SUB_EXPRESSIONS = new GraqlElementType("ENTITY_SUB_EXPRESSIONS");
-  IElementType EQUALITY_EXPRESSION = new GraqlElementType("EQUALITY_EXPRESSION");
-  IElementType EXPRESSION = new GraqlElementType("EXPRESSION");
-  IElementType HAS_EXPRESSION = new GraqlElementType("HAS_EXPRESSION");
-  IElementType HAS_VALUE_EXPRESSION = new GraqlElementType("HAS_VALUE_EXPRESSION");
-  IElementType IDENTIFIER_EXPR = new GraqlElementType("IDENTIFIER_EXPR");
-  IElementType INSERT_EXPRESSION = new GraqlElementType("INSERT_EXPRESSION");
-  IElementType ISA_EXPRESSION = new GraqlElementType("ISA_EXPRESSION");
-  IElementType KEY_EXPRESSION = new GraqlElementType("KEY_EXPRESSION");
-  IElementType LABEL_EXPRESSION = new GraqlElementType("LABEL_EXPRESSION");
-  IElementType LITERAL = new GraqlElementType("LITERAL");
-  IElementType LITERAL_EXPR = new GraqlElementType("LITERAL_EXPR");
-  IElementType MATCH_EXPRESSION = new GraqlElementType("MATCH_EXPRESSION");
-  IElementType PLAYS_EXPRESSION = new GraqlElementType("PLAYS_EXPRESSION");
-  IElementType RELATES_EXPRESSION = new GraqlElementType("RELATES_EXPRESSION");
-  IElementType RELATION = new GraqlElementType("RELATION");
-  IElementType RELATIONSHIP_EXPRESSION = new GraqlElementType("RELATIONSHIP_EXPRESSION");
-  IElementType RELATION_EXPRESSION = new GraqlElementType("RELATION_EXPRESSION");
-  IElementType RELATION_FIELD = new GraqlElementType("RELATION_FIELD");
-  IElementType RELATION_LIST = new GraqlElementType("RELATION_LIST");
-  IElementType RELATION_STATEMENT = new GraqlElementType("RELATION_STATEMENT");
-  IElementType ROLE_EXPRESSION = new GraqlElementType("ROLE_EXPRESSION");
-  IElementType RULE_EXPRESSION = new GraqlElementType("RULE_EXPRESSION");
-  IElementType SUB_EXPRESSION = new GraqlElementType("SUB_EXPRESSION");
-  IElementType SUB_EXPRESSIONS = new GraqlElementType("SUB_EXPRESSIONS");
-  IElementType THING_EXPR = new GraqlElementType("THING_EXPR");
-  IElementType VAR = new GraqlElementType("VAR");
-  IElementType VAR_FIELD = new GraqlElementType("VAR_FIELD");
-  IElementType VAR_LIST = new GraqlElementType("VAR_LIST");
-  IElementType WHEN_THEN_EXPRESSION = new GraqlElementType("WHEN_THEN_EXPRESSION");
+  IElementType AGGREGATE = new GraqlElementType("AGGREGATE");
+  IElementType AGGREGATE_QUERY = new GraqlElementType("AGGREGATE_QUERY");
+  IElementType AND_PATTERN = new GraqlElementType("AND_PATTERN");
+  IElementType ARGUMENT = new GraqlElementType("ARGUMENT");
+  IElementType CASTING = new GraqlElementType("CASTING");
+  IElementType CLUSTER_PARAM = new GraqlElementType("CLUSTER_PARAM");
+  IElementType DEFINE_QUERY = new GraqlElementType("DEFINE_QUERY");
+  IElementType DELETE_QUERY = new GraqlElementType("DELETE_QUERY");
+  IElementType GET_QUERY = new GraqlElementType("GET_QUERY");
+  IElementType ID = new GraqlElementType("ID");
+  IElementType IDENTIFIER = new GraqlElementType("IDENTIFIER");
+  IElementType INSERT_QUERY = new GraqlElementType("INSERT_QUERY");
+  IElementType IN_LIST = new GraqlElementType("IN_LIST");
+  IElementType LABEL = new GraqlElementType("LABEL");
+  IElementType LABEL_LIST = new GraqlElementType("LABEL_LIST");
+  IElementType MATCH_PART = new GraqlElementType("MATCH_PART");
+  IElementType NAMED_AGG = new GraqlElementType("NAMED_AGG");
+  IElementType OF_LIST = new GraqlElementType("OF_LIST");
+  IElementType OR_PATTERN = new GraqlElementType("OR_PATTERN");
+  IElementType PATTERN = new GraqlElementType("PATTERN");
+  IElementType PATTERNS = new GraqlElementType("PATTERNS");
+  IElementType PREDICATE = new GraqlElementType("PREDICATE");
+  IElementType PROPERTY = new GraqlElementType("PROPERTY");
+  IElementType QUERY = new GraqlElementType("QUERY");
+  IElementType UNDEFINE_QUERY = new GraqlElementType("UNDEFINE_QUERY");
+  IElementType VALUE = new GraqlElementType("VALUE");
+  IElementType VALUE_OR_VAR = new GraqlElementType("VALUE_OR_VAR");
+  IElementType VARIABLE = new GraqlElementType("VARIABLE");
+  IElementType VARIABLES = new GraqlElementType("VARIABLES");
+  IElementType VAR_PATTERN = new GraqlElementType("VAR_PATTERN");
+  IElementType VAR_PATTERNS = new GraqlElementType("VAR_PATTERNS");
 
-  IElementType AGGREGATE = new GraqlTokenType("aggregate");
+  //IElementType AGGREGATE = new GraqlTokenType("aggregate");
   IElementType AS = new GraqlTokenType("as");
   IElementType ASK = new GraqlTokenType("ask");
   IElementType ATTRIBUTE = new GraqlTokenType("attribute");
-  IElementType BOOLEAN = new GraqlTokenType("boolean");
-  IElementType CLUSTER = new GraqlTokenType("cluster");
+  IElementType BOOLEAN = new GraqlTokenType("BOOLEAN");
+  IElementType CLUSTER = new GraqlTokenType("CLUSTER");
   IElementType COLON = new GraqlTokenType(":");
   IElementType COMMA = new GraqlTokenType(",");
   IElementType COMMIT = new GraqlTokenType("commit");
   IElementType COMPUTE = new GraqlTokenType("compute");
-  IElementType COUNT = new GraqlTokenType("count");
-  IElementType DATATYPE = new GraqlTokenType("datatype");
-  IElementType DATE = new GraqlTokenType("date");
-  IElementType DEFINE = new GraqlTokenType("define");
+  IElementType CONTAINS = new GraqlTokenType("contains");
+  IElementType COUNT = new GraqlTokenType("COUNT");
+  IElementType DATATYPE = new GraqlTokenType("DATATYPE");
+  IElementType DATE = new GraqlTokenType("DATE");
+  IElementType DATETIME = new GraqlTokenType("DATETIME");
+  IElementType DEFINE = new GraqlTokenType("DEFINE");
+  IElementType DEGREES = new GraqlTokenType("DEGREES");
   IElementType DELETE = new GraqlTokenType("delete");
   IElementType DOUBLE = new GraqlTokenType("double");
   IElementType ENTITY = new GraqlTokenType("entity");
   IElementType GET = new GraqlTokenType("get");
   IElementType GROUP = new GraqlTokenType("group");
   IElementType HAS = new GraqlTokenType("has");
-  IElementType ID = new GraqlTokenType("id");
-  IElementType IDENTIFIER = new GraqlTokenType("identifier");
+  //IElementType ID = new GraqlTokenType("ID");
+  IElementType IMPLICIT_IDENTIFIER = new GraqlTokenType("IMPLICIT_IDENTIFIER");
   IElementType IN = new GraqlTokenType("in");
-  IElementType INSERT = new GraqlTokenType("insert");
+  IElementType INSERT = new GraqlTokenType("INSERT");
+  IElementType INTEGER = new GraqlTokenType("INTEGER");
   IElementType ISA = new GraqlTokenType("isa");
   IElementType IS_ABSTRACT = new GraqlTokenType("is-abstract");
   IElementType KEY = new GraqlTokenType("key");
-  IElementType LABEL = new GraqlTokenType("label");
+  //IElementType LABEL = new GraqlTokenType("label");
   IElementType LBRACE = new GraqlTokenType("{");
   IElementType LONG = new GraqlTokenType("long");
   IElementType LPAREN = new GraqlTokenType("(");
-  IElementType MATCH = new GraqlTokenType("match");
-  IElementType MAX = new GraqlTokenType("max");
-  IElementType MEAN = new GraqlTokenType("mean");
-  IElementType MEDIAN = new GraqlTokenType("median");
+  IElementType MATCH = new GraqlTokenType("MATCH");
+  IElementType MAX = new GraqlTokenType("MAX");
+  IElementType MEAN = new GraqlTokenType("MEAN");
+  IElementType MEDIAN = new GraqlTokenType("MEDIAN");
   IElementType MEMBER = new GraqlTokenType("member");
-  IElementType MIN = new GraqlTokenType("min");
-  IElementType NOT_EQUAL = new GraqlTokenType("!=");
-  IElementType NUMBER_LITERAL = new GraqlTokenType("number_literal");
+  IElementType MEMBERS = new GraqlTokenType("MEMBERS");
+  IElementType MIN = new GraqlTokenType("MIN");
   IElementType OF = new GraqlTokenType("of");
+  IElementType OR = new GraqlTokenType("or");
+  IElementType ORDER = new GraqlTokenType("ORDER");
+  IElementType PATH = new GraqlTokenType("PATH");
   IElementType PLAYS = new GraqlTokenType("plays");
   IElementType RBRACE = new GraqlTokenType("}");
+  IElementType REAL = new GraqlTokenType("REAL");
+  IElementType REGEX = new GraqlTokenType("REGEX");
   IElementType RELATES = new GraqlTokenType("relates");
   IElementType RELATIONSHIP = new GraqlTokenType("relationship");
   IElementType ROLE = new GraqlTokenType("role");
@@ -99,141 +97,113 @@ public interface GraqlTokenTypes {
   IElementType RULE = new GraqlTokenType("rule");
   IElementType SEMICOLON = new GraqlTokenType(";");
   IElementType SINGLE_LINE_COMMENT = new GraqlTokenType("single_line_comment");
-  IElementType STD = new GraqlTokenType("std");
-  IElementType STRING = new GraqlTokenType("string");
-  IElementType STRING_LITERAL = new GraqlTokenType("string_literal");
+  IElementType SIZE = new GraqlTokenType("SIZE");
+  IElementType STD = new GraqlTokenType("STD");
+  IElementType STRING = new GraqlTokenType("STRING");
   IElementType SUB = new GraqlTokenType("sub");
-  IElementType SUM = new GraqlTokenType("sum");
+  IElementType SUM = new GraqlTokenType("SUM");
   IElementType THEN = new GraqlTokenType("then");
-  IElementType VARIABLE = new GraqlTokenType("VARIABLE");
+  IElementType UNDEFINE = new GraqlTokenType("UNDEFINE");
+  IElementType VAL = new GraqlTokenType("val");
+  //IElementType VARIABLE = new GraqlTokenType("VARIABLE");
   IElementType VIA = new GraqlTokenType("via");
   IElementType WHEN = new GraqlTokenType("when");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == AGGREGATE_EXPRESSION) {
-        return new GraqlAggregateExpressionImpl(node);
+       if (type == AGGREGATE) {
+        return new GraqlAggregateImpl(node);
       }
-      else if (type == AGGREGATE_TYPE) {
-        return new GraqlAggregateTypeImpl(node);
+      else if (type == AGGREGATE_QUERY) {
+        return new GraqlAggregateQueryImpl(node);
       }
-      else if (type == AGGREGATE_TYPE_EXPR) {
-        return new GraqlAggregateTypeExprImpl(node);
+      else if (type == AND_PATTERN) {
+        return new GraqlAndPatternImpl(node);
       }
-      else if (type == AGGREGATE_TYPE_WITH_VAR) {
-        return new GraqlAggregateTypeWithVarImpl(node);
+      else if (type == ARGUMENT) {
+        return new GraqlArgumentImpl(node);
       }
-      else if (type == ATTRIBUTE_EXPRESSION) {
-        return new GraqlAttributeExpressionImpl(node);
+      else if (type == CASTING) {
+        return new GraqlCastingImpl(node);
       }
-      else if (type == COMMIT_EXPRESSION) {
-        return new GraqlCommitExpressionImpl(node);
+      else if (type == CLUSTER_PARAM) {
+        return new GraqlClusterParamImpl(node);
       }
-      else if (type == COMPUTE_EXPRESSION) {
-        return new GraqlComputeExpressionImpl(node);
+      else if (type == DEFINE_QUERY) {
+        return new GraqlDefineQueryImpl(node);
       }
-      else if (type == DATATYPE_EXPRESSION) {
-        return new GraqlDatatypeExpressionImpl(node);
+      else if (type == DELETE_QUERY) {
+        return new GraqlDeleteQueryImpl(node);
       }
-      else if (type == DEFINE_EXPRESSION) {
-        return new GraqlDefineExpressionImpl(node);
+      else if (type == GET_QUERY) {
+        return new GraqlGetQueryImpl(node);
       }
-      else if (type == DELETE_EXPRESSION) {
-        return new GraqlDeleteExpressionImpl(node);
+      else if (type == ID) {
+        return new GraqlIdImpl(node);
       }
-      else if (type == ENTITY_EXPRESSION) {
-        return new GraqlEntityExpressionImpl(node);
+      else if (type == IDENTIFIER) {
+        return new GraqlIdentifierImpl(node);
       }
-      else if (type == ENTITY_SUB_EXPRESSIONS) {
-        return new GraqlEntitySubExpressionsImpl(node);
+      else if (type == INSERT_QUERY) {
+        return new GraqlInsertQueryImpl(node);
       }
-      else if (type == EQUALITY_EXPRESSION) {
-        return new GraqlEqualityExpressionImpl(node);
+      else if (type == IN_LIST) {
+        return new GraqlInListImpl(node);
       }
-      else if (type == EXPRESSION) {
-        return new GraqlExpressionImpl(node);
+      else if (type == LABEL) {
+        return new GraqlLabelImpl(node);
       }
-      else if (type == HAS_EXPRESSION) {
-        return new GraqlHasExpressionImpl(node);
+      else if (type == LABEL_LIST) {
+        return new GraqlLabelListImpl(node);
       }
-      else if (type == HAS_VALUE_EXPRESSION) {
-        return new GraqlHasValueExpressionImpl(node);
+      else if (type == MATCH_PART) {
+        return new GraqlMatchPartImpl(node);
       }
-      else if (type == IDENTIFIER_EXPR) {
-        return new GraqlIdentifierExprImpl(node);
+      else if (type == NAMED_AGG) {
+        return new GraqlNamedAggImpl(node);
       }
-      else if (type == INSERT_EXPRESSION) {
-        return new GraqlInsertExpressionImpl(node);
+      else if (type == OF_LIST) {
+        return new GraqlOfListImpl(node);
       }
-      else if (type == ISA_EXPRESSION) {
-        return new GraqlIsaExpressionImpl(node);
+      else if (type == OR_PATTERN) {
+        return new GraqlOrPatternImpl(node);
       }
-      else if (type == KEY_EXPRESSION) {
-        return new GraqlKeyExpressionImpl(node);
+      else if (type == PATTERN) {
+        return new GraqlPatternImpl(node);
       }
-      else if (type == LABEL_EXPRESSION) {
-        return new GraqlLabelExpressionImpl(node);
+      else if (type == PATTERNS) {
+        return new GraqlPatternsImpl(node);
       }
-      else if (type == LITERAL) {
-        return new GraqlLiteralImpl(node);
+      else if (type == PREDICATE) {
+        return new GraqlPredicateImpl(node);
       }
-      else if (type == LITERAL_EXPR) {
-        return new GraqlLiteralExprImpl(node);
+      else if (type == PROPERTY) {
+        return new GraqlPropertyImpl(node);
       }
-      else if (type == MATCH_EXPRESSION) {
-        return new GraqlMatchExpressionImpl(node);
+      else if (type == QUERY) {
+        return new GraqlQueryImpl(node);
       }
-      else if (type == PLAYS_EXPRESSION) {
-        return new GraqlPlaysExpressionImpl(node);
+      else if (type == UNDEFINE_QUERY) {
+        return new GraqlUndefineQueryImpl(node);
       }
-      else if (type == RELATES_EXPRESSION) {
-        return new GraqlRelatesExpressionImpl(node);
+      else if (type == VALUE) {
+        return new GraqlValueImpl(node);
       }
-      else if (type == RELATION) {
-        return new GraqlRelationImpl(node);
+      else if (type == VALUE_OR_VAR) {
+        return new GraqlValueOrVarImpl(node);
       }
-      else if (type == RELATIONSHIP_EXPRESSION) {
-        return new GraqlRelationshipExpressionImpl(node);
+      else if (type == VARIABLE) {
+        return new GraqlVariableImpl(node);
       }
-      else if (type == RELATION_EXPRESSION) {
-        return new GraqlRelationExpressionImpl(node);
+      else if (type == VARIABLES) {
+        return new GraqlVariablesImpl(node);
       }
-      else if (type == RELATION_FIELD) {
-        return new GraqlRelationFieldImpl(node);
+      else if (type == VAR_PATTERN) {
+        return new GraqlVarPatternImpl(node);
       }
-      else if (type == RELATION_LIST) {
-        return new GraqlRelationListImpl(node);
-      }
-      else if (type == RELATION_STATEMENT) {
-        return new GraqlRelationStatementImpl(node);
-      }
-      else if (type == ROLE_EXPRESSION) {
-        return new GraqlRoleExpressionImpl(node);
-      }
-      else if (type == RULE_EXPRESSION) {
-        return new GraqlRuleExpressionImpl(node);
-      }
-      else if (type == SUB_EXPRESSION) {
-        return new GraqlSubExpressionImpl(node);
-      }
-      else if (type == SUB_EXPRESSIONS) {
-        return new GraqlSubExpressionsImpl(node);
-      }
-      else if (type == THING_EXPR) {
-        return new GraqlThingExprImpl(node);
-      }
-      else if (type == VAR) {
-        return new GraqlVarImpl(node);
-      }
-      else if (type == VAR_FIELD) {
-        return new GraqlVarFieldImpl(node);
-      }
-      else if (type == VAR_LIST) {
-        return new GraqlVarListImpl(node);
-      }
-      else if (type == WHEN_THEN_EXPRESSION) {
-        return new GraqlWhenThenExpressionImpl(node);
+      else if (type == VAR_PATTERNS) {
+        return new GraqlVarPatternsImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }
