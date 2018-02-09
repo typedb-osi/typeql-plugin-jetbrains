@@ -7,19 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface GraqlMatchPart extends PsiElement {
 
-  @Nullable
-  GraqlMatchPart getMatchPart();
-
-  @Nullable
+  @NotNull
   GraqlPatterns getPatterns();
-
-  @Nullable
-  PsiElement getInteger();
-
-  @Nullable
-  PsiElement getOrder();
-
-  @Nullable
-  PsiElement getVariable();
 
 }

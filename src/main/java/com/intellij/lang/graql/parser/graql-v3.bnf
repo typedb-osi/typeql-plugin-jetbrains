@@ -95,9 +95,9 @@ GraqlFile ::= !<<eof>> (query)*
 query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery //| computeQuery ;
 
 matchPart ::= MATCH patterns                        // matchBase
-    | matchPart 'limit' INTEGER              ';'    // matchLimit
-    | matchPart 'offset' INTEGER             ';'    // matchOffset
-    | matchPart 'order' 'by' VARIABLE ORDER? ';'    // matchOrderBy
+//    | matchPart 'limit' INTEGER              ';'    // matchLimit
+//    | matchPart 'offset' INTEGER             ';'    // matchOffset
+//    | matchPart 'order' 'by' VARIABLE ORDER? ';'    // matchOrderBy
     ;
 
 getQuery ::= matchPart 'get' (VARIABLE (',' VARIABLE)*)? ';' ;
