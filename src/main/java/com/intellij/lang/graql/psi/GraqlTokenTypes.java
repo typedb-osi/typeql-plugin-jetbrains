@@ -62,6 +62,8 @@ public interface GraqlTokenTypes {
   IElementType ENTITY = new GraqlTokenType("entity");
   IElementType GET = new GraqlTokenType("get");
   IElementType GROUP = new GraqlTokenType("group");
+  IElementType GTHAN = new GraqlTokenType(">");
+  IElementType GTHANEQ = new GraqlTokenType(">=");
   IElementType HAS = new GraqlTokenType("has");
   //IElementType ID = new GraqlTokenType("ID");
   IElementType IMPLICIT_IDENTIFIER = new GraqlTokenType("IMPLICIT_IDENTIFIER");
@@ -75,6 +77,8 @@ public interface GraqlTokenTypes {
   IElementType LBRACE = new GraqlTokenType("{");
   IElementType LONG = new GraqlTokenType("long");
   IElementType LPAREN = new GraqlTokenType("(");
+  IElementType LTHAN = new GraqlTokenType("<");
+  IElementType LTHANEQ = new GraqlTokenType("<=");
   IElementType MATCH = new GraqlTokenType("MATCH");
   IElementType MAX = new GraqlTokenType("MAX");
   IElementType MEAN = new GraqlTokenType("MEAN");

@@ -812,7 +812,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "predicate_3")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ">");
+    r = consumeToken(b, GTHAN);
     r = r && valueOrVar(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -823,7 +823,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "predicate_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, ">=");
+    r = consumeToken(b, GTHANEQ);
     r = r && valueOrVar(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -834,7 +834,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "predicate_5")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "<");
+    r = consumeToken(b, LTHAN);
     r = r && valueOrVar(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -845,7 +845,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "predicate_6")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "<=");
+    r = consumeToken(b, LTHANEQ);
     r = r && valueOrVar(b, l + 1);
     exit_section_(b, m, null, r);
     return r;

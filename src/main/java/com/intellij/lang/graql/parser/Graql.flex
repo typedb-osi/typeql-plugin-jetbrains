@@ -47,6 +47,10 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   ")"                        { return RPAREN; }
   "{"                        { return LBRACE; }
   "}"                        { return RBRACE; }
+  "<"                        { return LTHAN; }
+  "<="                       { return LTHANEQ; }
+  ">"                        { return GTHAN; }
+  ">="                       { return GTHANEQ; }
   "sub"                      { return SUB; }
   "key"                      { return KEY; }
   "has"                      { return HAS; }
