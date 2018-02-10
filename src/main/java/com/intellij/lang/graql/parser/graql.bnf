@@ -207,7 +207,7 @@ id ::= identifier ;
 // Some keywords can also be used as identifiers
 identifier ::= ID | STRING
     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP {
+    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]

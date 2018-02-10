@@ -99,7 +99,7 @@ public interface GraqlTokenTypes {
   IElementType RELATIONSHIP = new GraqlTokenType("RELATIONSHIP");
   IElementType ROLE = new GraqlTokenType("role");
   IElementType RPAREN = new GraqlTokenType(")");
-  IElementType RULE = new GraqlTokenType("rule");
+  IElementType RULE = new GraqlTokenType("RULE");
   IElementType SEMICOLON = new GraqlTokenType(";");
   IElementType SINGLE_LINE_COMMENT = new GraqlTokenType("single_line_comment");
   IElementType SIZE = new GraqlTokenType("SIZE");

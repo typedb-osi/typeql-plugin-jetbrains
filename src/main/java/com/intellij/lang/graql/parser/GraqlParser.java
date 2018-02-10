@@ -464,7 +464,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ID | STRING
   //     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-  //     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP
+  //     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
     boolean r;
@@ -485,6 +485,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, SIZE);
     if (!r) r = consumeToken(b, ENTITY);
     if (!r) r = consumeToken(b, RELATIONSHIP);
+    if (!r) r = consumeToken(b, RULE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
