@@ -40,7 +40,6 @@ public interface GraqlTokenTypes {
   IElementType VAR_PATTERN = new GraqlElementType("VAR_PATTERN");
   IElementType VAR_PATTERNS = new GraqlElementType("VAR_PATTERNS");
 
-  //IElementType AGGREGATE = new GraqlTokenType("aggregate");
   IElementType AS = new GraqlTokenType("as");
   IElementType ASK = new GraqlTokenType("ask");
   IElementType ATTRIBUTE = new GraqlTokenType("attribute");
@@ -66,7 +65,6 @@ public interface GraqlTokenTypes {
   IElementType GTHAN = new GraqlTokenType(">");
   IElementType GTHANEQ = new GraqlTokenType(">=");
   IElementType HAS = new GraqlTokenType("has");
-  //IElementType ID = new GraqlTokenType("ID");
   IElementType IMPLICIT_IDENTIFIER = new GraqlTokenType("IMPLICIT_IDENTIFIER");
   IElementType IN = new GraqlTokenType("in");
   IElementType INSERT = new GraqlTokenType("INSERT");
@@ -74,7 +72,6 @@ public interface GraqlTokenTypes {
   IElementType ISA = new GraqlTokenType("isa");
   IElementType IS_ABSTRACT = new GraqlTokenType("is-abstract");
   IElementType KEY = new GraqlTokenType("key");
-  //IElementType LABEL = new GraqlTokenType("label");
   IElementType LBRACE = new GraqlTokenType("{");
   IElementType LIMIT = new GraqlTokenType("limit");
   IElementType LONG = new GraqlTokenType("long");
@@ -99,7 +96,7 @@ public interface GraqlTokenTypes {
   IElementType REAL = new GraqlTokenType("REAL");
   IElementType REGEX = new GraqlTokenType("REGEX");
   IElementType RELATES = new GraqlTokenType("relates");
-  IElementType RELATIONSHIP = new GraqlTokenType("relationship");
+  IElementType RELATIONSHIP = new GraqlTokenType("RELATIONSHIP");
   IElementType ROLE = new GraqlTokenType("role");
   IElementType RPAREN = new GraqlTokenType(")");
   IElementType RULE = new GraqlTokenType("rule");
@@ -113,7 +110,6 @@ public interface GraqlTokenTypes {
   IElementType THEN = new GraqlTokenType("then");
   IElementType UNDEFINE = new GraqlTokenType("UNDEFINE");
   IElementType VAL = new GraqlTokenType("val");
-  //IElementType VARIABLE = new GraqlTokenType("VARIABLE");
   IElementType VIA = new GraqlTokenType("via");
   IElementType WHEN = new GraqlTokenType("when");
 

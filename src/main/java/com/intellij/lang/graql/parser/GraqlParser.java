@@ -386,7 +386,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')?
+  // matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
   public static boolean getQuery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "getQuery")) return false;
     if (!nextTokenIs(b, MATCH)) return false;
@@ -398,58 +398,51 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('get' (VARIABLE (',' VARIABLE)*)? ';')?
+  // 'get' (VARIABLE (',' VARIABLE)*)? ';'
   private static boolean getQuery_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "getQuery_1")) return false;
-    getQuery_1_0(b, l + 1);
-    return true;
-  }
-
-  // 'get' (VARIABLE (',' VARIABLE)*)? ';'
-  private static boolean getQuery_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, GET);
-    r = r && getQuery_1_0_1(b, l + 1);
+    r = r && getQuery_1_1(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (VARIABLE (',' VARIABLE)*)?
-  private static boolean getQuery_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_1_0_1")) return false;
-    getQuery_1_0_1_0(b, l + 1);
+  private static boolean getQuery_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_1")) return false;
+    getQuery_1_1_0(b, l + 1);
     return true;
   }
 
   // VARIABLE (',' VARIABLE)*
-  private static boolean getQuery_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_1_0_1_0")) return false;
+  private static boolean getQuery_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, VARIABLE);
-    r = r && getQuery_1_0_1_0_1(b, l + 1);
+    r = r && getQuery_1_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (',' VARIABLE)*
-  private static boolean getQuery_1_0_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_1_0_1_0_1")) return false;
+  private static boolean getQuery_1_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_1_0_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!getQuery_1_0_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "getQuery_1_0_1_0_1", c)) break;
+      if (!getQuery_1_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "getQuery_1_1_0_1", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
   // ',' VARIABLE
-  private static boolean getQuery_1_0_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_1_0_1_0_1_0")) return false;
+  private static boolean getQuery_1_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, COMMA, VARIABLE);
@@ -471,7 +464,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ID | STRING
   //     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-  //     | DEGREES | MEMBERS | SIZE | ENTITY
+  //     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
     boolean r;
@@ -491,6 +484,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, MEMBERS);
     if (!r) r = consumeToken(b, SIZE);
     if (!r) r = consumeToken(b, ENTITY);
+    if (!r) r = consumeToken(b, RELATIONSHIP);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -713,17 +707,31 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // varPattern  // varPatternCase
-  //     | orPattern         // orPattern
+  // varPattern          // varPatternCase
+  //     | orPattern or orPattern    // orPattern (double; todo: recursive)
+  //     | orPattern                 // orPattern
   //     | andPattern
   public static boolean pattern(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pattern")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PATTERN, "<pattern>");
     r = varPattern(b, l + 1);
+    if (!r) r = pattern_1(b, l + 1);
     if (!r) r = orPattern(b, l + 1);
     if (!r) r = andPattern(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // orPattern or orPattern
+  private static boolean pattern_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pattern_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = orPattern(b, l + 1);
+    r = r && consumeToken(b, OR);
+    r = r && orPattern(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 

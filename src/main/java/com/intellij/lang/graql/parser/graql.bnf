@@ -104,7 +104,7 @@ matchPart ::= MATCH patterns           // matchBase
     (order by VARIABLE ORDER_SORT? ';')?    // matchOrderBy
     ;
 
-getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')? ;
+getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';') ;
 insertQuery ::= matchPart? INSERT varPatterns ;
 defineQuery ::= DEFINE varPatterns ;
 undefineQuery ::= UNDEFINE varPatterns ;
@@ -145,9 +145,10 @@ argument ::= VARIABLE  // variableArgument
 namedAgg ::= aggregate 'as' identifier ;
 
 patterns ::= (pattern ';')+ ;
-pattern ::= varPattern  // varPatternCase
-    | orPattern         // orPattern
-    | andPattern        // andPattern
+pattern ::= varPattern          // varPatternCase
+    | orPattern or orPattern    // orPattern (double; todo: recursive)
+    | orPattern                 // orPattern
+    | andPattern                // andPattern
     ;
 andPattern ::= '{' patterns '}'
 orPattern ::= (varPattern|andPattern) 'or' (varPattern|andPattern)
@@ -206,7 +207,7 @@ id ::= identifier ;
 // Some keywords can also be used as identifiers
 identifier ::= ID | STRING
     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-    | DEGREES | MEMBERS | SIZE | ENTITY {
+    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]

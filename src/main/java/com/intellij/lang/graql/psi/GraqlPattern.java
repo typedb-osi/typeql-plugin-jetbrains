@@ -10,8 +10,8 @@ public interface GraqlPattern extends PsiElement {
   @Nullable
   GraqlAndPattern getAndPattern();
 
-  @Nullable
-  GraqlOrPattern getOrPattern();
+  @NotNull
+  List<GraqlOrPattern> getOrPatternList();
 
   @Nullable
   GraqlVarPattern getVarPattern();

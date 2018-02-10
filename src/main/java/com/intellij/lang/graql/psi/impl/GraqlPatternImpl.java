@@ -33,9 +33,9 @@ public class GraqlPatternImpl extends ASTWrapperPsiElement implements GraqlPatte
   }
 
   @Override
-  @Nullable
-  public GraqlOrPattern getOrPattern() {
-    return findChildByClass(GraqlOrPattern.class);
+  @NotNull
+  public List<GraqlOrPattern> getOrPatternList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlOrPattern.class);
   }
 
   @Override
