@@ -10,4 +10,10 @@ public interface GraqlMatchPart extends PsiElement {
   @NotNull
   GraqlPatterns getPatterns();
 
+  @Nullable
+  PsiElement getOrderSort();
+
+  @Nullable
+  PsiElement getVariable();
+
 }

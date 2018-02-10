@@ -386,53 +386,70 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // matchPart 'get' (VARIABLE (',' VARIABLE)*)? ';'
+  // matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')?
   public static boolean getQuery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "getQuery")) return false;
     if (!nextTokenIs(b, MATCH)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = matchPart(b, l + 1);
-    r = r && consumeToken(b, GET);
-    r = r && getQuery_2(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
+    r = r && getQuery_1(b, l + 1);
     exit_section_(b, m, GET_QUERY, r);
     return r;
   }
 
+  // ('get' (VARIABLE (',' VARIABLE)*)? ';')?
+  private static boolean getQuery_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1")) return false;
+    getQuery_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'get' (VARIABLE (',' VARIABLE)*)? ';'
+  private static boolean getQuery_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, GET);
+    r = r && getQuery_1_0_1(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // (VARIABLE (',' VARIABLE)*)?
-  private static boolean getQuery_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_2")) return false;
-    getQuery_2_0(b, l + 1);
+  private static boolean getQuery_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_0_1")) return false;
+    getQuery_1_0_1_0(b, l + 1);
     return true;
   }
 
   // VARIABLE (',' VARIABLE)*
-  private static boolean getQuery_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_2_0")) return false;
+  private static boolean getQuery_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, VARIABLE);
-    r = r && getQuery_2_0_1(b, l + 1);
+    r = r && getQuery_1_0_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (',' VARIABLE)*
-  private static boolean getQuery_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_2_0_1")) return false;
+  private static boolean getQuery_1_0_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_0_1_0_1")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!getQuery_2_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "getQuery_2_0_1", c)) break;
+      if (!getQuery_1_0_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "getQuery_1_0_1_0_1", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
   // ',' VARIABLE
-  private static boolean getQuery_2_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "getQuery_2_0_1_0")) return false;
+  private static boolean getQuery_1_0_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "getQuery_1_0_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, COMMA, VARIABLE);
@@ -454,7 +471,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // ID | STRING
   //     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-  //     | DEGREES | MEMBERS | SIZE
+  //     | DEGREES | MEMBERS | SIZE | ENTITY
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
     boolean r;
@@ -473,6 +490,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DEGREES);
     if (!r) r = consumeToken(b, MEMBERS);
     if (!r) r = consumeToken(b, SIZE);
+    if (!r) r = consumeToken(b, ENTITY);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -557,7 +575,10 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MATCH patterns
+  // MATCH patterns           // matchBase
+  //     (limit INTEGER              ';')?    // matchLimit
+  //     (offset INTEGER             ';')?    // matchOffset
+  //     (order by VARIABLE ORDER_SORT? ';')?
   public static boolean matchPart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchPart")) return false;
     if (!nextTokenIs(b, MATCH)) return false;
@@ -565,8 +586,71 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, MATCH);
     r = r && patterns(b, l + 1);
+    r = r && matchPart_2(b, l + 1);
+    r = r && matchPart_3(b, l + 1);
+    r = r && matchPart_4(b, l + 1);
     exit_section_(b, m, MATCH_PART, r);
     return r;
+  }
+
+  // (limit INTEGER              ';')?
+  private static boolean matchPart_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_2")) return false;
+    matchPart_2_0(b, l + 1);
+    return true;
+  }
+
+  // limit INTEGER              ';'
+  private static boolean matchPart_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, LIMIT, INTEGER, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (offset INTEGER             ';')?
+  private static boolean matchPart_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_3")) return false;
+    matchPart_3_0(b, l + 1);
+    return true;
+  }
+
+  // offset INTEGER             ';'
+  private static boolean matchPart_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, OFFSET, INTEGER, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (order by VARIABLE ORDER_SORT? ';')?
+  private static boolean matchPart_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_4")) return false;
+    matchPart_4_0(b, l + 1);
+    return true;
+  }
+
+  // order by VARIABLE ORDER_SORT? ';'
+  private static boolean matchPart_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, ORDER, BY, VARIABLE);
+    r = r && matchPart_4_0_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ORDER_SORT?
+  private static boolean matchPart_4_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchPart_4_0_3")) return false;
+    consumeToken(b, ORDER_SORT);
+    return true;
   }
 
   /* ********************************************************** */

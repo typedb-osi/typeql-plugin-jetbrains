@@ -32,4 +32,16 @@ public class GraqlMatchPartImpl extends ASTWrapperPsiElement implements GraqlMat
     return findNotNullChildByClass(GraqlPatterns.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getOrderSort() {
+    return findChildByType(ORDER_SORT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getVariable() {
+    return findChildByType(VARIABLE);
+  }
+
 }

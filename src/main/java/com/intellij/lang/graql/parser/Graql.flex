@@ -26,7 +26,7 @@ EOL=\R
 WHITE_SPACE=\s+
 
 DATATYPE=(long|double|string|boolean|date)
-ORDER=(asc|desc)
+ORDER_SORT=(asc|desc)
 BOOLEAN=(true|false)
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 REGEX="/"([^\\\/]+)"/"
@@ -98,6 +98,10 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "val"                      { return VAL; }
   "contains"                 { return CONTAINS; }
   "or"                       { return OR; }
+  "offset"                   { return OFFSET; }
+  "limit"                    { return LIMIT; }
+  "order"                    { return ORDER; }
+  "by"                       { return BY; }
   "UNDEFINE"                 { return UNDEFINE; }
   "MEMBERS"                  { return MEMBERS; }
   "SIZE"                     { return SIZE; }
@@ -108,7 +112,7 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "DEGREES"                  { return DEGREES; }
 
   {DATATYPE}                 { return DATATYPE; }
-  {ORDER}                    { return ORDER; }
+  {ORDER_SORT}               { return ORDER_SORT; }
   {BOOLEAN}                  { return BOOLEAN; }
   {STRING}                   { return STRING; }
   {REGEX}                    { return REGEX; }

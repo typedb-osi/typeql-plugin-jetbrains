@@ -45,6 +45,7 @@ public interface GraqlTokenTypes {
   IElementType ASK = new GraqlTokenType("ask");
   IElementType ATTRIBUTE = new GraqlTokenType("attribute");
   IElementType BOOLEAN = new GraqlTokenType("BOOLEAN");
+  IElementType BY = new GraqlTokenType("by");
   IElementType CLUSTER = new GraqlTokenType("CLUSTER");
   IElementType COLON = new GraqlTokenType(":");
   IElementType COMMA = new GraqlTokenType(",");
@@ -59,7 +60,7 @@ public interface GraqlTokenTypes {
   IElementType DEGREES = new GraqlTokenType("DEGREES");
   IElementType DELETE = new GraqlTokenType("delete");
   IElementType DOUBLE = new GraqlTokenType("double");
-  IElementType ENTITY = new GraqlTokenType("entity");
+  IElementType ENTITY = new GraqlTokenType("ENTITY");
   IElementType GET = new GraqlTokenType("get");
   IElementType GROUP = new GraqlTokenType("group");
   IElementType GTHAN = new GraqlTokenType(">");
@@ -75,6 +76,7 @@ public interface GraqlTokenTypes {
   IElementType KEY = new GraqlTokenType("key");
   //IElementType LABEL = new GraqlTokenType("label");
   IElementType LBRACE = new GraqlTokenType("{");
+  IElementType LIMIT = new GraqlTokenType("limit");
   IElementType LONG = new GraqlTokenType("long");
   IElementType LPAREN = new GraqlTokenType("(");
   IElementType LTHAN = new GraqlTokenType("<");
@@ -87,8 +89,10 @@ public interface GraqlTokenTypes {
   IElementType MEMBERS = new GraqlTokenType("MEMBERS");
   IElementType MIN = new GraqlTokenType("MIN");
   IElementType OF = new GraqlTokenType("of");
+  IElementType OFFSET = new GraqlTokenType("offset");
   IElementType OR = new GraqlTokenType("or");
-  IElementType ORDER = new GraqlTokenType("ORDER");
+  IElementType ORDER = new GraqlTokenType("order");
+  IElementType ORDER_SORT = new GraqlTokenType("ORDER_SORT");
   IElementType PATH = new GraqlTokenType("PATH");
   IElementType PLAYS = new GraqlTokenType("plays");
   IElementType RBRACE = new GraqlTokenType("}");
