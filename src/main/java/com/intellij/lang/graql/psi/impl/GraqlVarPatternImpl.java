@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.graql.psi.*;
 
-public class GraqlVarPatternImpl extends ASTWrapperPsiElement implements GraqlVarPattern {
+public class GraqlVarPatternImpl extends GraqlPatternImpl implements GraqlVarPattern {
 
   public GraqlVarPatternImpl(ASTNode node) {
     super(node);

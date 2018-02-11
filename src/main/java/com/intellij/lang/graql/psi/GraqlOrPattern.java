@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GraqlOrPattern extends PsiElement {
+public interface GraqlOrPattern extends GraqlPattern {
 
   @NotNull
-  List<GraqlAndPattern> getAndPatternList();
-
-  @NotNull
-  List<GraqlVarPattern> getVarPatternList();
+  List<GraqlPattern> getPatternList();
 
 }

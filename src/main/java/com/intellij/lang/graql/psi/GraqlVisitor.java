@@ -16,7 +16,7 @@ public class GraqlVisitor extends PsiElementVisitor {
   }
 
   public void visitAndPattern(@NotNull GraqlAndPattern o) {
-    visitPsiElement(o);
+    visitPattern(o);
   }
 
   public void visitArgument(@NotNull GraqlArgument o) {
@@ -80,7 +80,7 @@ public class GraqlVisitor extends PsiElementVisitor {
   }
 
   public void visitOrPattern(@NotNull GraqlOrPattern o) {
-    visitPsiElement(o);
+    visitPattern(o);
   }
 
   public void visitPattern(@NotNull GraqlPattern o) {
@@ -116,7 +116,7 @@ public class GraqlVisitor extends PsiElementVisitor {
   }
 
   public void visitVarPattern(@NotNull GraqlVarPattern o) {
-    visitPsiElement(o);
+    visitPattern(o);
   }
 
   public void visitVarPatterns(@NotNull GraqlVarPatterns o) {

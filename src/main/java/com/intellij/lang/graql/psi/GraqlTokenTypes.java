@@ -173,9 +173,6 @@ public interface GraqlTokenTypes {
       else if (type == OR_PATTERN) {
         return new GraqlOrPatternImpl(node);
       }
-      else if (type == PATTERN) {
-        return new GraqlPatternImpl(node);
-      }
       else if (type == PATTERNS) {
         return new GraqlPatternsImpl(node);
       }

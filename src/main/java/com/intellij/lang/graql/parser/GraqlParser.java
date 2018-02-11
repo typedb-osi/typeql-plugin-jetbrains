@@ -21,16 +21,13 @@ public class GraqlParser implements PsiParser, LightPsiParser {
 
   public void parseLight(IElementType t, PsiBuilder b) {
     boolean r;
-    b = adapt_builder_(t, b, this, null);
+    b = adapt_builder_(t, b, this, EXTENDS_SETS_);
     Marker m = enter_section_(b, 0, _COLLAPSE_, null);
     if (t == AGGREGATE) {
       r = aggregate(b, 0);
     }
     else if (t == AGGREGATE_QUERY) {
       r = aggregateQuery(b, 0);
-    }
-    else if (t == AND_PATTERN) {
-      r = andPattern(b, 0);
     }
     else if (t == ARGUMENT) {
       r = argument(b, 0);
@@ -77,11 +74,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     else if (t == OF_LIST) {
       r = ofList(b, 0);
     }
-    else if (t == OR_PATTERN) {
-      r = orPattern(b, 0);
-    }
     else if (t == PATTERN) {
-      r = pattern(b, 0);
+      r = pattern(b, 0, -1);
     }
     else if (t == PATTERNS) {
       r = patterns(b, 0);
@@ -104,9 +98,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     else if (t == VALUE_OR_VAR) {
       r = valueOrVar(b, 0);
     }
-    else if (t == VAR_PATTERN) {
-      r = varPattern(b, 0);
-    }
     else if (t == VAR_PATTERNS) {
       r = varPatterns(b, 0);
     }
@@ -125,6 +116,10 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   protected boolean parse_root_(IElementType t, PsiBuilder b, int l) {
     return GraqlFile(b, l + 1);
   }
+
+  public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
+    create_token_set_(AND_PATTERN, OR_PATTERN, PATTERN, VAR_PATTERN),
+  };
 
   /* ********************************************************** */
   // !<<eof>> (query)*
@@ -254,20 +249,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     r = r && aggregate(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, AGGREGATE_QUERY, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // '{' patterns '}'
-  public static boolean andPattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "andPattern")) return false;
-    if (!nextTokenIs(b, LBRACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LBRACE);
-    r = r && patterns(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
-    exit_section_(b, m, AND_PATTERN, r);
     return r;
   }
 
@@ -673,70 +654,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (varPattern|andPattern) 'or' (varPattern|andPattern)
-  public static boolean orPattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "orPattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, OR_PATTERN, "<or pattern>");
-    r = orPattern_0(b, l + 1);
-    r = r && consumeToken(b, OR);
-    r = r && orPattern_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // varPattern|andPattern
-  private static boolean orPattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "orPattern_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = varPattern(b, l + 1);
-    if (!r) r = andPattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // varPattern|andPattern
-  private static boolean orPattern_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "orPattern_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = varPattern(b, l + 1);
-    if (!r) r = andPattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // varPattern          // varPatternCase
-  //     | orPattern or orPattern    // orPattern (double; todo: recursive)
-  //     | orPattern                 // orPattern
-  //     | andPattern
-  public static boolean pattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, PATTERN, "<pattern>");
-    r = varPattern(b, l + 1);
-    if (!r) r = pattern_1(b, l + 1);
-    if (!r) r = orPattern(b, l + 1);
-    if (!r) r = andPattern(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // orPattern or orPattern
-  private static boolean pattern_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pattern_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = orPattern(b, l + 1);
-    r = r && consumeToken(b, OR);
-    r = r && orPattern(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // (pattern ';')+
   public static boolean patterns(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "patterns")) return false;
@@ -758,7 +675,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "patterns_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = pattern(b, l + 1);
+    r = pattern(b, l + 1, -1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, m, null, r);
     return r;
@@ -1204,56 +1121,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // variable? property (','? property)*
-  public static boolean varPattern(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, VAR_PATTERN, "<var pattern>");
-    r = varPattern_0(b, l + 1);
-    r = r && property(b, l + 1);
-    r = r && varPattern_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // variable?
-  private static boolean varPattern_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern_0")) return false;
-    variable(b, l + 1);
-    return true;
-  }
-
-  // (','? property)*
-  private static boolean varPattern_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern_2")) return false;
-    int c = current_position_(b);
-    while (true) {
-      if (!varPattern_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "varPattern_2", c)) break;
-      c = current_position_(b);
-    }
-    return true;
-  }
-
-  // ','? property
-  private static boolean varPattern_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = varPattern_2_0_0(b, l + 1);
-    r = r && property(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ','?
-  private static boolean varPattern_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern_2_0_0")) return false;
-    consumeToken(b, COMMA);
-    return true;
-  }
-
-  /* ********************************************************** */
   // (varPattern ';')+
   public static boolean varPatterns(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "varPatterns")) return false;
@@ -1325,6 +1192,104 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, COMMA, VARIABLE);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // Expression root: pattern
+  // Operator priority table:
+  // 0: ATOM(varPattern)
+  // 1: BINARY(orPattern)
+  // 2: ATOM(andPattern)
+  public static boolean pattern(PsiBuilder b, int l, int g) {
+    if (!recursion_guard_(b, l, "pattern")) return false;
+    addVariant(b, "<pattern>");
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, "<pattern>");
+    r = varPattern(b, l + 1);
+    if (!r) r = andPattern(b, l + 1);
+    p = r;
+    r = r && pattern_0(b, l + 1, g);
+    exit_section_(b, l, m, null, r, p, null);
+    return r || p;
+  }
+
+  public static boolean pattern_0(PsiBuilder b, int l, int g) {
+    if (!recursion_guard_(b, l, "pattern_0")) return false;
+    boolean r = true;
+    while (true) {
+      Marker m = enter_section_(b, l, _LEFT_, null);
+      if (g < 1 && consumeTokenSmart(b, OR)) {
+        r = pattern(b, l, 1);
+        exit_section_(b, l, m, OR_PATTERN, r, true, null);
+      }
+      else {
+        exit_section_(b, l, m, null, false, false, null);
+        break;
+      }
+    }
+    return r;
+  }
+
+  // variable? property (','? property)*
+  public static boolean varPattern(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, VAR_PATTERN, "<var pattern>");
+    r = varPattern_0(b, l + 1);
+    r = r && property(b, l + 1);
+    r = r && varPattern_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // variable?
+  private static boolean varPattern_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern_0")) return false;
+    variable(b, l + 1);
+    return true;
+  }
+
+  // (','? property)*
+  private static boolean varPattern_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern_2")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!varPattern_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "varPattern_2", c)) break;
+      c = current_position_(b);
+    }
+    return true;
+  }
+
+  // ','? property
+  private static boolean varPattern_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = varPattern_2_0_0(b, l + 1);
+    r = r && property(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ','?
+  private static boolean varPattern_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern_2_0_0")) return false;
+    consumeTokenSmart(b, COMMA);
+    return true;
+  }
+
+  // '{' patterns '}'
+  public static boolean andPattern(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "andPattern")) return false;
+    if (!nextTokenIsSmart(b, LBRACE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokenSmart(b, LBRACE);
+    r = r && patterns(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, AND_PATTERN, r);
     return r;
   }
 

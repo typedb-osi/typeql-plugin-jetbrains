@@ -7,13 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface GraqlPattern extends PsiElement {
 
-  @Nullable
-  GraqlAndPattern getAndPattern();
-
-  @NotNull
-  List<GraqlOrPattern> getOrPatternList();
-
-  @Nullable
-  GraqlVarPattern getVarPattern();
-
 }

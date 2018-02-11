@@ -11,7 +11,7 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.graql.psi.*;
 
-public class GraqlPatternImpl extends ASTWrapperPsiElement implements GraqlPattern {
+public abstract class GraqlPatternImpl extends ASTWrapperPsiElement implements GraqlPattern {
 
   public GraqlPatternImpl(ASTNode node) {
     super(node);
@@ -24,24 +24,6 @@ public class GraqlPatternImpl extends ASTWrapperPsiElement implements GraqlPatte
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof GraqlVisitor) accept((GraqlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public GraqlAndPattern getAndPattern() {
-    return findChildByClass(GraqlAndPattern.class);
-  }
-
-  @Override
-  @NotNull
-  public List<GraqlOrPattern> getOrPatternList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlOrPattern.class);
-  }
-
-  @Override
-  @Nullable
-  public GraqlVarPattern getVarPattern() {
-    return findChildByClass(GraqlVarPattern.class);
   }
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GraqlVarPattern extends PsiElement {
+public interface GraqlVarPattern extends GraqlPattern {
 
   @NotNull
   List<GraqlProperty> getPropertyList();

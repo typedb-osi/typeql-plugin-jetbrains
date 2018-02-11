@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.graql.psi.*;
 
-public class GraqlOrPatternImpl extends ASTWrapperPsiElement implements GraqlOrPattern {
+public class GraqlOrPatternImpl extends GraqlPatternImpl implements GraqlOrPattern {
 
   public GraqlOrPatternImpl(ASTNode node) {
     super(node);
@@ -28,14 +27,8 @@ public class GraqlOrPatternImpl extends ASTWrapperPsiElement implements GraqlOrP
 
   @Override
   @NotNull
-  public List<GraqlAndPattern> getAndPatternList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlAndPattern.class);
-  }
-
-  @Override
-  @NotNull
-  public List<GraqlVarPattern> getVarPatternList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlVarPattern.class);
+  public List<GraqlPattern> getPatternList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlPattern.class);
   }
 
 }
