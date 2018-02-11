@@ -70,12 +70,6 @@ public class GraqlPropertyImpl extends ASTWrapperPsiElement implements GraqlProp
 
   @Override
   @Nullable
-  public PsiElement getDatatype() {
-    return findChildByType(DATATYPE);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getRegex() {
     return findChildByType(REGEX);
   }

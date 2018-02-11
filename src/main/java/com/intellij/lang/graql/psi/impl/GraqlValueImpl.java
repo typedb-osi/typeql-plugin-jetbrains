@@ -28,12 +28,6 @@ public class GraqlValueImpl extends ASTWrapperPsiElement implements GraqlValue {
 
   @Override
   @Nullable
-  public PsiElement getBoolean() {
-    return findChildByType(BOOLEAN);
-  }
-
-  @Override
-  @Nullable
   public PsiElement getInteger() {
     return findChildByType(INTEGER);
   }

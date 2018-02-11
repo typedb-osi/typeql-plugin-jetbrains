@@ -25,9 +25,6 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-DATATYPE=(long|double|string|boolean|date)
-ORDER_SORT=(asc|desc)
-BOOLEAN=(true|false)
 STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 REGEX="/"([^\\\/]+)"/"
 INTEGER=([-+]?[0-9]+)
@@ -102,6 +99,10 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "limit"                    { return LIMIT; }
   "order"                    { return ORDER; }
   "by"                       { return BY; }
+  "asc"                      { return ASC; }
+  "desc"                     { return DESC; }
+  "true"                     { return TRUE; }
+  "false"                    { return FALSE; }
   "UNDEFINE"                 { return UNDEFINE; }
   "MEMBERS"                  { return MEMBERS; }
   "SIZE"                     { return SIZE; }
@@ -111,9 +112,6 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "PATH"                     { return PATH; }
   "DEGREES"                  { return DEGREES; }
 
-  {DATATYPE}                 { return DATATYPE; }
-  {ORDER_SORT}               { return ORDER_SORT; }
-  {BOOLEAN}                  { return BOOLEAN; }
   {STRING}                   { return STRING; }
   {REGEX}                    { return REGEX; }
   {INTEGER}                  { return INTEGER; }

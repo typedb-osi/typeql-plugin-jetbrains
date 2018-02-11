@@ -630,7 +630,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'order' 'by' VARIABLE ORDER? ';'
+  // 'order' 'by' VARIABLE (asc|desc)? ';'
   public static boolean matchOrderBy(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchOrderBy")) return false;
     if (!nextTokenIs(b, ORDER)) return false;
@@ -643,11 +643,22 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ORDER?
+  // (asc|desc)?
   private static boolean matchOrderBy_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchOrderBy_3")) return false;
-    consumeToken(b, ORDER);
+    matchOrderBy_3_0(b, l + 1);
     return true;
+  }
+
+  // asc|desc
+  private static boolean matchOrderBy_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOrderBy_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ASC);
+    if (!r) r = consumeToken(b, DESC);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -744,7 +755,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // '='? value                // predicateEq
-  //     | '='? VARIABLE                      // predicateVariable
+  //     | '='? VARIABLE                     // predicateVariable
   //     | '!=' valueOrVar                   // predicateNeq
   //     | '>' valueOrVar                    // predicateGt
   //     | '>=' valueOrVar                   // predicateGte
@@ -897,7 +908,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   //     | 'key' variable                    // propKey
   //     | '(' casting (',' casting)* ')'    // propRel
   //     | 'is-abstract'                     // isAbstract
-  //     | 'datatype' DATATYPE               // propDatatype
+  //     | 'datatype' (long|double|string|boolean|date)  // propDatatype
   //     | 'regex' REGEX                     // propRegex
   //     | '!=' variable
   public static boolean property(PsiBuilder b, int l) {
@@ -918,7 +929,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = property_11(b, l + 1);
     if (!r) r = property_12(b, l + 1);
     if (!r) r = consumeToken(b, IS_ABSTRACT);
-    if (!r) r = parseTokens(b, 0, DATATYPE, DATATYPE);
+    if (!r) r = property_14(b, l + 1);
     if (!r) r = property_15(b, l + 1);
     if (!r) r = property_16(b, l + 1);
     exit_section_(b, l, m, r, false, null);
@@ -1096,6 +1107,31 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // 'datatype' (long|double|string|boolean|date)
+  private static boolean property_14(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_14")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DATATYPE);
+    r = r && property_14_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // long|double|string|boolean|date
+  private static boolean property_14_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_14_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, BOOLEAN);
+    if (!r) r = consumeToken(b, DATE);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // 'regex' REGEX
   private static boolean property_15(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_15")) return false;
@@ -1151,7 +1187,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   // STRING   // valueString
   //    | INTEGER  // valueInteger
   //    | REAL     // valueReal
-  //    | BOOLEAN  // valueBoolean
+  //    | (true|false)  // valueBoolean
   //    | DATE     // valueDate
   //    | DATETIME
   public static boolean value(PsiBuilder b, int l) {
@@ -1161,10 +1197,21 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, STRING);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = consumeToken(b, REAL);
-    if (!r) r = consumeToken(b, BOOLEAN);
+    if (!r) r = value_3(b, l + 1);
     if (!r) r = consumeToken(b, DATE);
     if (!r) r = consumeToken(b, DATETIME);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // true|false
+  private static boolean value_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "value_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, TRUE);
+    if (!r) r = consumeToken(b, FALSE);
+    exit_section_(b, m, null, r);
     return r;
   }
 

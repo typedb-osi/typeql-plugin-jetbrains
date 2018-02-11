@@ -46,9 +46,10 @@ public interface GraqlTokenTypes {
   IElementType VAR_PATTERNS = new GraqlElementType("VAR_PATTERNS");
 
   IElementType AS = new GraqlTokenType("as");
+  IElementType ASC = new GraqlTokenType("asc");
   IElementType ASK = new GraqlTokenType("ask");
   IElementType ATTRIBUTE = new GraqlTokenType("attribute");
-  IElementType BOOLEAN = new GraqlTokenType("BOOLEAN");
+  IElementType BOOLEAN = new GraqlTokenType("boolean");
   IElementType BY = new GraqlTokenType("by");
   IElementType CLUSTER = new GraqlTokenType("CLUSTER");
   IElementType COLON = new GraqlTokenType(":");
@@ -57,14 +58,16 @@ public interface GraqlTokenTypes {
   IElementType COMPUTE = new GraqlTokenType("compute");
   IElementType CONTAINS = new GraqlTokenType("contains");
   IElementType COUNT = new GraqlTokenType("COUNT");
-  IElementType DATATYPE = new GraqlTokenType("DATATYPE");
+  IElementType DATATYPE = new GraqlTokenType("datatype");
   IElementType DATE = new GraqlTokenType("DATE");
   IElementType DATETIME = new GraqlTokenType("DATETIME");
   IElementType DEFINE = new GraqlTokenType("DEFINE");
   IElementType DEGREES = new GraqlTokenType("DEGREES");
   IElementType DELETE = new GraqlTokenType("delete");
+  IElementType DESC = new GraqlTokenType("desc");
   IElementType DOUBLE = new GraqlTokenType("double");
   IElementType ENTITY = new GraqlTokenType("ENTITY");
+  IElementType FALSE = new GraqlTokenType("false");
   IElementType GET = new GraqlTokenType("get");
   IElementType GROUP = new GraqlTokenType("group");
   IElementType GTHAN = new GraqlTokenType(">");
@@ -93,8 +96,7 @@ public interface GraqlTokenTypes {
   IElementType OF = new GraqlTokenType("of");
   IElementType OFFSET = new GraqlTokenType("offset");
   IElementType OR = new GraqlTokenType("or");
-  IElementType ORDER = new GraqlTokenType("ORDER");
-  IElementType ORDER_SORT = new GraqlTokenType("ORDER_SORT");
+  IElementType ORDER = new GraqlTokenType("order");
   IElementType PATH = new GraqlTokenType("PATH");
   IElementType PLAYS = new GraqlTokenType("plays");
   IElementType RBRACE = new GraqlTokenType("}");
@@ -113,6 +115,7 @@ public interface GraqlTokenTypes {
   IElementType SUB = new GraqlTokenType("sub");
   IElementType SUM = new GraqlTokenType("SUM");
   IElementType THEN = new GraqlTokenType("then");
+  IElementType TRUE = new GraqlTokenType("true");
   IElementType UNDEFINE = new GraqlTokenType("UNDEFINE");
   IElementType VAL = new GraqlTokenType("val");
   IElementType VIA = new GraqlTokenType("via");

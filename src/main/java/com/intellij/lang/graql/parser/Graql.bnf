@@ -78,10 +78,11 @@
         limit               = 'limit'
         order               = 'order'
         by                  = 'by'
+        asc                 = 'asc'
+        desc                = 'desc'
+        true                = 'true'
+        false               = 'false'
 
-        DATATYPE            = "regexp:(long|double|string|boolean|date)";
-        ORDER_SORT          = 'regexp:(asc|desc)' ;
-        BOOLEAN             = 'regexp:(true|false)' ;
         STRING              = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
         INTEGER             = "regexp:([-+]?\d+)"
@@ -101,7 +102,7 @@ matchLimitOffset ::= matchLimit matchOffset?
 matchOffsetLimit ::= matchOffset matchLimit?
 matchLimit ::= 'limit' INTEGER ';' // matchLimit
 matchOffset ::= 'offset' INTEGER ';' // matchOffset
-matchOrderBy ::= 'order' 'by' VARIABLE ORDER? ';' // matchOrderBy
+matchOrderBy ::= 'order' 'by' VARIABLE (asc|desc)? ';' // matchOrderBy
 
 getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
 insertQuery ::= matchPart? INSERT varPatterns
@@ -164,7 +165,7 @@ property ::= 'isa' variable             // isa
     | 'key' variable                    // propKey
     | '(' casting (',' casting)* ')'    // propRel
     | 'is-abstract'                     // isAbstract
-    | 'datatype' DATATYPE               // propDatatype
+    | 'datatype' (long|double|string|boolean|date)  // propDatatype
     | 'regex' REGEX                     // propRegex
     | '!=' variable                     // propNeq
 
@@ -174,7 +175,7 @@ casting ::= variable (':' VARIABLE)?
 variable ::= label | VARIABLE
 
 predicate ::= '='? value                // predicateEq
-    | '='? VARIABLE                      // predicateVariable
+    | '='? VARIABLE                     // predicateVariable
     | '!=' valueOrVar                   // predicateNeq
     | '>' valueOrVar                    // predicateGt
     | '>=' valueOrVar                   // predicateGte
@@ -187,7 +188,7 @@ valueOrVar ::= VARIABLE // valueVariable
 value ::= STRING   // valueString
    | INTEGER  // valueInteger
    | REAL     // valueReal
-   | BOOLEAN  // valueBoolean
+   | (true|false)  // valueBoolean
    | DATE     // valueDate
    | DATETIME // valueDateTime
 

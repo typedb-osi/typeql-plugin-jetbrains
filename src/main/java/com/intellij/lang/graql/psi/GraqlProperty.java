@@ -29,9 +29,6 @@ public interface GraqlProperty extends PsiElement {
   GraqlVariable getVariable();
 
   @Nullable
-  PsiElement getDatatype();
-
-  @Nullable
   PsiElement getRegex();
 
 }

@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface GraqlValue extends PsiElement {
 
   @Nullable
-  PsiElement getBoolean();
-
-  @Nullable
   PsiElement getInteger();
 
   @Nullable
