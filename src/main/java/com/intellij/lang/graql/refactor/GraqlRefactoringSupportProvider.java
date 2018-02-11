@@ -1,6 +1,6 @@
 package com.intellij.lang.graql.refactor;
 
-import com.intellij.lang.graql.psi.GraqlIdentifierExpr;
+import com.intellij.lang.graql.psi.GraqlIdentifier;
 import com.intellij.lang.refactoring.RefactoringSupportProvider;
 import com.intellij.psi.PsiElement;
 
@@ -11,7 +11,7 @@ public class GraqlRefactoringSupportProvider extends RefactoringSupportProvider 
 
     @Override
     public boolean isMemberInplaceRenameAvailable(PsiElement element, PsiElement context) {
-        return element instanceof GraqlIdentifierExpr;
+        return element instanceof GraqlIdentifier;
     }
 
 }

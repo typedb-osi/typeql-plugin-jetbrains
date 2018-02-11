@@ -1,6 +1,6 @@
 package com.intellij.lang.graql.reference;
 
-import com.intellij.lang.graql.psi.GraqlIdentifierExpr;
+import com.intellij.lang.graql.psi.GraqlIdentifier;
 import com.intellij.lang.graql.psi.GraqlTokenTypes;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.patterns.PlatformPatterns;
@@ -16,19 +16,12 @@ public class GraqlReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar registrar) {
         registrar.registerReferenceProvider(PlatformPatterns.psiElement(
-                GraqlTokenTypes.IDENTIFIER_EXPR), new PsiReferenceProvider() {
+                GraqlTokenTypes.IDENTIFIER), new PsiReferenceProvider() {
             @NotNull
             @Override
             public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                GraqlIdentifierExpr identifierExpr = (GraqlIdentifierExpr) element;
-                String text;
-                if (identifierExpr.getIdentifier() != null) {
-                    text = identifierExpr.getIdentifier().getText();
-                } else if (identifierExpr.getStringLiteral() != null) {
-                    text = identifierExpr.getStringLiteral().getText();
-                } else {
-                    throw new UnsupportedOperationException("Invalid type: " + element);
-                }
+                GraqlIdentifier identifierExpr = (GraqlIdentifier) element;
+                String text = identifierExpr.getText();
                 return new PsiReference[]{new GraqlReference(identifierExpr, new TextRange(0, text.length()), text)};
             }
         });

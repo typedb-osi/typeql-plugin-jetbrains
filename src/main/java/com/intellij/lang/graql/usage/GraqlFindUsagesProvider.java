@@ -4,7 +4,7 @@ import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
 import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
 import com.intellij.lang.graql.parser.GraqlLexer;
-import com.intellij.lang.graql.psi.GraqlIdentifierExpr;
+import com.intellij.lang.graql.psi.GraqlIdentifier;
 import com.intellij.lang.graql.psi.GraqlTokenTypes;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
@@ -20,14 +20,14 @@ public class GraqlFindUsagesProvider implements FindUsagesProvider {
     @Override
     public WordsScanner getWordsScanner() {
         return new DefaultWordsScanner(new GraqlLexer(),
-                TokenSet.create(GraqlTokenTypes.IDENTIFIER_EXPR),
+                TokenSet.create(GraqlTokenTypes.IDENTIFIER),
                 TokenSet.create(GraqlTokenTypes.SINGLE_LINE_COMMENT),
                 TokenSet.EMPTY);
     }
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        return psiElement instanceof GraqlIdentifierExpr;
+        return psiElement instanceof GraqlIdentifier;
     }
 
     @Nullable
@@ -39,7 +39,7 @@ public class GraqlFindUsagesProvider implements FindUsagesProvider {
     @NotNull
     @Override
     public String getType(@NotNull PsiElement element) {
-        if (element instanceof GraqlIdentifierExpr) {
+        if (element instanceof GraqlIdentifier) {
             return "Graql identifier";
         } else {
             return "";
