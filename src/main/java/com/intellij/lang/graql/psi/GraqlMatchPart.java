@@ -7,13 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface GraqlMatchPart extends PsiElement {
 
+  @Nullable
+  GraqlMatchLimitOffset getMatchLimitOffset();
+
+  @Nullable
+  GraqlMatchOffsetLimit getMatchOffsetLimit();
+
+  @Nullable
+  GraqlMatchOrderBy getMatchOrderBy();
+
   @NotNull
   GraqlPatterns getPatterns();
-
-  @Nullable
-  PsiElement getOrderSort();
-
-  @Nullable
-  PsiElement getVariable();
 
 }

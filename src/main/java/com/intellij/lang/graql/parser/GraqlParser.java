@@ -65,6 +65,21 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     else if (t == LABEL_LIST) {
       r = labelList(b, 0);
     }
+    else if (t == MATCH_LIMIT) {
+      r = matchLimit(b, 0);
+    }
+    else if (t == MATCH_LIMIT_OFFSET) {
+      r = matchLimitOffset(b, 0);
+    }
+    else if (t == MATCH_OFFSET) {
+      r = matchOffset(b, 0);
+    }
+    else if (t == MATCH_OFFSET_LIMIT) {
+      r = matchOffsetLimit(b, 0);
+    }
+    else if (t == MATCH_ORDER_BY) {
+      r = matchOrderBy(b, 0);
+    }
     else if (t == MATCH_PART) {
       r = matchPart(b, 0);
     }
@@ -551,10 +566,92 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // MATCH patterns           // matchBase
-  //     (limit INTEGER              ';')?    // matchLimit
-  //     (offset INTEGER             ';')?    // matchOffset
-  //     (order by VARIABLE ORDER_SORT? ';')?
+  // 'limit' INTEGER ';'
+  public static boolean matchLimit(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchLimit")) return false;
+    if (!nextTokenIs(b, LIMIT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, LIMIT, INTEGER, SEMICOLON);
+    exit_section_(b, m, MATCH_LIMIT, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // matchLimit matchOffset?
+  public static boolean matchLimitOffset(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchLimitOffset")) return false;
+    if (!nextTokenIs(b, LIMIT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = matchLimit(b, l + 1);
+    r = r && matchLimitOffset_1(b, l + 1);
+    exit_section_(b, m, MATCH_LIMIT_OFFSET, r);
+    return r;
+  }
+
+  // matchOffset?
+  private static boolean matchLimitOffset_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchLimitOffset_1")) return false;
+    matchOffset(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // 'offset' INTEGER ';'
+  public static boolean matchOffset(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOffset")) return false;
+    if (!nextTokenIs(b, OFFSET)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, OFFSET, INTEGER, SEMICOLON);
+    exit_section_(b, m, MATCH_OFFSET, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // matchOffset matchLimit?
+  public static boolean matchOffsetLimit(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOffsetLimit")) return false;
+    if (!nextTokenIs(b, OFFSET)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = matchOffset(b, l + 1);
+    r = r && matchOffsetLimit_1(b, l + 1);
+    exit_section_(b, m, MATCH_OFFSET_LIMIT, r);
+    return r;
+  }
+
+  // matchLimit?
+  private static boolean matchOffsetLimit_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOffsetLimit_1")) return false;
+    matchLimit(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // 'order' 'by' VARIABLE ORDER? ';'
+  public static boolean matchOrderBy(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOrderBy")) return false;
+    if (!nextTokenIs(b, ORDER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, ORDER, BY, VARIABLE);
+    r = r && matchOrderBy_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, MATCH_ORDER_BY, r);
+    return r;
+  }
+
+  // ORDER?
+  private static boolean matchOrderBy_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "matchOrderBy_3")) return false;
+    consumeToken(b, ORDER);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy?
   public static boolean matchPart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchPart")) return false;
     if (!nextTokenIs(b, MATCH)) return false;
@@ -564,68 +661,32 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     r = r && patterns(b, l + 1);
     r = r && matchPart_2(b, l + 1);
     r = r && matchPart_3(b, l + 1);
-    r = r && matchPart_4(b, l + 1);
     exit_section_(b, m, MATCH_PART, r);
     return r;
   }
 
-  // (limit INTEGER              ';')?
+  // (matchLimitOffset|matchOffsetLimit)?
   private static boolean matchPart_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchPart_2")) return false;
     matchPart_2_0(b, l + 1);
     return true;
   }
 
-  // limit INTEGER              ';'
+  // matchLimitOffset|matchOffsetLimit
   private static boolean matchPart_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchPart_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, LIMIT, INTEGER, SEMICOLON);
+    r = matchLimitOffset(b, l + 1);
+    if (!r) r = matchOffsetLimit(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (offset INTEGER             ';')?
+  // matchOrderBy?
   private static boolean matchPart_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "matchPart_3")) return false;
-    matchPart_3_0(b, l + 1);
-    return true;
-  }
-
-  // offset INTEGER             ';'
-  private static boolean matchPart_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "matchPart_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, OFFSET, INTEGER, SEMICOLON);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (order by VARIABLE ORDER_SORT? ';')?
-  private static boolean matchPart_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "matchPart_4")) return false;
-    matchPart_4_0(b, l + 1);
-    return true;
-  }
-
-  // order by VARIABLE ORDER_SORT? ';'
-  private static boolean matchPart_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "matchPart_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ORDER, BY, VARIABLE);
-    r = r && matchPart_4_0_3(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ORDER_SORT?
-  private static boolean matchPart_4_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "matchPart_4_0_3")) return false;
-    consumeToken(b, ORDER_SORT);
+    matchOrderBy(b, l + 1);
     return true;
   }
 

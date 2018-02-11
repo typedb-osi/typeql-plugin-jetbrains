@@ -23,6 +23,11 @@ public interface GraqlTokenTypes {
   IElementType IN_LIST = new GraqlElementType("IN_LIST");
   IElementType LABEL = new GraqlElementType("LABEL");
   IElementType LABEL_LIST = new GraqlElementType("LABEL_LIST");
+  IElementType MATCH_LIMIT = new GraqlElementType("MATCH_LIMIT");
+  IElementType MATCH_LIMIT_OFFSET = new GraqlElementType("MATCH_LIMIT_OFFSET");
+  IElementType MATCH_OFFSET = new GraqlElementType("MATCH_OFFSET");
+  IElementType MATCH_OFFSET_LIMIT = new GraqlElementType("MATCH_OFFSET_LIMIT");
+  IElementType MATCH_ORDER_BY = new GraqlElementType("MATCH_ORDER_BY");
   IElementType MATCH_PART = new GraqlElementType("MATCH_PART");
   IElementType NAMED_AGG = new GraqlElementType("NAMED_AGG");
   IElementType OF_LIST = new GraqlElementType("OF_LIST");
@@ -88,7 +93,7 @@ public interface GraqlTokenTypes {
   IElementType OF = new GraqlTokenType("of");
   IElementType OFFSET = new GraqlTokenType("offset");
   IElementType OR = new GraqlTokenType("or");
-  IElementType ORDER = new GraqlTokenType("order");
+  IElementType ORDER = new GraqlTokenType("ORDER");
   IElementType ORDER_SORT = new GraqlTokenType("ORDER_SORT");
   IElementType PATH = new GraqlTokenType("PATH");
   IElementType PLAYS = new GraqlTokenType("plays");
@@ -160,6 +165,21 @@ public interface GraqlTokenTypes {
       }
       else if (type == LABEL_LIST) {
         return new GraqlLabelListImpl(node);
+      }
+      else if (type == MATCH_LIMIT) {
+        return new GraqlMatchLimitImpl(node);
+      }
+      else if (type == MATCH_LIMIT_OFFSET) {
+        return new GraqlMatchLimitOffsetImpl(node);
+      }
+      else if (type == MATCH_OFFSET) {
+        return new GraqlMatchOffsetImpl(node);
+      }
+      else if (type == MATCH_OFFSET_LIMIT) {
+        return new GraqlMatchOffsetLimitImpl(node);
+      }
+      else if (type == MATCH_ORDER_BY) {
+        return new GraqlMatchOrderByImpl(node);
       }
       else if (type == MATCH_PART) {
         return new GraqlMatchPartImpl(node);

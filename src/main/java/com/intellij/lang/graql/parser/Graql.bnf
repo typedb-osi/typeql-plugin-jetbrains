@@ -96,10 +96,12 @@ GraqlFile ::= !<<eof>> (query)*
 
 query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery //| computeQuery
 
-matchPart ::= MATCH patterns           // matchBase
-    (limit INTEGER              ';')?    // matchLimit
-    (offset INTEGER             ';')?    // matchOffset
-    (order by VARIABLE ORDER_SORT? ';')?    // matchOrderBy
+matchPart ::= MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy?
+matchLimitOffset ::= matchLimit matchOffset?
+matchOffsetLimit ::= matchOffset matchLimit?
+matchLimit ::= 'limit' INTEGER ';' // matchLimit
+matchOffset ::= 'offset' INTEGER ';' // matchOffset
+matchOrderBy ::= 'order' 'by' VARIABLE ORDER? ';' // matchOrderBy
 
 getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
 insertQuery ::= matchPart? INSERT varPatterns

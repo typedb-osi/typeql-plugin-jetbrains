@@ -67,6 +67,26 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMatchLimit(@NotNull GraqlMatchLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchLimitOffset(@NotNull GraqlMatchLimitOffset o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOffset(@NotNull GraqlMatchOffset o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOffsetLimit(@NotNull GraqlMatchOffsetLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOrderBy(@NotNull GraqlMatchOrderBy o) {
+    visitPsiElement(o);
+  }
+
   public void visitMatchPart(@NotNull GraqlMatchPart o) {
     visitPsiElement(o);
   }

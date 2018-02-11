@@ -27,21 +27,27 @@ public class GraqlMatchPartImpl extends ASTWrapperPsiElement implements GraqlMat
   }
 
   @Override
+  @Nullable
+  public GraqlMatchLimitOffset getMatchLimitOffset() {
+    return findChildByClass(GraqlMatchLimitOffset.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlMatchOffsetLimit getMatchOffsetLimit() {
+    return findChildByClass(GraqlMatchOffsetLimit.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlMatchOrderBy getMatchOrderBy() {
+    return findChildByClass(GraqlMatchOrderBy.class);
+  }
+
+  @Override
   @NotNull
   public GraqlPatterns getPatterns() {
     return findNotNullChildByClass(GraqlPatterns.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getOrderSort() {
-    return findChildByType(ORDER_SORT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getVariable() {
-    return findChildByType(VARIABLE);
   }
 
 }
