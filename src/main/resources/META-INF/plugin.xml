@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.intellij.lang.graql</id>
     <name>Graql</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="support@sourceplusplus.com" url="https://sourceplusplus.com">Source++</vendor>
 
     <description><![CDATA[
