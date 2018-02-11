@@ -33,6 +33,7 @@
                              implementationClass="com.intellij.lang.graql.refactor.GraqlNamesValidator"/>
         <completion.contributor language="Graql"
                                 implementationClass="com.intellij.lang.graql.completion.GraqlCompletionContributor"/>
+        <lang.commenter language="Graql" implementationClass="com.intellij.lang.graql.refactor.GraqlCommenter"/>
     </extensions>
 
     <actions>

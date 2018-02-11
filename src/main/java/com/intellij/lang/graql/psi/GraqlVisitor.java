@@ -7,167 +7,147 @@ import com.intellij.psi.PsiElement;
 
 public class GraqlVisitor extends PsiElementVisitor {
 
-  public void visitAggregateExpression(@NotNull GraqlAggregateExpression o) {
+  public void visitAggregate(@NotNull GraqlAggregate o) {
     visitPsiElement(o);
   }
 
-  public void visitAggregateType(@NotNull GraqlAggregateType o) {
+  public void visitAggregateQuery(@NotNull GraqlAggregateQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitAggregateTypeExpr(@NotNull GraqlAggregateTypeExpr o) {
+  public void visitAndPattern(@NotNull GraqlAndPattern o) {
+    visitPattern(o);
+  }
+
+  public void visitArgument(@NotNull GraqlArgument o) {
     visitPsiElement(o);
   }
 
-  public void visitAggregateTypeWithVar(@NotNull GraqlAggregateTypeWithVar o) {
+  public void visitCasting(@NotNull GraqlCasting o) {
     visitPsiElement(o);
   }
 
-  public void visitAttributeExpression(@NotNull GraqlAttributeExpression o) {
+  public void visitClusterParam(@NotNull GraqlClusterParam o) {
     visitPsiElement(o);
   }
 
-  public void visitCommitExpression(@NotNull GraqlCommitExpression o) {
+  public void visitDefineQuery(@NotNull GraqlDefineQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitComputeExpression(@NotNull GraqlComputeExpression o) {
+  public void visitDeleteQuery(@NotNull GraqlDeleteQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitDatatypeExpression(@NotNull GraqlDatatypeExpression o) {
+  public void visitGetQuery(@NotNull GraqlGetQuery o) {
     visitPsiElement(o);
   }
 
-  public void visitDefineExpression(@NotNull GraqlDefineExpression o) {
+  public void visitId(@NotNull GraqlId o) {
     visitPsiElement(o);
   }
 
-  public void visitDeleteExpression(@NotNull GraqlDeleteExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitEntityExpression(@NotNull GraqlEntityExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitEntitySubExpressions(@NotNull GraqlEntitySubExpressions o) {
-    visitPsiElement(o);
-  }
-
-  public void visitEqualityExpression(@NotNull GraqlEqualityExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitExpression(@NotNull GraqlExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitHasExpression(@NotNull GraqlHasExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitHasValueExpression(@NotNull GraqlHasValueExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInsertExpression(@NotNull GraqlInsertExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIsaExpression(@NotNull GraqlIsaExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitKeyExpression(@NotNull GraqlKeyExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitLabelExpression(@NotNull GraqlLabelExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitLiteral(@NotNull GraqlLiteral o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMatchExpression(@NotNull GraqlMatchExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPlaysExpression(@NotNull GraqlPlaysExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelatesExpression(@NotNull GraqlRelatesExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelation(@NotNull GraqlRelation o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelationExpression(@NotNull GraqlRelationExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelationField(@NotNull GraqlRelationField o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelationList(@NotNull GraqlRelationList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelationStatement(@NotNull GraqlRelationStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRelationshipExpression(@NotNull GraqlRelationshipExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRoleExpression(@NotNull GraqlRoleExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRuleExpression(@NotNull GraqlRuleExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSubExpression(@NotNull GraqlSubExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSubExpressions(@NotNull GraqlSubExpressions o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVar(@NotNull GraqlVar o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVarField(@NotNull GraqlVarField o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVarList(@NotNull GraqlVarList o) {
-    visitPsiElement(o);
-  }
-
-  public void visitWhenThenExpression(@NotNull GraqlWhenThenExpression o) {
-    visitPsiElement(o);
-  }
-
-  public void visitIdentifierExpr(@NotNull GraqlIdentifierExpr o) {
+  public void visitIdentifier(@NotNull GraqlIdentifier o) {
     visitNamedElement(o);
   }
 
-  public void visitLiteralExpr(@NotNull GraqlLiteralExpr o) {
+  public void visitInList(@NotNull GraqlInList o) {
     visitPsiElement(o);
   }
 
-  public void visitThingExpr(@NotNull GraqlThingExpr o) {
+  public void visitInsertQuery(@NotNull GraqlInsertQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLabel(@NotNull GraqlLabel o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLabelList(@NotNull GraqlLabelList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchLimit(@NotNull GraqlMatchLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchLimitOffset(@NotNull GraqlMatchLimitOffset o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOffset(@NotNull GraqlMatchOffset o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOffsetLimit(@NotNull GraqlMatchOffsetLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchOrderBy(@NotNull GraqlMatchOrderBy o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMatchPart(@NotNull GraqlMatchPart o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedAgg(@NotNull GraqlNamedAgg o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOfList(@NotNull GraqlOfList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOrPattern(@NotNull GraqlOrPattern o) {
+    visitPattern(o);
+  }
+
+  public void visitPattern(@NotNull GraqlPattern o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPatterns(@NotNull GraqlPatterns o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPredicate(@NotNull GraqlPredicate o) {
+    visitPsiElement(o);
+  }
+
+  public void visitProperty(@NotNull GraqlProperty o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQuery(@NotNull GraqlQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUndefineQuery(@NotNull GraqlUndefineQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitValue(@NotNull GraqlValue o) {
+    visitPsiElement(o);
+  }
+
+  public void visitValueOrVar(@NotNull GraqlValueOrVar o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVarPattern(@NotNull GraqlVarPattern o) {
+    visitPattern(o);
+  }
+
+  public void visitVarPatterns(@NotNull GraqlVarPatterns o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariable(@NotNull GraqlVariable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitVariables(@NotNull GraqlVariables o) {
     visitPsiElement(o);
   }
 

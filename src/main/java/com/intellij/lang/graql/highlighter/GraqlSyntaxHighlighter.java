@@ -46,7 +46,7 @@ public class GraqlSyntaxHighlighter extends SyntaxHighlighterBase {
         fillMap(ATTRIBUTES, IDENTIFIER, GraqlTokenTypes.IDENTIFIER);
         fillMap(ATTRIBUTES, SEMICOLON, GraqlTokenTypes.SEMICOLON);
         fillMap(ATTRIBUTES, COMMA, GraqlTokenTypes.COMMA);
-        fillMap(ATTRIBUTES, STRING, GraqlTokenTypes.STRING_LITERAL);
+        fillMap(ATTRIBUTES, STRING, GraqlTokenTypes.STRING);
         fillMap(ATTRIBUTES, GraqlTokenTypeSets.MODEL, STRING);
         fillMap(ATTRIBUTES, GraqlTokenTypeSets.KEYWORDS, KEYWORD);
         fillMap(ATTRIBUTES, GraqlTokenTypeSets.DATATYPES, DATATYPES);

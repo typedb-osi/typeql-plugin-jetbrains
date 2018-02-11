@@ -3,7 +3,7 @@ package com.intellij.lang.graql.reference;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.lang.graql.GraqlFileType;
-import com.intellij.lang.graql.psi.GraqlIdentifierExpr;
+import com.intellij.lang.graql.psi.GraqlIdentifier;
 import com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
@@ -20,14 +20,15 @@ import java.util.Set;
 /**
  * @author github.com/BFergerson
  */
-public class GraqlReference extends PsiReferenceBase<GraqlIdentifierExpr> implements PsiPolyVariantReference {
+public class GraqlReference extends PsiReferenceBase<GraqlIdentifier> implements PsiPolyVariantReference {
 
     private final String identifier;
 
-    public GraqlReference(@NotNull GraqlIdentifierExpr element, @NotNull TextRange textRange,
+    public GraqlReference(@NotNull GraqlIdentifier element, @NotNull TextRange textRange,
                           @NotNull String identifier) {
         super(element, textRange);
         this.identifier = identifier;
+
     }
 
     @NotNull
@@ -41,9 +42,9 @@ public class GraqlReference extends PsiReferenceBase<GraqlIdentifierExpr> implem
     @Override
     public ResolveResult[] multiResolve(boolean incompleteCode) {
         Project project = myElement.getProject();
-        final List<GraqlIdentifierExpr> properties = GraqlPsiImplUtil.findIdentifiers(project, identifier);
+        final List<GraqlIdentifier> properties = GraqlPsiImplUtil.findIdentifiers(project, identifier);
         List<ResolveResult> results = new ArrayList<>();
-        for (GraqlIdentifierExpr property : properties) {
+        for (GraqlIdentifier property : properties) {
             results.add(new PsiElementResolveResult(property));
         }
         return results.toArray(new ResolveResult[results.size()]);
@@ -61,10 +62,10 @@ public class GraqlReference extends PsiReferenceBase<GraqlIdentifierExpr> implem
     public Object[] getVariants() {
         Project project = myElement.getProject();
         List<LookupElement> variants = new ArrayList<>();
-        List<GraqlIdentifierExpr> identifiers = GraqlPsiImplUtil.findIdentifiers(project);
+        List<GraqlIdentifier> identifiers = GraqlPsiImplUtil.findIdentifiers(project);
         Set<String> distinctVariants = new HashSet<>();
 
-        for (GraqlIdentifierExpr identifier : identifiers) {
+        for (GraqlIdentifier identifier : identifiers) {
             if (!distinctVariants.contains(identifier.getText())) {
                 distinctVariants.add(identifier.getText());
                 variants.add(LookupElementBuilder.create(identifier).
