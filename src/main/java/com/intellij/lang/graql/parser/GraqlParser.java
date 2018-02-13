@@ -678,15 +678,15 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ID | STRING
+  // ID | STRING_LITERAL
   //     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-  //     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE
+  //     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENTIFIER, "<identifier>");
     r = consumeToken(b, ID);
-    if (!r) r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, MIN);
     if (!r) r = consumeToken(b, MAX);
     if (!r) r = consumeToken(b, MEDIAN);
@@ -702,6 +702,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, ENTITY);
     if (!r) r = consumeToken(b, RELATIONSHIP);
     if (!r) r = consumeToken(b, RULE);
+    if (!r) r = consumeToken(b, ROLE);
+    if (!r) r = consumeToken(b, ATTRIBUTE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1185,7 +1187,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   //     | '>=' valueOrVar                   // predicateGte
   //     | '<' valueOrVar                    // predicateLt
   //     | '<=' valueOrVar                   // predicateLte
-  //     | 'contains' (STRING | VARIABLE)    // predicateContains
+  //     | 'contains' (STRING_LITERAL | VARIABLE)    // predicateContains
   //     | REGEX
   public static boolean predicate(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "predicate")) return false;
@@ -1295,7 +1297,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'contains' (STRING | VARIABLE)
+  // 'contains' (STRING_LITERAL | VARIABLE)
   private static boolean predicate_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "predicate_7")) return false;
     boolean r;
@@ -1306,12 +1308,12 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING | VARIABLE
+  // STRING_LITERAL | VARIABLE
   private static boolean predicate_7_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "predicate_7_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, VARIABLE);
     exit_section_(b, m, null, r);
     return r;
@@ -1675,7 +1677,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING   // valueString
+  // STRING_LITERAL   // valueString
   //    | INTEGER  // valueInteger
   //    | REAL     // valueReal
   //    | (true|false)  // valueBoolean
@@ -1685,7 +1687,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, VALUE, "<value>");
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, INTEGER);
     if (!r) r = consumeToken(b, REAL);
     if (!r) r = value_3(b, l + 1);

@@ -83,7 +83,7 @@
         true                = 'true'
         false               = 'false'
 
-        STRING              = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+        STRING_LITERAL      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
         INTEGER             = "regexp:([-+]?\d+)"
         space               = 'regexp:\s+'
@@ -181,11 +181,11 @@ predicate ::= '='? value                // predicateEq
     | '>=' valueOrVar                   // predicateGte
     | '<' valueOrVar                    // predicateLt
     | '<=' valueOrVar                   // predicateLte
-    | 'contains' (STRING | VARIABLE)    // predicateContains
+    | 'contains' (STRING_LITERAL | VARIABLE)    // predicateContains
     | REGEX                             // predicateRegex
 valueOrVar ::= VARIABLE // valueVariable
     | value             // valuePrimitive
-value ::= STRING   // valueString
+value ::= STRING_LITERAL   // valueString
    | INTEGER  // valueInteger
    | REAL     // valueReal
    | (true|false)  // valueBoolean
@@ -196,9 +196,9 @@ label ::= identifier | IMPLICIT_IDENTIFIER
 id ::= identifier
 
 // Some keywords can also be used as identifiers
-identifier ::= ID | STRING
+identifier ::= ID | STRING_LITERAL
     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE {
+    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]

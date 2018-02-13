@@ -61,7 +61,7 @@ public interface GraqlTokenTypes {
   IElementType AS = new GraqlTokenType("as");
   IElementType ASC = new GraqlTokenType("asc");
   IElementType ASK = new GraqlTokenType("ask");
-  IElementType ATTRIBUTE = new GraqlTokenType("attribute");
+  IElementType ATTRIBUTE = new GraqlTokenType("ATTRIBUTE");
   IElementType BOOLEAN = new GraqlTokenType("boolean");
   IElementType BY = new GraqlTokenType("by");
   IElementType COLON = new GraqlTokenType(":");
@@ -109,13 +109,14 @@ public interface GraqlTokenTypes {
   IElementType REGEX = new GraqlTokenType("REGEX");
   IElementType RELATES = new GraqlTokenType("relates");
   IElementType RELATIONSHIP = new GraqlTokenType("RELATIONSHIP");
-  IElementType ROLE = new GraqlTokenType("role");
+  IElementType ROLE = new GraqlTokenType("ROLE");
   IElementType RPAREN = new GraqlTokenType(")");
   IElementType RULE = new GraqlTokenType("RULE");
   IElementType SEMICOLON = new GraqlTokenType(";");
   IElementType SINGLE_LINE_COMMENT = new GraqlTokenType("single_line_comment");
   IElementType SIZE = new GraqlTokenType("SIZE");
-  IElementType STRING = new GraqlTokenType("STRING");
+  IElementType STRING = new GraqlTokenType("string");
+  IElementType STRING_LITERAL = new GraqlTokenType("STRING_LITERAL");
   IElementType SUB = new GraqlTokenType("sub");
   IElementType THEN = new GraqlTokenType("then");
   IElementType TRUE = new GraqlTokenType("true");

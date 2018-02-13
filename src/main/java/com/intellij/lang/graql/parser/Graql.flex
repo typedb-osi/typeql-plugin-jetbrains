@@ -25,7 +25,7 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
+STRING_LITERAL=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 REGEX="/"([^\\\/]+)"/"
 INTEGER=([-+]?[0-9]+)
 SPACE=[ \t\n\x0B\f\r]+
@@ -113,7 +113,7 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "DATETIME"                 { return DATETIME; }
   "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
 
-  {STRING}                   { return STRING; }
+  {STRING_LITERAL}           { return STRING_LITERAL; }
   {REGEX}                    { return REGEX; }
   {INTEGER}                  { return INTEGER; }
   {SPACE}                    { return SPACE; }

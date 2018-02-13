@@ -46,8 +46,8 @@ public class GraqlPredicateImpl extends ASTWrapperPsiElement implements GraqlPre
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
   }
 
   @Override

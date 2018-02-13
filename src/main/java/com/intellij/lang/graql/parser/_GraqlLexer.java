@@ -80,12 +80,12 @@ public class _GraqlLexer implements FlexLexer {
     "\1\53\2\1\1\54\10\1\1\55\4\1\1\56\4\1"+
     "\1\57\1\60\1\61\6\1\1\62\1\63\1\64\1\1"+
     "\1\65\7\1\1\66\1\1\1\67\5\1\1\70\1\71"+
-    "\4\1\1\72\1\1\1\20\1\1\1\73\4\1\1\74"+
-    "\1\1\1\75\1\76\1\77\1\1\1\100\3\1\1\101"+
-    "\1\102\1\103\5\1\1\104\2\1\1\105\3\1\1\106"+
-    "\1\1\1\107\1\1\1\110\2\1\1\111\4\1\1\112"+
-    "\1\113\1\114\1\115\1\1\1\116\1\117\7\1\1\120"+
-    "\1\1\1\121\7\1\1\122";
+    "\4\1\1\72\1\1\1\73\1\1\1\74\4\1\1\75"+
+    "\1\1\1\76\1\77\1\100\1\1\1\101\3\1\1\102"+
+    "\1\103\1\104\5\1\1\105\2\1\1\106\3\1\1\107"+
+    "\1\1\1\110\1\1\1\111\2\1\1\112\4\1\1\113"+
+    "\1\114\1\115\1\116\1\1\1\117\1\120\7\1\1\121"+
+    "\1\1\1\122\7\1\1\123";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[303];
@@ -763,412 +763,417 @@ public class _GraqlLexer implements FlexLexer {
             { return ID;
             } 
             // fall through
-          case 83: break;
+          case 84: break;
           case 2: 
             { return BAD_CHARACTER;
             } 
             // fall through
-          case 84: break;
+          case 85: break;
           case 3: 
             { return WHITE_SPACE;
             } 
             // fall through
-          case 85: break;
+          case 86: break;
           case 4: 
             { return INTEGER;
             } 
             // fall through
-          case 86: break;
+          case 87: break;
           case 5: 
             { return SINGLE_LINE_COMMENT;
             } 
             // fall through
-          case 87: break;
+          case 88: break;
           case 6: 
             { return VARIABLE;
             } 
             // fall through
-          case 88: break;
+          case 89: break;
           case 7: 
             { return COLON;
             } 
             // fall through
-          case 89: break;
+          case 90: break;
           case 8: 
             { return SEMICOLON;
             } 
             // fall through
-          case 90: break;
+          case 91: break;
           case 9: 
             { return COMMA;
             } 
             // fall through
-          case 91: break;
+          case 92: break;
           case 10: 
             { return LPAREN;
             } 
             // fall through
-          case 92: break;
+          case 93: break;
           case 11: 
             { return RPAREN;
             } 
             // fall through
-          case 93: break;
+          case 94: break;
           case 12: 
             { return LBRACE;
             } 
             // fall through
-          case 94: break;
+          case 95: break;
           case 13: 
             { return RBRACE;
             } 
             // fall through
-          case 95: break;
+          case 96: break;
           case 14: 
             { return LTHAN;
             } 
             // fall through
-          case 96: break;
+          case 97: break;
           case 15: 
             { return GTHAN;
             } 
             // fall through
-          case 97: break;
+          case 98: break;
           case 16: 
-            { return STRING;
+            { return STRING_LITERAL;
             } 
             // fall through
-          case 98: break;
+          case 99: break;
           case 17: 
             { return LTHANEQ;
             } 
             // fall through
-          case 99: break;
+          case 100: break;
           case 18: 
             { return GTHANEQ;
             } 
             // fall through
-          case 100: break;
+          case 101: break;
           case 19: 
             { return BY;
             } 
             // fall through
-          case 101: break;
+          case 102: break;
           case 20: 
             { return AS;
             } 
             // fall through
-          case 102: break;
+          case 103: break;
           case 21: 
             { return OR;
             } 
             // fall through
-          case 103: break;
+          case 104: break;
           case 22: 
             { return OF;
             } 
             // fall through
-          case 104: break;
+          case 105: break;
           case 23: 
             { return IN;
             } 
             // fall through
-          case 105: break;
+          case 106: break;
           case 24: 
             { return REGEX;
             } 
             // fall through
-          case 106: break;
+          case 107: break;
           case 25: 
             { return SUB;
             } 
             // fall through
-          case 107: break;
+          case 108: break;
           case 26: 
             { return SUM;
             } 
             // fall through
-          case 108: break;
+          case 109: break;
           case 27: 
             { return STD;
             } 
             // fall through
-          case 109: break;
+          case 110: break;
           case 28: 
             { return KEY;
             } 
             // fall through
-          case 110: break;
+          case 111: break;
           case 29: 
             { return HAS;
             } 
             // fall through
-          case 111: break;
+          case 112: break;
           case 30: 
             { return ASK;
             } 
             // fall through
-          case 112: break;
+          case 113: break;
           case 31: 
             { return ASC;
             } 
             // fall through
-          case 113: break;
+          case 114: break;
           case 32: 
             { return ISA;
             } 
             // fall through
-          case 114: break;
+          case 115: break;
           case 33: 
             { return GET;
             } 
             // fall through
-          case 115: break;
+          case 116: break;
           case 34: 
             { return VAL;
             } 
             // fall through
-          case 116: break;
+          case 117: break;
           case 35: 
             { return VIA;
             } 
             // fall through
-          case 117: break;
+          case 118: break;
           case 36: 
             { return MAX;
             } 
             // fall through
-          case 118: break;
+          case 119: break;
           case 37: 
             { return MIN;
             } 
             // fall through
-          case 119: break;
+          case 120: break;
           case 38: 
             { return LONG;
             } 
             // fall through
-          case 120: break;
+          case 121: break;
           case 39: 
             { return RULE;
             } 
             // fall through
-          case 121: break;
+          case 122: break;
           case 40: 
             { return ROLE;
             } 
             // fall through
-          case 122: break;
+          case 123: break;
           case 41: 
             { return THEN;
             } 
             // fall through
-          case 123: break;
+          case 124: break;
           case 42: 
             { return TRUE;
             } 
             // fall through
-          case 124: break;
+          case 125: break;
           case 43: 
             { return DESC;
             } 
             // fall through
-          case 125: break;
+          case 126: break;
           case 44: 
             { return DATE;
             } 
             // fall through
-          case 126: break;
+          case 127: break;
           case 45: 
             { return MEAN;
             } 
             // fall through
-          case 127: break;
+          case 128: break;
           case 46: 
             { return WHEN;
             } 
             // fall through
-          case 128: break;
+          case 129: break;
           case 47: 
             { return REAL;
             } 
             // fall through
-          case 129: break;
+          case 130: break;
           case 48: 
             { return SIZE;
             } 
             // fall through
-          case 130: break;
+          case 131: break;
           case 49: 
             { return PATH;
             } 
             // fall through
-          case 131: break;
+          case 132: break;
           case 50: 
             { return PLAYS;
             } 
             // fall through
-          case 132: break;
+          case 133: break;
           case 51: 
             { return LABEL;
             } 
             // fall through
-          case 133: break;
+          case 134: break;
           case 52: 
             { return LIMIT;
             } 
             // fall through
-          case 134: break;
+          case 135: break;
           case 53: 
             { return ORDER;
             } 
             // fall through
-          case 135: break;
+          case 136: break;
           case 54: 
             { return GROUP;
             } 
             // fall through
-          case 136: break;
+          case 137: break;
           case 55: 
             { return COUNT;
             } 
             // fall through
-          case 137: break;
+          case 138: break;
           case 56: 
             { return MATCH;
             } 
             // fall through
-          case 138: break;
+          case 139: break;
           case 57: 
             { return FALSE;
             } 
             // fall through
-          case 139: break;
+          case 140: break;
           case 58: 
             { return PATHS;
             } 
             // fall through
-          case 140: break;
-          case 59: 
-            { return ENTITY;
-            } 
-            // fall through
           case 141: break;
-          case 60: 
-            { return OFFSET;
+          case 59: 
+            { return STRING;
             } 
             // fall through
           case 142: break;
-          case 61: 
-            { return INSERT;
+          case 60: 
+            { return ENTITY;
             } 
             // fall through
           case 143: break;
-          case 62: 
-            { return DELETE;
+          case 61: 
+            { return OFFSET;
             } 
             // fall through
           case 144: break;
-          case 63: 
-            { return DEFINE;
+          case 62: 
+            { return INSERT;
             } 
             // fall through
           case 145: break;
-          case 64: 
-            { return DOUBLE;
+          case 63: 
+            { return DELETE;
             } 
             // fall through
           case 146: break;
-          case 65: 
-            { return COMMIT;
+          case 64: 
+            { return DEFINE;
             } 
             // fall through
           case 147: break;
-          case 66: 
-            { return MEDIAN;
+          case 65: 
+            { return DOUBLE;
             } 
             // fall through
           case 148: break;
-          case 67: 
-            { return MEMBER;
+          case 66: 
+            { return COMMIT;
             } 
             // fall through
           case 149: break;
-          case 68: 
-            { return BOOLEAN;
+          case 67: 
+            { return MEDIAN;
             } 
             // fall through
           case 150: break;
-          case 69: 
-            { return RELATES;
+          case 68: 
+            { return MEMBER;
             } 
             // fall through
           case 151: break;
-          case 70: 
-            { return CLUSTER;
+          case 69: 
+            { return BOOLEAN;
             } 
             // fall through
           case 152: break;
-          case 71: 
-            { return COMPUTE;
+          case 70: 
+            { return RELATES;
             } 
             // fall through
           case 153: break;
-          case 72: 
-            { return DEGREES;
+          case 71: 
+            { return CLUSTER;
             } 
             // fall through
           case 154: break;
-          case 73: 
-            { return MEMBERS;
+          case 72: 
+            { return COMPUTE;
             } 
             // fall through
           case 155: break;
-          case 74: 
-            { return DATATYPE;
+          case 73: 
+            { return DEGREES;
             } 
             // fall through
           case 156: break;
-          case 75: 
-            { return CONTAINS;
+          case 74: 
+            { return MEMBERS;
             } 
             // fall through
           case 157: break;
-          case 76: 
-            { return UNDEFINE;
+          case 75: 
+            { return DATATYPE;
             } 
             // fall through
           case 158: break;
-          case 77: 
-            { return DATETIME;
+          case 76: 
+            { return CONTAINS;
             } 
             // fall through
           case 159: break;
-          case 78: 
-            { return ATTRIBUTE;
+          case 77: 
+            { return UNDEFINE;
             } 
             // fall through
           case 160: break;
-          case 79: 
-            { return AGGREGATE;
+          case 78: 
+            { return DATETIME;
             } 
             // fall through
           case 161: break;
-          case 80: 
-            { return IS_ABSTRACT;
+          case 79: 
+            { return ATTRIBUTE;
             } 
             // fall through
           case 162: break;
-          case 81: 
-            { return RELATIONSHIP;
+          case 80: 
+            { return AGGREGATE;
             } 
             // fall through
           case 163: break;
-          case 82: 
-            { return IMPLICIT_IDENTIFIER;
+          case 81: 
+            { return IS_ABSTRACT;
             } 
             // fall through
           case 164: break;
+          case 82: 
+            { return RELATIONSHIP;
+            } 
+            // fall through
+          case 165: break;
+          case 83: 
+            { return IMPLICIT_IDENTIFIER;
+            } 
+            // fall through
+          case 166: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
