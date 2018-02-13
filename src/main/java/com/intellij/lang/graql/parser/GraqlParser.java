@@ -35,11 +35,26 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     else if (t == CASTING) {
       r = casting(b, 0);
     }
+    else if (t == CLUSTER) {
+      r = cluster(b, 0);
+    }
     else if (t == CLUSTER_PARAM) {
       r = clusterParam(b, 0);
     }
+    else if (t == COMPUTE_METHOD) {
+      r = computeMethod(b, 0);
+    }
+    else if (t == COMPUTE_QUERY) {
+      r = computeQuery(b, 0);
+    }
+    else if (t == COUNT) {
+      r = count(b, 0);
+    }
     else if (t == DEFINE_QUERY) {
       r = defineQuery(b, 0);
+    }
+    else if (t == DEGREES) {
+      r = degrees(b, 0);
     }
     else if (t == DELETE_QUERY) {
       r = deleteQuery(b, 0);
@@ -83,11 +98,29 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     else if (t == MATCH_PART) {
       r = matchPart(b, 0);
     }
+    else if (t == MAX) {
+      r = max(b, 0);
+    }
+    else if (t == MEAN) {
+      r = mean(b, 0);
+    }
+    else if (t == MEDIAN) {
+      r = median(b, 0);
+    }
+    else if (t == MIN) {
+      r = min(b, 0);
+    }
     else if (t == NAMED_AGG) {
       r = namedAgg(b, 0);
     }
     else if (t == OF_LIST) {
       r = ofList(b, 0);
+    }
+    else if (t == PATH) {
+      r = path(b, 0);
+    }
+    else if (t == PATHS) {
+      r = paths(b, 0);
     }
     else if (t == PATTERN) {
       r = pattern(b, 0, -1);
@@ -103,6 +136,12 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     }
     else if (t == QUERY) {
       r = query(b, 0);
+    }
+    else if (t == STD) {
+      r = std(b, 0);
+    }
+    else if (t == SUM) {
+      r = sum(b, 0);
     }
     else if (t == UNDEFINE_QUERY) {
       r = undefineQuery(b, 0);
@@ -333,6 +372,70 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // CLUSTER ('of' id    )?      ('in' inList)? ';' clusterParam*
+  public static boolean cluster(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster")) return false;
+    if (!nextTokenIs(b, CLUSTER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, CLUSTER);
+    r = r && cluster_1(b, l + 1);
+    r = r && cluster_2(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    r = r && cluster_4(b, l + 1);
+    exit_section_(b, m, CLUSTER, r);
+    return r;
+  }
+
+  // ('of' id    )?
+  private static boolean cluster_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster_1")) return false;
+    cluster_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'of' id
+  private static boolean cluster_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OF);
+    r = r && id(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean cluster_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster_2")) return false;
+    cluster_2_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean cluster_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // clusterParam*
+  private static boolean cluster_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cluster_4")) return false;
+    int c = current_position_(b);
+    while (true) {
+      if (!clusterParam(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "cluster_4", c)) break;
+      c = current_position_(b);
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // MEMBERS ';'    // clusterMembers
   //    | SIZE INTEGER ';'
   public static boolean clusterParam(PsiBuilder b, int l) {
@@ -347,6 +450,72 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // min | max | median | mean | std | sum | count | path | paths | cluster | degrees
+  public static boolean computeMethod(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "computeMethod")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, COMPUTE_METHOD, "<compute method>");
+    r = min(b, l + 1);
+    if (!r) r = max(b, l + 1);
+    if (!r) r = median(b, l + 1);
+    if (!r) r = mean(b, l + 1);
+    if (!r) r = std(b, l + 1);
+    if (!r) r = sum(b, l + 1);
+    if (!r) r = count(b, l + 1);
+    if (!r) r = path(b, l + 1);
+    if (!r) r = paths(b, l + 1);
+    if (!r) r = cluster(b, l + 1);
+    if (!r) r = degrees(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'compute' computeMethod
+  public static boolean computeQuery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "computeQuery")) return false;
+    if (!nextTokenIs(b, COMPUTE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMPUTE);
+    r = r && computeMethod(b, l + 1);
+    exit_section_(b, m, COMPUTE_QUERY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // COUNT                         ('in' inList)? ';'
+  public static boolean count(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "count")) return false;
+    if (!nextTokenIs(b, COUNT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COUNT);
+    r = r && count_1(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, COUNT, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean count_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "count_1")) return false;
+    count_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean count_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "count_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // DEFINE varPatterns
   public static boolean defineQuery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "defineQuery")) return false;
@@ -356,6 +525,57 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, DEFINE);
     r = r && varPatterns(b, l + 1);
     exit_section_(b, m, DEFINE_QUERY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // DEGREES ('of' ofList)?      ('in' inList)? ';'
+  public static boolean degrees(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "degrees")) return false;
+    if (!nextTokenIs(b, DEGREES)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, DEGREES);
+    r = r && degrees_1(b, l + 1);
+    r = r && degrees_2(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, DEGREES, r);
+    return r;
+  }
+
+  // ('of' ofList)?
+  private static boolean degrees_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "degrees_1")) return false;
+    degrees_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'of' ofList
+  private static boolean degrees_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "degrees_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OF);
+    r = r && ofList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean degrees_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "degrees_2")) return false;
+    degrees_2_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean degrees_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "degrees_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -702,6 +922,138 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // MAX         'of' ofList         ('in' inList)? ';'
+  public static boolean max(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "max")) return false;
+    if (!nextTokenIs(b, MAX)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, MAX, OF);
+    r = r && ofList(b, l + 1);
+    r = r && max_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, MAX, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean max_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "max_3")) return false;
+    max_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean max_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "max_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // MEAN       'of' ofList         ('in' inList)? ';'
+  public static boolean mean(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mean")) return false;
+    if (!nextTokenIs(b, MEAN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, MEAN, OF);
+    r = r && ofList(b, l + 1);
+    r = r && mean_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, MEAN, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean mean_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mean_3")) return false;
+    mean_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean mean_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mean_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // MEDIAN   'of' ofList         ('in' inList)? ';'
+  public static boolean median(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "median")) return false;
+    if (!nextTokenIs(b, MEDIAN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, MEDIAN, OF);
+    r = r && ofList(b, l + 1);
+    r = r && median_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, MEDIAN, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean median_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "median_3")) return false;
+    median_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean median_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "median_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // MIN         'of' ofList         ('in' inList)? ';'
+  public static boolean min(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "min")) return false;
+    if (!nextTokenIs(b, MIN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, MIN, OF);
+    r = r && ofList(b, l + 1);
+    r = r && min_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, MIN, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean min_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "min_3")) return false;
+    min_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean min_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "min_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // aggregate 'as' identifier
   public static boolean namedAgg(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namedAgg")) return false;
@@ -722,6 +1074,78 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, OF_LIST, "<of list>");
     r = labelList(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PATH       'from' id 'to' id   ('in' inList)? ';'
+  public static boolean path(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path")) return false;
+    if (!nextTokenIs(b, PATH)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PATH);
+    r = r && consumeToken(b, "from");
+    r = r && id(b, l + 1);
+    r = r && consumeToken(b, "to");
+    r = r && id(b, l + 1);
+    r = r && path_5(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, PATH, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean path_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_5")) return false;
+    path_5_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean path_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // PATHS     'from' id 'to' id   ('in' inList)? ';'
+  public static boolean paths(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "paths")) return false;
+    if (!nextTokenIs(b, PATHS)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PATHS);
+    r = r && consumeToken(b, "from");
+    r = r && id(b, l + 1);
+    r = r && consumeToken(b, "to");
+    r = r && id(b, l + 1);
+    r = r && paths_5(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, PATHS, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean paths_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "paths_5")) return false;
+    paths_5_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean paths_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "paths_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1155,7 +1579,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery
+  // getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery | computeQuery
   public static boolean query(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "query")) return false;
     boolean r;
@@ -1166,7 +1590,74 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = undefineQuery(b, l + 1);
     if (!r) r = deleteQuery(b, l + 1);
     if (!r) r = aggregateQuery(b, l + 1);
+    if (!r) r = computeQuery(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // STD         'of' ofList         ('in' inList)? ';'
+  public static boolean std(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "std")) return false;
+    if (!nextTokenIs(b, STD)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, STD, OF);
+    r = r && ofList(b, l + 1);
+    r = r && std_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, STD, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean std_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "std_3")) return false;
+    std_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean std_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "std_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SUM         'of' ofList         ('in' inList)? ';'
+  public static boolean sum(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "sum")) return false;
+    if (!nextTokenIs(b, SUM)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, SUM, OF);
+    r = r && ofList(b, l + 1);
+    r = r && sum_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, SUM, r);
+    return r;
+  }
+
+  // ('in' inList)?
+  private static boolean sum_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "sum_3")) return false;
+    sum_3_0(b, l + 1);
+    return true;
+  }
+
+  // 'in' inList
+  private static boolean sum_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "sum_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IN);
+    r = r && inList(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 

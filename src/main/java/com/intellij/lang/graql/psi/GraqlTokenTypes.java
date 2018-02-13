@@ -13,8 +13,13 @@ public interface GraqlTokenTypes {
   IElementType AND_PATTERN = new GraqlElementType("AND_PATTERN");
   IElementType ARGUMENT = new GraqlElementType("ARGUMENT");
   IElementType CASTING = new GraqlElementType("CASTING");
+  IElementType CLUSTER = new GraqlElementType("CLUSTER");
   IElementType CLUSTER_PARAM = new GraqlElementType("CLUSTER_PARAM");
+  IElementType COMPUTE_METHOD = new GraqlElementType("COMPUTE_METHOD");
+  IElementType COMPUTE_QUERY = new GraqlElementType("COMPUTE_QUERY");
+  IElementType COUNT = new GraqlElementType("COUNT");
   IElementType DEFINE_QUERY = new GraqlElementType("DEFINE_QUERY");
+  IElementType DEGREES = new GraqlElementType("DEGREES");
   IElementType DELETE_QUERY = new GraqlElementType("DELETE_QUERY");
   IElementType GET_QUERY = new GraqlElementType("GET_QUERY");
   IElementType ID = new GraqlElementType("ID");
@@ -29,14 +34,22 @@ public interface GraqlTokenTypes {
   IElementType MATCH_OFFSET_LIMIT = new GraqlElementType("MATCH_OFFSET_LIMIT");
   IElementType MATCH_ORDER_BY = new GraqlElementType("MATCH_ORDER_BY");
   IElementType MATCH_PART = new GraqlElementType("MATCH_PART");
+  IElementType MAX = new GraqlElementType("MAX");
+  IElementType MEAN = new GraqlElementType("MEAN");
+  IElementType MEDIAN = new GraqlElementType("MEDIAN");
+  IElementType MIN = new GraqlElementType("MIN");
   IElementType NAMED_AGG = new GraqlElementType("NAMED_AGG");
   IElementType OF_LIST = new GraqlElementType("OF_LIST");
   IElementType OR_PATTERN = new GraqlElementType("OR_PATTERN");
+  IElementType PATH = new GraqlElementType("PATH");
+  IElementType PATHS = new GraqlElementType("PATHS");
   IElementType PATTERN = new GraqlElementType("PATTERN");
   IElementType PATTERNS = new GraqlElementType("PATTERNS");
   IElementType PREDICATE = new GraqlElementType("PREDICATE");
   IElementType PROPERTY = new GraqlElementType("PROPERTY");
   IElementType QUERY = new GraqlElementType("QUERY");
+  IElementType STD = new GraqlElementType("STD");
+  IElementType SUM = new GraqlElementType("SUM");
   IElementType UNDEFINE_QUERY = new GraqlElementType("UNDEFINE_QUERY");
   IElementType VALUE = new GraqlElementType("VALUE");
   IElementType VALUE_OR_VAR = new GraqlElementType("VALUE_OR_VAR");
@@ -51,18 +64,15 @@ public interface GraqlTokenTypes {
   IElementType ATTRIBUTE = new GraqlTokenType("attribute");
   IElementType BOOLEAN = new GraqlTokenType("boolean");
   IElementType BY = new GraqlTokenType("by");
-  IElementType CLUSTER = new GraqlTokenType("CLUSTER");
   IElementType COLON = new GraqlTokenType(":");
   IElementType COMMA = new GraqlTokenType(",");
   IElementType COMMIT = new GraqlTokenType("commit");
   IElementType COMPUTE = new GraqlTokenType("compute");
   IElementType CONTAINS = new GraqlTokenType("contains");
-  IElementType COUNT = new GraqlTokenType("COUNT");
   IElementType DATATYPE = new GraqlTokenType("datatype");
   IElementType DATE = new GraqlTokenType("DATE");
   IElementType DATETIME = new GraqlTokenType("DATETIME");
   IElementType DEFINE = new GraqlTokenType("DEFINE");
-  IElementType DEGREES = new GraqlTokenType("DEGREES");
   IElementType DELETE = new GraqlTokenType("delete");
   IElementType DESC = new GraqlTokenType("desc");
   IElementType DOUBLE = new GraqlTokenType("double");
@@ -87,17 +97,12 @@ public interface GraqlTokenTypes {
   IElementType LTHAN = new GraqlTokenType("<");
   IElementType LTHANEQ = new GraqlTokenType("<=");
   IElementType MATCH = new GraqlTokenType("MATCH");
-  IElementType MAX = new GraqlTokenType("MAX");
-  IElementType MEAN = new GraqlTokenType("MEAN");
-  IElementType MEDIAN = new GraqlTokenType("MEDIAN");
   IElementType MEMBER = new GraqlTokenType("member");
   IElementType MEMBERS = new GraqlTokenType("MEMBERS");
-  IElementType MIN = new GraqlTokenType("MIN");
   IElementType OF = new GraqlTokenType("of");
   IElementType OFFSET = new GraqlTokenType("offset");
   IElementType OR = new GraqlTokenType("or");
   IElementType ORDER = new GraqlTokenType("order");
-  IElementType PATH = new GraqlTokenType("PATH");
   IElementType PLAYS = new GraqlTokenType("plays");
   IElementType RBRACE = new GraqlTokenType("}");
   IElementType REAL = new GraqlTokenType("REAL");
@@ -110,10 +115,8 @@ public interface GraqlTokenTypes {
   IElementType SEMICOLON = new GraqlTokenType(";");
   IElementType SINGLE_LINE_COMMENT = new GraqlTokenType("single_line_comment");
   IElementType SIZE = new GraqlTokenType("SIZE");
-  IElementType STD = new GraqlTokenType("STD");
   IElementType STRING = new GraqlTokenType("STRING");
   IElementType SUB = new GraqlTokenType("sub");
-  IElementType SUM = new GraqlTokenType("SUM");
   IElementType THEN = new GraqlTokenType("then");
   IElementType TRUE = new GraqlTokenType("true");
   IElementType UNDEFINE = new GraqlTokenType("UNDEFINE");
@@ -139,11 +142,26 @@ public interface GraqlTokenTypes {
       else if (type == CASTING) {
         return new GraqlCastingImpl(node);
       }
+      else if (type == CLUSTER) {
+        return new GraqlClusterImpl(node);
+      }
       else if (type == CLUSTER_PARAM) {
         return new GraqlClusterParamImpl(node);
       }
+      else if (type == COMPUTE_METHOD) {
+        return new GraqlComputeMethodImpl(node);
+      }
+      else if (type == COMPUTE_QUERY) {
+        return new GraqlComputeQueryImpl(node);
+      }
+      else if (type == COUNT) {
+        return new GraqlCountImpl(node);
+      }
       else if (type == DEFINE_QUERY) {
         return new GraqlDefineQueryImpl(node);
+      }
+      else if (type == DEGREES) {
+        return new GraqlDegreesImpl(node);
       }
       else if (type == DELETE_QUERY) {
         return new GraqlDeleteQueryImpl(node);
@@ -187,6 +205,18 @@ public interface GraqlTokenTypes {
       else if (type == MATCH_PART) {
         return new GraqlMatchPartImpl(node);
       }
+      else if (type == MAX) {
+        return new GraqlMaxImpl(node);
+      }
+      else if (type == MEAN) {
+        return new GraqlMeanImpl(node);
+      }
+      else if (type == MEDIAN) {
+        return new GraqlMedianImpl(node);
+      }
+      else if (type == MIN) {
+        return new GraqlMinImpl(node);
+      }
       else if (type == NAMED_AGG) {
         return new GraqlNamedAggImpl(node);
       }
@@ -195,6 +225,12 @@ public interface GraqlTokenTypes {
       }
       else if (type == OR_PATTERN) {
         return new GraqlOrPatternImpl(node);
+      }
+      else if (type == PATH) {
+        return new GraqlPathImpl(node);
+      }
+      else if (type == PATHS) {
+        return new GraqlPathsImpl(node);
       }
       else if (type == PATTERNS) {
         return new GraqlPatternsImpl(node);
@@ -207,6 +243,12 @@ public interface GraqlTokenTypes {
       }
       else if (type == QUERY) {
         return new GraqlQueryImpl(node);
+      }
+      else if (type == STD) {
+        return new GraqlStdImpl(node);
+      }
+      else if (type == SUM) {
+        return new GraqlSumImpl(node);
       }
       else if (type == UNDEFINE_QUERY) {
         return new GraqlUndefineQueryImpl(node);

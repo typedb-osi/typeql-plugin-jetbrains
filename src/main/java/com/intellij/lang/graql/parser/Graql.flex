@@ -104,13 +104,14 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "true"                     { return TRUE; }
   "false"                    { return FALSE; }
   "UNDEFINE"                 { return UNDEFINE; }
+  "DEGREES"                  { return DEGREES; }
+  "PATH"                     { return PATH; }
+  "PATHS"                    { return PATHS; }
   "MEMBERS"                  { return MEMBERS; }
   "SIZE"                     { return SIZE; }
   "REAL"                     { return REAL; }
   "DATETIME"                 { return DATETIME; }
   "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
-  "PATH"                     { return PATH; }
-  "DEGREES"                  { return DEGREES; }
 
   {STRING}                   { return STRING; }
   {REGEX}                    { return REGEX; }

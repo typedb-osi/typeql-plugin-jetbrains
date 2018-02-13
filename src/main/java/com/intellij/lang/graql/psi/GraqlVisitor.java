@@ -27,11 +27,31 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCluster(@NotNull GraqlCluster o) {
+    visitPsiElement(o);
+  }
+
   public void visitClusterParam(@NotNull GraqlClusterParam o) {
     visitPsiElement(o);
   }
 
+  public void visitComputeMethod(@NotNull GraqlComputeMethod o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComputeQuery(@NotNull GraqlComputeQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCount(@NotNull GraqlCount o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefineQuery(@NotNull GraqlDefineQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDegrees(@NotNull GraqlDegrees o) {
     visitPsiElement(o);
   }
 
@@ -91,6 +111,22 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMax(@NotNull GraqlMax o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMean(@NotNull GraqlMean o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMedian(@NotNull GraqlMedian o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMin(@NotNull GraqlMin o) {
+    visitPsiElement(o);
+  }
+
   public void visitNamedAgg(@NotNull GraqlNamedAgg o) {
     visitPsiElement(o);
   }
@@ -101,6 +137,14 @@ public class GraqlVisitor extends PsiElementVisitor {
 
   public void visitOrPattern(@NotNull GraqlOrPattern o) {
     visitPattern(o);
+  }
+
+  public void visitPath(@NotNull GraqlPath o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPaths(@NotNull GraqlPaths o) {
+    visitPsiElement(o);
   }
 
   public void visitPattern(@NotNull GraqlPattern o) {
@@ -120,6 +164,14 @@ public class GraqlVisitor extends PsiElementVisitor {
   }
 
   public void visitQuery(@NotNull GraqlQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStd(@NotNull GraqlStd o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSum(@NotNull GraqlSum o) {
     visitPsiElement(o);
   }
 
