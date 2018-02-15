@@ -23,10 +23,10 @@
         RPAREN              = ')'
         LBRACE              = '{'
         RBRACE              = '}'
-        LTHAN               = '<'
-        LTHANEQ             = '<='
-        GTHAN               = '>'
-        GTHANEQ             = '>='
+        LESS                = '<'
+        LESSEQ              = '<='
+        GREATER             = '>'
+        GREATEREQ           = '>='
         sub                 = 'sub'
         key                 = 'key'
         has                 = 'has'
@@ -82,6 +82,11 @@
         desc                = 'desc'
         true                = 'true'
         false               = 'false'
+        for                 = 'for'
+        do                  = 'do'
+        if                  = 'if'
+        not                 = 'not'
+        else                = 'else'
 
         STRING_LITERAL      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
@@ -95,9 +100,9 @@
 
 GraqlFile ::= !<<eof>> (query)*
 
-query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery | computeQuery
+query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery | computeQuery | statement
 
-matchPart ::= MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy?
+matchPart ::= MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy? blockContents?
 matchLimitOffset ::= matchLimit matchOffset?
 matchOffsetLimit ::= matchOffset matchLimit?
 matchLimit ::= 'limit' INTEGER ';' // matchLimit
@@ -105,7 +110,7 @@ matchOffset ::= 'offset' INTEGER ';' // matchOffset
 matchOrderBy ::= 'order' 'by' VARIABLE (asc|desc)? ';' // matchOrderBy
 
 getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
-insertQuery ::= matchPart? INSERT varPatterns
+insertQuery ::= matchPart? INSERT varPatterns? blockContents?
 defineQuery ::= DEFINE varPatterns
 undefineQuery ::= UNDEFINE varPatterns
 deleteQuery ::= matchPart 'delete' variables? ';'
@@ -141,7 +146,7 @@ argument ::= VARIABLE  // variableArgument
     | aggregate        // aggregateArgument
 namedAgg ::= aggregate 'as' identifier
 
-patterns ::= (pattern ';')+
+patterns ::= (pattern (','|';')?)+
 pattern ::= varPattern          // varPatternCase
     | orPattern                 // orPattern
     | andPattern                // andPattern
@@ -162,6 +167,7 @@ property ::= 'isa' variable             // isa
     | 'then' '{' varPatterns '}'        // propThen
     | 'has' label predicate             // propHas
     | 'has' variable                    // propResource
+    | 'has' property                    // propHasProp?
     | 'key' variable                    // propKey
     | '(' casting (',' casting)* ')'    // propRel
     | 'is-abstract'                     // isAbstract
@@ -183,6 +189,7 @@ predicate ::= '='? value                // predicateEq
     | '<=' valueOrVar                   // predicateLte
     | 'contains' (STRING_LITERAL | VARIABLE)    // predicateContains
     | REGEX                             // predicateRegex
+    | escapedExpression
 valueOrVar ::= VARIABLE // valueVariable
     | value             // valuePrimitive
 value ::= STRING_LITERAL   // valueString
@@ -195,11 +202,55 @@ value ::= STRING_LITERAL   // valueString
 label ::= identifier | IMPLICIT_IDENTIFIER
 id ::= identifier
 
-// Some keywords can also be used as identifiers
 identifier ::= ID | STRING_LITERAL
     | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE {
+    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE | VAL {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]
 }
+
+//Graql template extension
+escapedExpression ::= untypedExpression;
+untypedExpression ::= '<' id accessor* '>'                              //idExpression
+    | ID_MACRO LPAREN expression? (',' expression)* RPAREN accessor?    //macroExpression
+
+ID_MACRO ::= '@' (ID|int|long|double|boolean|date)
+
+accessor ::= '.' id     //mapAccessor
+    | '[' int_ ']'      //listAccessor
+
+block ::= '{' blockContents '}' ';'?
+blockContents ::= (statement | escapedExpression | query | patterns)*
+
+statement ::= forInStatement
+    | forEachStatement
+    | ifStatement
+
+forInStatement   ::= FOR LPAREN identifier IN escapedExpression RPAREN DO block
+forEachStatement ::= FOR LPAREN escapedExpression RPAREN DO block
+
+ifStatement   ::= ifPartial elseIfPartial* elsePartial?
+ifPartial     ::= IF LPAREN bool RPAREN DO block
+elseIfPartial ::= ELSEIF LPAREN bool RPAREN DO block
+elsePartial   ::= ELSE block
+
+expression    ::= untypedExpression | nil | string | number | BOOLEAN;
+number        ::= untypedExpression | int_ | double_;
+int_          ::= untypedExpression | INTEGER;
+double_       ::= untypedExpression | DOUBLE;
+string        ::= untypedExpression | STRING_LITERAL;
+list          ::= untypedExpression ;
+nil           ::= NULL;
+bool ::= LPAREN bool RPAREN       //groupExpression
+    | NOT bool                   //notExpression
+    | expression '=' expression   //eqExpression
+    | expression '!=' expression  //notEqExpression
+    | bool OR bool               //orExpression
+    | bool AND bool              //andExpression
+    | number GREATER number      //greaterExpression
+    | number GREATEREQ number    //greaterEqExpression
+    | number LESS number         //lessExpression
+    | number LESSEQ number       //lessEqExpression
+    | untypedExpression          //booleanExpression
+    | BOOLEAN                    //booleanConstant
