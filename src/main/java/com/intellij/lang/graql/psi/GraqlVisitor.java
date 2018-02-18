@@ -7,6 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public class GraqlVisitor extends PsiElementVisitor {
 
+  public void visitIdMacro(@NotNull GraqlIdMacro o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMacroEquals(@NotNull GraqlMacroEquals o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMacroNoescp(@NotNull GraqlMacroNoescp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAccessor(@NotNull GraqlAccessor o) {
+    visitPsiElement(o);
+  }
+
   public void visitAggregate(@NotNull GraqlAggregate o) {
     visitPsiElement(o);
   }
@@ -15,11 +31,27 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitAndBool(@NotNull GraqlAndBool o) {
+    visitPsiElement(o);
+  }
+
   public void visitAndPattern(@NotNull GraqlAndPattern o) {
     visitPattern(o);
   }
 
   public void visitArgument(@NotNull GraqlArgument o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlock(@NotNull GraqlBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlockContents(@NotNull GraqlBlockContents o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBool(@NotNull GraqlBool o) {
     visitPsiElement(o);
   }
 
@@ -59,7 +91,39 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDouble_(@NotNull GraqlDouble_ o) {
+    visitPsiElement(o);
+  }
+
+  public void visitElseIfPartial(@NotNull GraqlElseIfPartial o) {
+    visitPsiElement(o);
+  }
+
+  public void visitElsePartial(@NotNull GraqlElsePartial o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEscapedExpression(@NotNull GraqlEscapedExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpression(@NotNull GraqlExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForEachStatement(@NotNull GraqlForEachStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitForInStatement(@NotNull GraqlForInStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitGetQuery(@NotNull GraqlGetQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGroupBool(@NotNull GraqlGroupBool o) {
     visitPsiElement(o);
   }
 
@@ -71,6 +135,14 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitIfPartial(@NotNull GraqlIfPartial o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIfStatement(@NotNull GraqlIfStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitInList(@NotNull GraqlInList o) {
     visitPsiElement(o);
   }
@@ -79,11 +151,19 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitInt_(@NotNull GraqlInt_ o) {
+    visitPsiElement(o);
+  }
+
   public void visitLabel(@NotNull GraqlLabel o) {
     visitPsiElement(o);
   }
 
   public void visitLabelList(@NotNull GraqlLabelList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitList(@NotNull GraqlList o) {
     visitPsiElement(o);
   }
 
@@ -131,7 +211,23 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitNil(@NotNull GraqlNil o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNotBool(@NotNull GraqlNotBool o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNumber(@NotNull GraqlNumber o) {
+    visitPsiElement(o);
+  }
+
   public void visitOfList(@NotNull GraqlOfList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitOrBool(@NotNull GraqlOrBool o) {
     visitPsiElement(o);
   }
 
@@ -167,6 +263,10 @@ public class GraqlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStatement(@NotNull GraqlStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitStd(@NotNull GraqlStd o) {
     visitPsiElement(o);
   }
@@ -176,6 +276,10 @@ public class GraqlVisitor extends PsiElementVisitor {
   }
 
   public void visitUndefineQuery(@NotNull GraqlUndefineQuery o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUntypedExpression(@NotNull GraqlUntypedExpression o) {
     visitPsiElement(o);
   }
 

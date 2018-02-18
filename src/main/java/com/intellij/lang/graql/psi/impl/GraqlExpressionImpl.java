@@ -11,14 +11,14 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.graql.psi.*;
 
-public class GraqlInsertQueryImpl extends ASTWrapperPsiElement implements GraqlInsertQuery {
+public class GraqlExpressionImpl extends ASTWrapperPsiElement implements GraqlExpression {
 
-  public GraqlInsertQueryImpl(ASTNode node) {
+  public GraqlExpressionImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GraqlVisitor visitor) {
-    visitor.visitInsertQuery(this);
+    visitor.visitExpression(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,26 +28,26 @@ public class GraqlInsertQueryImpl extends ASTWrapperPsiElement implements GraqlI
 
   @Override
   @Nullable
-  public GraqlBlockContents getBlockContents() {
-    return findChildByClass(GraqlBlockContents.class);
+  public GraqlNil getNil() {
+    return findChildByClass(GraqlNil.class);
   }
 
   @Override
   @Nullable
-  public GraqlMatchPart getMatchPart() {
-    return findChildByClass(GraqlMatchPart.class);
+  public GraqlNumber getNumber() {
+    return findChildByClass(GraqlNumber.class);
   }
 
   @Override
   @Nullable
-  public GraqlVarPatterns getVarPatterns() {
-    return findChildByClass(GraqlVarPatterns.class);
+  public GraqlUntypedExpression getUntypedExpression() {
+    return findChildByClass(GraqlUntypedExpression.class);
   }
 
   @Override
   @Nullable
-  public GraqlVariable getVariable() {
-    return findChildByClass(GraqlVariable.class);
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
   }
 
 }

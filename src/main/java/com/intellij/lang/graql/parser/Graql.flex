@@ -37,6 +37,10 @@ VARIABLE=\$[a-zA-Z0-9_-]*
 <YYINITIAL> {
   {WHITE_SPACE}              { return WHITE_SPACE; }
 
+  "@"                        { return AT; }
+  "["                        { return LBR; }
+  "]"                        { return RBR; }
+  "."                        { return PERIOD; }
   ":"                        { return COLON; }
   ";"                        { return SEMICOLON; }
   ","                        { return COMMA; }
@@ -44,10 +48,12 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   ")"                        { return RPAREN; }
   "{"                        { return LBRACE; }
   "}"                        { return RBRACE; }
-  "<"                        { return LTHAN; }
-  "<="                       { return LTHANEQ; }
-  ">"                        { return GTHAN; }
-  ">="                       { return GTHANEQ; }
+  "<"                        { return LESS; }
+  "<="                       { return LESSEQ; }
+  ">"                        { return GREATER; }
+  ">="                       { return GREATEREQ; }
+  "="                        { return EQ; }
+  "!="                       { return NEQ; }
   "sub"                      { return SUB; }
   "key"                      { return KEY; }
   "has"                      { return HAS; }
@@ -103,6 +109,12 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "desc"                     { return DESC; }
   "true"                     { return TRUE; }
   "false"                    { return FALSE; }
+  "for"                      { return FOR; }
+  "do"                       { return DO; }
+  "if"                       { return IF; }
+  "not"                      { return NOT; }
+  "else"                     { return ELSE; }
+  "null"                     { return NULL; }
   "UNDEFINE"                 { return UNDEFINE; }
   "DEGREES"                  { return DEGREES; }
   "PATH"                     { return PATH; }
@@ -112,6 +124,11 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "REAL"                     { return REAL; }
   "DATETIME"                 { return DATETIME; }
   "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
+  "int"                      { return INT; }
+  "noescp"                   { return NOESCP; }
+  "equals"                   { return EQUALS; }
+  "ELSEIF"                   { return ELSEIF; }
+  "AND"                      { return AND; }
 
   {STRING_LITERAL}           { return STRING_LITERAL; }
   {REGEX}                    { return REGEX; }

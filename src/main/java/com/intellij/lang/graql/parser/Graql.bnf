@@ -16,6 +16,10 @@
     tokenTypeClass="com.intellij.lang.graql.psi.GraqlTokenType"
 
     tokens=[
+        AT                  = '@'
+        LBR                 = '['
+        RBR                 = ']'
+        period              = '.'
         colon               = ':'
         semicolon           = ';'
         comma               = ','
@@ -27,6 +31,8 @@
         LESSEQ              = '<='
         GREATER             = '>'
         GREATEREQ           = '>='
+        EQ                  = '='
+        NEQ                 = '!='
         sub                 = 'sub'
         key                 = 'key'
         has                 = 'has'
@@ -87,6 +93,7 @@
         if                  = 'if'
         not                 = 'not'
         else                = 'else'
+        null                = 'null'
 
         STRING_LITERAL      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
@@ -109,8 +116,8 @@ matchLimit ::= 'limit' INTEGER ';' // matchLimit
 matchOffset ::= 'offset' INTEGER ';' // matchOffset
 matchOrderBy ::= 'order' 'by' VARIABLE (asc|desc)? ';' // matchOrderBy
 
-getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
-insertQuery ::= matchPart? INSERT varPatterns? blockContents?
+getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')?
+insertQuery ::= matchPart? INSERT varPatterns? (variable? blockContents?)
 defineQuery ::= DEFINE varPatterns
 undefineQuery ::= UNDEFINE varPatterns
 deleteQuery ::= matchPart 'delete' variables? ';'
@@ -150,22 +157,25 @@ patterns ::= (pattern (','|';')?)+
 pattern ::= varPattern          // varPatternCase
     | orPattern                 // orPattern
     | andPattern                // andPattern
-andPattern ::= '{' patterns '}'
+andPattern ::= LBRACE patterns RBRACE
 orPattern ::= pattern 'or' pattern
 
-varPatterns ::= (varPattern ';')+
+varPatterns ::= (varPattern ';'?)+
 varPattern ::= variable? property (','? property)*
 
 property ::= 'isa' variable             // isa
+    | 'isa' escapedExpression           // isa
     | 'sub' variable                    // sub
     | 'relates' variable                // relates
     | 'plays' variable                  // plays
     | 'id' id                           // propId
     | 'label' label                     // propLabel
     | 'val' predicate                   // propValue
-    | 'when' '{' patterns '}'           // propWhen
-    | 'then' '{' varPatterns '}'        // propThen
+    | 'val' escapedExpression           // propValue
+    | 'when' LBRACE patterns RBRACE     // propWhen
+    | 'then' LBRACE varPatterns RBRACE  // propThen
     | 'has' label predicate             // propHas
+    | 'has' label escapedExpression     // propHas
     | 'has' variable                    // propResource
     | 'has' property                    // propHasProp?
     | 'key' variable                    // propKey
@@ -173,23 +183,23 @@ property ::= 'isa' variable             // isa
     | 'is-abstract'                     // isAbstract
     | 'datatype' (long|double|string|boolean|date)  // propDatatype
     | 'regex' REGEX                     // propRegex
-    | '!=' variable                     // propNeq
+    | NEQ variable                     // propNeq
+    | ';'
 
 casting ::= variable (':' VARIABLE)?
     | variable VARIABLE
 
 variable ::= label | VARIABLE
 
-predicate ::= '='? value                // predicateEq
-    | '='? VARIABLE                     // predicateVariable
-    | '!=' valueOrVar                   // predicateNeq
+predicate ::= EQ? value                // predicateEq
+    | EQ? VARIABLE                     // predicateVariable
+    | NEQ valueOrVar                   // predicateNeq
     | '>' valueOrVar                    // predicateGt
     | '>=' valueOrVar                   // predicateGte
     | '<' valueOrVar                    // predicateLt
     | '<=' valueOrVar                   // predicateLte
     | 'contains' (STRING_LITERAL | VARIABLE)    // predicateContains
     | REGEX                             // predicateRegex
-    | escapedExpression
 valueOrVar ::= VARIABLE // valueVariable
     | value             // valuePrimitive
 value ::= STRING_LITERAL   // valueString
@@ -203,7 +213,7 @@ label ::= identifier | IMPLICIT_IDENTIFIER
 id ::= identifier
 
 identifier ::= ID | STRING_LITERAL
-    | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
+    | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER | DATE
     | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE | VAL {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
@@ -213,14 +223,19 @@ identifier ::= ID | STRING_LITERAL
 //Graql template extension
 escapedExpression ::= untypedExpression;
 untypedExpression ::= '<' id accessor* '>'                              //idExpression
+    | MACRO_NOESCP
+    | MACRO_EQUALS
     | ID_MACRO LPAREN expression? (',' expression)* RPAREN accessor?    //macroExpression
+    | id
 
-ID_MACRO ::= '@' (ID|int|long|double|boolean|date)
+ID_MACRO ::= AT (MACRO_NOESCP|ID|int|long|double|boolean|date)
+MACRO_NOESCP ::= AT noescp LPAREN expression? (',' expression)* RPAREN accessor? identifier?
+MACRO_EQUALS ::= AT equals LPAREN expression? (',' expression)* RPAREN accessor?
 
-accessor ::= '.' id     //mapAccessor
-    | '[' int_ ']'      //listAccessor
+accessor ::= period id     //mapAccessor
+    | LBR int_ RBR      //listAccessor
 
-block ::= '{' blockContents '}' ';'?
+block ::= LBRACE blockContents RBRACE ';'?
 blockContents ::= (statement | escapedExpression | query | patterns)*
 
 statement ::= forInStatement
@@ -235,22 +250,25 @@ ifPartial     ::= IF LPAREN bool RPAREN DO block
 elseIfPartial ::= ELSEIF LPAREN bool RPAREN DO block
 elsePartial   ::= ELSE block
 
-expression    ::= untypedExpression | nil | string | number | BOOLEAN;
-number        ::= untypedExpression | int_ | double_;
-int_          ::= untypedExpression | INTEGER;
-double_       ::= untypedExpression | DOUBLE;
-string        ::= untypedExpression | STRING_LITERAL;
-list          ::= untypedExpression ;
-nil           ::= NULL;
-bool ::= LPAREN bool RPAREN       //groupExpression
-    | NOT bool                   //notExpression
-    | expression '=' expression   //eqExpression
-    | expression '!=' expression  //notEqExpression
-    | bool OR bool               //orExpression
-    | bool AND bool              //andExpression
-    | number GREATER number      //greaterExpression
-    | number GREATEREQ number    //greaterEqExpression
-    | number LESS number         //lessExpression
-    | number LESSEQ number       //lessEqExpression
-    | untypedExpression          //booleanExpression
-    | BOOLEAN                    //booleanConstant
+expression    ::= untypedExpression | nil | STRING_LITERAL | number | (true|false)
+number        ::= untypedExpression | int_ | double_
+int_          ::= untypedExpression | INTEGER
+double_       ::= untypedExpression | DOUBLE
+list          ::= untypedExpression
+nil           ::= NULL
+bool ::= expression EQ expression           //eqExpression
+    | expression NEQ expression             //NEQExpression
+    | number GREATER number                 //greaterExpression
+    | number GREATEREQ number               //greaterEqExpression
+    | number LESS number                    //lessExpression
+    | number LESSEQ number                  //lessEqExpression
+    | untypedExpression                     //booleanExpression
+    | (true|false)                          //booleanConstant
+    | orBool
+    | andBool
+    | notBool
+    | groupBool
+groupBool ::= LPAREN bool RPAREN
+orBool ::= groupBool OR groupBool
+andBool ::= groupBool AND groupBool
+notBool ::= NOT groupBool

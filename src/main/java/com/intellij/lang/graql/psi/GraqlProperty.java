@@ -11,6 +11,9 @@ public interface GraqlProperty extends PsiElement {
   List<GraqlCasting> getCastingList();
 
   @Nullable
+  GraqlEscapedExpression getEscapedExpression();
+
+  @Nullable
   GraqlId getId();
 
   @Nullable
@@ -21,6 +24,9 @@ public interface GraqlProperty extends PsiElement {
 
   @Nullable
   GraqlPredicate getPredicate();
+
+  @Nullable
+  GraqlProperty getProperty();
 
   @Nullable
   GraqlVarPatterns getVarPatterns();

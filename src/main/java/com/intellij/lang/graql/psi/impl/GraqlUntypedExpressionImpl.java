@@ -11,14 +11,14 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.graql.psi.*;
 
-public class GraqlMatchPartImpl extends ASTWrapperPsiElement implements GraqlMatchPart {
+public class GraqlUntypedExpressionImpl extends ASTWrapperPsiElement implements GraqlUntypedExpression {
 
-  public GraqlMatchPartImpl(ASTNode node) {
+  public GraqlUntypedExpressionImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull GraqlVisitor visitor) {
-    visitor.visitMatchPart(this);
+    visitor.visitUntypedExpression(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -28,32 +28,38 @@ public class GraqlMatchPartImpl extends ASTWrapperPsiElement implements GraqlMat
 
   @Override
   @Nullable
-  public GraqlBlockContents getBlockContents() {
-    return findChildByClass(GraqlBlockContents.class);
+  public GraqlIdMacro getIdMacro() {
+    return findChildByClass(GraqlIdMacro.class);
   }
 
   @Override
   @Nullable
-  public GraqlMatchLimitOffset getMatchLimitOffset() {
-    return findChildByClass(GraqlMatchLimitOffset.class);
+  public GraqlMacroEquals getMacroEquals() {
+    return findChildByClass(GraqlMacroEquals.class);
   }
 
   @Override
   @Nullable
-  public GraqlMatchOffsetLimit getMatchOffsetLimit() {
-    return findChildByClass(GraqlMatchOffsetLimit.class);
-  }
-
-  @Override
-  @Nullable
-  public GraqlMatchOrderBy getMatchOrderBy() {
-    return findChildByClass(GraqlMatchOrderBy.class);
+  public GraqlMacroNoescp getMacroNoescp() {
+    return findChildByClass(GraqlMacroNoescp.class);
   }
 
   @Override
   @NotNull
-  public GraqlPatterns getPatterns() {
-    return findNotNullChildByClass(GraqlPatterns.class);
+  public List<GraqlAccessor> getAccessorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlAccessor.class);
+  }
+
+  @Override
+  @NotNull
+  public List<GraqlExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlId getId() {
+    return findChildByClass(GraqlId.class);
   }
 
 }

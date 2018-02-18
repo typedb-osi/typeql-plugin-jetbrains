@@ -8,10 +8,15 @@ import com.intellij.lang.graql.psi.impl.*;
 
 public interface GraqlTokenTypes {
 
+  IElementType ACCESSOR = new GraqlElementType("ACCESSOR");
   IElementType AGGREGATE = new GraqlElementType("AGGREGATE");
   IElementType AGGREGATE_QUERY = new GraqlElementType("AGGREGATE_QUERY");
+  IElementType AND_BOOL = new GraqlElementType("AND_BOOL");
   IElementType AND_PATTERN = new GraqlElementType("AND_PATTERN");
   IElementType ARGUMENT = new GraqlElementType("ARGUMENT");
+  IElementType BLOCK = new GraqlElementType("BLOCK");
+  IElementType BLOCK_CONTENTS = new GraqlElementType("BLOCK_CONTENTS");
+  IElementType BOOL = new GraqlElementType("BOOL");
   IElementType CASTING = new GraqlElementType("CASTING");
   IElementType CLUSTER = new GraqlElementType("CLUSTER");
   IElementType CLUSTER_PARAM = new GraqlElementType("CLUSTER_PARAM");
@@ -21,13 +26,28 @@ public interface GraqlTokenTypes {
   IElementType DEFINE_QUERY = new GraqlElementType("DEFINE_QUERY");
   IElementType DEGREES = new GraqlElementType("DEGREES");
   IElementType DELETE_QUERY = new GraqlElementType("DELETE_QUERY");
+  IElementType DOUBLE_ = new GraqlElementType("DOUBLE_");
+  IElementType ELSE_IF_PARTIAL = new GraqlElementType("ELSE_IF_PARTIAL");
+  IElementType ELSE_PARTIAL = new GraqlElementType("ELSE_PARTIAL");
+  IElementType ESCAPED_EXPRESSION = new GraqlElementType("ESCAPED_EXPRESSION");
+  IElementType EXPRESSION = new GraqlElementType("EXPRESSION");
+  IElementType FOR_EACH_STATEMENT = new GraqlElementType("FOR_EACH_STATEMENT");
+  IElementType FOR_IN_STATEMENT = new GraqlElementType("FOR_IN_STATEMENT");
   IElementType GET_QUERY = new GraqlElementType("GET_QUERY");
+  IElementType GROUP_BOOL = new GraqlElementType("GROUP_BOOL");
   IElementType ID = new GraqlElementType("ID");
   IElementType IDENTIFIER = new GraqlElementType("IDENTIFIER");
+  IElementType ID_MACRO = new GraqlElementType("ID_MACRO");
+  IElementType IF_PARTIAL = new GraqlElementType("IF_PARTIAL");
+  IElementType IF_STATEMENT = new GraqlElementType("IF_STATEMENT");
   IElementType INSERT_QUERY = new GraqlElementType("INSERT_QUERY");
+  IElementType INT_ = new GraqlElementType("INT_");
   IElementType IN_LIST = new GraqlElementType("IN_LIST");
   IElementType LABEL = new GraqlElementType("LABEL");
   IElementType LABEL_LIST = new GraqlElementType("LABEL_LIST");
+  IElementType LIST = new GraqlElementType("LIST");
+  IElementType MACRO_EQUALS = new GraqlElementType("MACRO_EQUALS");
+  IElementType MACRO_NOESCP = new GraqlElementType("MACRO_NOESCP");
   IElementType MATCH_LIMIT = new GraqlElementType("MATCH_LIMIT");
   IElementType MATCH_LIMIT_OFFSET = new GraqlElementType("MATCH_LIMIT_OFFSET");
   IElementType MATCH_OFFSET = new GraqlElementType("MATCH_OFFSET");
@@ -39,7 +59,11 @@ public interface GraqlTokenTypes {
   IElementType MEDIAN = new GraqlElementType("MEDIAN");
   IElementType MIN = new GraqlElementType("MIN");
   IElementType NAMED_AGG = new GraqlElementType("NAMED_AGG");
+  IElementType NIL = new GraqlElementType("NIL");
+  IElementType NOT_BOOL = new GraqlElementType("NOT_BOOL");
+  IElementType NUMBER = new GraqlElementType("NUMBER");
   IElementType OF_LIST = new GraqlElementType("OF_LIST");
+  IElementType OR_BOOL = new GraqlElementType("OR_BOOL");
   IElementType OR_PATTERN = new GraqlElementType("OR_PATTERN");
   IElementType PATH = new GraqlElementType("PATH");
   IElementType PATHS = new GraqlElementType("PATHS");
@@ -48,9 +72,11 @@ public interface GraqlTokenTypes {
   IElementType PREDICATE = new GraqlElementType("PREDICATE");
   IElementType PROPERTY = new GraqlElementType("PROPERTY");
   IElementType QUERY = new GraqlElementType("QUERY");
+  IElementType STATEMENT = new GraqlElementType("STATEMENT");
   IElementType STD = new GraqlElementType("STD");
   IElementType SUM = new GraqlElementType("SUM");
   IElementType UNDEFINE_QUERY = new GraqlElementType("UNDEFINE_QUERY");
+  IElementType UNTYPED_EXPRESSION = new GraqlElementType("UNTYPED_EXPRESSION");
   IElementType VALUE = new GraqlElementType("VALUE");
   IElementType VALUE_OR_VAR = new GraqlElementType("VALUE_OR_VAR");
   IElementType VARIABLE = new GraqlElementType("VARIABLE");
@@ -58,9 +84,11 @@ public interface GraqlTokenTypes {
   IElementType VAR_PATTERN = new GraqlElementType("VAR_PATTERN");
   IElementType VAR_PATTERNS = new GraqlElementType("VAR_PATTERNS");
 
+  IElementType AND = new GraqlTokenType("AND");
   IElementType AS = new GraqlTokenType("as");
   IElementType ASC = new GraqlTokenType("asc");
   IElementType ASK = new GraqlTokenType("ask");
+  IElementType AT = new GraqlTokenType("@");
   IElementType ATTRIBUTE = new GraqlTokenType("ATTRIBUTE");
   IElementType BOOLEAN = new GraqlTokenType("boolean");
   IElementType BY = new GraqlTokenType("by");
@@ -75,35 +103,50 @@ public interface GraqlTokenTypes {
   IElementType DEFINE = new GraqlTokenType("DEFINE");
   IElementType DELETE = new GraqlTokenType("delete");
   IElementType DESC = new GraqlTokenType("desc");
-  IElementType DOUBLE = new GraqlTokenType("double");
+  IElementType DO = new GraqlTokenType("DO");
+  IElementType DOUBLE = new GraqlTokenType("DOUBLE");
+  IElementType ELSE = new GraqlTokenType("ELSE");
+  IElementType ELSEIF = new GraqlTokenType("ELSEIF");
   IElementType ENTITY = new GraqlTokenType("ENTITY");
+  IElementType EQ = new GraqlTokenType("=");
+  IElementType EQUALS = new GraqlTokenType("equals");
   IElementType FALSE = new GraqlTokenType("false");
+  IElementType FOR = new GraqlTokenType("FOR");
   IElementType GET = new GraqlTokenType("get");
+  IElementType GREATER = new GraqlTokenType(">");
+  IElementType GREATEREQ = new GraqlTokenType(">=");
   IElementType GROUP = new GraqlTokenType("group");
-  IElementType GTHAN = new GraqlTokenType(">");
-  IElementType GTHANEQ = new GraqlTokenType(">=");
   IElementType HAS = new GraqlTokenType("has");
+  IElementType IF = new GraqlTokenType("IF");
   IElementType IMPLICIT_IDENTIFIER = new GraqlTokenType("IMPLICIT_IDENTIFIER");
-  IElementType IN = new GraqlTokenType("in");
+  IElementType IN = new GraqlTokenType("IN");
   IElementType INSERT = new GraqlTokenType("INSERT");
+  IElementType INT = new GraqlTokenType("int");
   IElementType INTEGER = new GraqlTokenType("INTEGER");
   IElementType ISA = new GraqlTokenType("isa");
   IElementType IS_ABSTRACT = new GraqlTokenType("is-abstract");
   IElementType KEY = new GraqlTokenType("key");
+  IElementType LBR = new GraqlTokenType("[");
   IElementType LBRACE = new GraqlTokenType("{");
+  IElementType LESS = new GraqlTokenType("<");
+  IElementType LESSEQ = new GraqlTokenType("<=");
   IElementType LIMIT = new GraqlTokenType("limit");
   IElementType LONG = new GraqlTokenType("long");
   IElementType LPAREN = new GraqlTokenType("(");
-  IElementType LTHAN = new GraqlTokenType("<");
-  IElementType LTHANEQ = new GraqlTokenType("<=");
   IElementType MATCH = new GraqlTokenType("MATCH");
   IElementType MEMBER = new GraqlTokenType("member");
   IElementType MEMBERS = new GraqlTokenType("MEMBERS");
+  IElementType NEQ = new GraqlTokenType("!=");
+  IElementType NOESCP = new GraqlTokenType("noescp");
+  IElementType NOT = new GraqlTokenType("NOT");
+  IElementType NULL = new GraqlTokenType("NULL");
   IElementType OF = new GraqlTokenType("of");
   IElementType OFFSET = new GraqlTokenType("offset");
-  IElementType OR = new GraqlTokenType("or");
+  IElementType OR = new GraqlTokenType("OR");
   IElementType ORDER = new GraqlTokenType("order");
+  IElementType PERIOD = new GraqlTokenType(".");
   IElementType PLAYS = new GraqlTokenType("plays");
+  IElementType RBR = new GraqlTokenType("]");
   IElementType RBRACE = new GraqlTokenType("}");
   IElementType REAL = new GraqlTokenType("REAL");
   IElementType REGEX = new GraqlTokenType("REGEX");
@@ -121,24 +164,39 @@ public interface GraqlTokenTypes {
   IElementType THEN = new GraqlTokenType("then");
   IElementType TRUE = new GraqlTokenType("true");
   IElementType UNDEFINE = new GraqlTokenType("UNDEFINE");
-  IElementType VAL = new GraqlTokenType("val");
+  IElementType VAL = new GraqlTokenType("VAL");
   IElementType VIA = new GraqlTokenType("via");
   IElementType WHEN = new GraqlTokenType("when");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == AGGREGATE) {
+       if (type == ACCESSOR) {
+        return new GraqlAccessorImpl(node);
+      }
+      else if (type == AGGREGATE) {
         return new GraqlAggregateImpl(node);
       }
       else if (type == AGGREGATE_QUERY) {
         return new GraqlAggregateQueryImpl(node);
+      }
+      else if (type == AND_BOOL) {
+        return new GraqlAndBoolImpl(node);
       }
       else if (type == AND_PATTERN) {
         return new GraqlAndPatternImpl(node);
       }
       else if (type == ARGUMENT) {
         return new GraqlArgumentImpl(node);
+      }
+      else if (type == BLOCK) {
+        return new GraqlBlockImpl(node);
+      }
+      else if (type == BLOCK_CONTENTS) {
+        return new GraqlBlockContentsImpl(node);
+      }
+      else if (type == BOOL) {
+        return new GraqlBoolImpl(node);
       }
       else if (type == CASTING) {
         return new GraqlCastingImpl(node);
@@ -167,8 +225,32 @@ public interface GraqlTokenTypes {
       else if (type == DELETE_QUERY) {
         return new GraqlDeleteQueryImpl(node);
       }
+      else if (type == DOUBLE_) {
+        return new GraqlDouble_Impl(node);
+      }
+      else if (type == ELSE_IF_PARTIAL) {
+        return new GraqlElseIfPartialImpl(node);
+      }
+      else if (type == ELSE_PARTIAL) {
+        return new GraqlElsePartialImpl(node);
+      }
+      else if (type == ESCAPED_EXPRESSION) {
+        return new GraqlEscapedExpressionImpl(node);
+      }
+      else if (type == EXPRESSION) {
+        return new GraqlExpressionImpl(node);
+      }
+      else if (type == FOR_EACH_STATEMENT) {
+        return new GraqlForEachStatementImpl(node);
+      }
+      else if (type == FOR_IN_STATEMENT) {
+        return new GraqlForInStatementImpl(node);
+      }
       else if (type == GET_QUERY) {
         return new GraqlGetQueryImpl(node);
+      }
+      else if (type == GROUP_BOOL) {
+        return new GraqlGroupBoolImpl(node);
       }
       else if (type == ID) {
         return new GraqlIdImpl(node);
@@ -176,8 +258,20 @@ public interface GraqlTokenTypes {
       else if (type == IDENTIFIER) {
         return new GraqlIdentifierImpl(node);
       }
+      else if (type == ID_MACRO) {
+        return new GraqlIdMacroImpl(node);
+      }
+      else if (type == IF_PARTIAL) {
+        return new GraqlIfPartialImpl(node);
+      }
+      else if (type == IF_STATEMENT) {
+        return new GraqlIfStatementImpl(node);
+      }
       else if (type == INSERT_QUERY) {
         return new GraqlInsertQueryImpl(node);
+      }
+      else if (type == INT_) {
+        return new GraqlInt_Impl(node);
       }
       else if (type == IN_LIST) {
         return new GraqlInListImpl(node);
@@ -187,6 +281,15 @@ public interface GraqlTokenTypes {
       }
       else if (type == LABEL_LIST) {
         return new GraqlLabelListImpl(node);
+      }
+      else if (type == LIST) {
+        return new GraqlListImpl(node);
+      }
+      else if (type == MACRO_EQUALS) {
+        return new GraqlMacroEqualsImpl(node);
+      }
+      else if (type == MACRO_NOESCP) {
+        return new GraqlMacroNoescpImpl(node);
       }
       else if (type == MATCH_LIMIT) {
         return new GraqlMatchLimitImpl(node);
@@ -221,8 +324,20 @@ public interface GraqlTokenTypes {
       else if (type == NAMED_AGG) {
         return new GraqlNamedAggImpl(node);
       }
+      else if (type == NIL) {
+        return new GraqlNilImpl(node);
+      }
+      else if (type == NOT_BOOL) {
+        return new GraqlNotBoolImpl(node);
+      }
+      else if (type == NUMBER) {
+        return new GraqlNumberImpl(node);
+      }
       else if (type == OF_LIST) {
         return new GraqlOfListImpl(node);
+      }
+      else if (type == OR_BOOL) {
+        return new GraqlOrBoolImpl(node);
       }
       else if (type == OR_PATTERN) {
         return new GraqlOrPatternImpl(node);
@@ -245,6 +360,9 @@ public interface GraqlTokenTypes {
       else if (type == QUERY) {
         return new GraqlQueryImpl(node);
       }
+      else if (type == STATEMENT) {
+        return new GraqlStatementImpl(node);
+      }
       else if (type == STD) {
         return new GraqlStdImpl(node);
       }
@@ -253,6 +371,9 @@ public interface GraqlTokenTypes {
       }
       else if (type == UNDEFINE_QUERY) {
         return new GraqlUndefineQueryImpl(node);
+      }
+      else if (type == UNTYPED_EXPRESSION) {
+        return new GraqlUntypedExpressionImpl(node);
       }
       else if (type == VALUE) {
         return new GraqlValueImpl(node);

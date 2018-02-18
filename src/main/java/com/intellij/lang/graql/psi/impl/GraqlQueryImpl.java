@@ -64,6 +64,12 @@ public class GraqlQueryImpl extends ASTWrapperPsiElement implements GraqlQuery {
 
   @Override
   @Nullable
+  public GraqlStatement getStatement() {
+    return findChildByClass(GraqlStatement.class);
+  }
+
+  @Override
+  @Nullable
   public GraqlUndefineQuery getUndefineQuery() {
     return findChildByClass(GraqlUndefineQuery.class);
   }

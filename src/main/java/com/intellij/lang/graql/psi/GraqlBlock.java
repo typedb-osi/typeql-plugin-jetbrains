@@ -5,18 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface GraqlInsertQuery extends PsiElement {
+public interface GraqlBlock extends PsiElement {
 
-  @Nullable
+  @NotNull
   GraqlBlockContents getBlockContents();
-
-  @Nullable
-  GraqlMatchPart getMatchPart();
-
-  @Nullable
-  GraqlVarPatterns getVarPatterns();
-
-  @Nullable
-  GraqlVariable getVariable();
 
 }
