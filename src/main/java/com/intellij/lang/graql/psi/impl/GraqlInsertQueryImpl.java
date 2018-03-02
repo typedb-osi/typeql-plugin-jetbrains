@@ -28,14 +28,26 @@ public class GraqlInsertQueryImpl extends ASTWrapperPsiElement implements GraqlI
 
   @Override
   @Nullable
+  public GraqlBlockContents getBlockContents() {
+    return findChildByClass(GraqlBlockContents.class);
+  }
+
+  @Override
+  @Nullable
   public GraqlMatchPart getMatchPart() {
     return findChildByClass(GraqlMatchPart.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public GraqlVarPatterns getVarPatterns() {
-    return findNotNullChildByClass(GraqlVarPatterns.class);
+    return findChildByClass(GraqlVarPatterns.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlVariable getVariable() {
+    return findChildByClass(GraqlVariable.class);
   }
 
 }

@@ -17,7 +17,7 @@ public interface GraqlPredicate extends PsiElement {
   PsiElement getRegex();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getStringLiteral();
 
   @Nullable
   PsiElement getVariable();

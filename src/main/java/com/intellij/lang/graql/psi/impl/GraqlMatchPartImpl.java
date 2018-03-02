@@ -28,6 +28,12 @@ public class GraqlMatchPartImpl extends ASTWrapperPsiElement implements GraqlMat
 
   @Override
   @Nullable
+  public GraqlBlockContents getBlockContents() {
+    return findChildByClass(GraqlBlockContents.class);
+  }
+
+  @Override
+  @Nullable
   public GraqlMatchLimitOffset getMatchLimitOffset() {
     return findChildByClass(GraqlMatchLimitOffset.class);
   }

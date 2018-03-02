@@ -16,6 +16,10 @@
     tokenTypeClass="com.intellij.lang.graql.psi.GraqlTokenType"
 
     tokens=[
+        AT                  = '@'
+        LBR                 = '['
+        RBR                 = ']'
+        period              = '.'
         colon               = ':'
         semicolon           = ';'
         comma               = ','
@@ -23,10 +27,12 @@
         RPAREN              = ')'
         LBRACE              = '{'
         RBRACE              = '}'
-        LTHAN               = '<'
-        LTHANEQ             = '<='
-        GTHAN               = '>'
-        GTHANEQ             = '>='
+        LESS                = '<'
+        LESSEQ              = '<='
+        GREATER             = '>'
+        GREATEREQ           = '>='
+        EQ                  = '='
+        NEQ                 = '!='
         sub                 = 'sub'
         key                 = 'key'
         has                 = 'has'
@@ -82,8 +88,14 @@
         desc                = 'desc'
         true                = 'true'
         false               = 'false'
+        for                 = 'for'
+        do                  = 'do'
+        if                  = 'if'
+        not                 = 'not'
+        else                = 'else'
+        null                = 'null'
 
-        STRING              = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+        STRING_LITERAL      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
         INTEGER             = "regexp:([-+]?\d+)"
         space               = 'regexp:\s+'
@@ -95,38 +107,38 @@
 
 GraqlFile ::= !<<eof>> (query)*
 
-query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery //| computeQuery
+query ::= getQuery | insertQuery | defineQuery | undefineQuery | deleteQuery | aggregateQuery | computeQuery | statement
 
-matchPart ::= MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy?
+matchPart ::= MATCH patterns (matchLimitOffset|matchOffsetLimit)? matchOrderBy? blockContents?
 matchLimitOffset ::= matchLimit matchOffset?
 matchOffsetLimit ::= matchOffset matchLimit?
 matchLimit ::= 'limit' INTEGER ';' // matchLimit
 matchOffset ::= 'offset' INTEGER ';' // matchOffset
 matchOrderBy ::= 'order' 'by' VARIABLE (asc|desc)? ';' // matchOrderBy
 
-getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')
-insertQuery ::= matchPart? INSERT varPatterns
+getQuery ::= matchPart ('get' (VARIABLE (',' VARIABLE)*)? ';')?
+insertQuery ::= matchPart? INSERT varPatterns? (variable? blockContents?)
 defineQuery ::= DEFINE varPatterns
 undefineQuery ::= UNDEFINE varPatterns
 deleteQuery ::= matchPart 'delete' variables? ';'
 aggregateQuery ::= matchPart 'aggregate' aggregate ';'
-//computeQuery ::= 'compute' computeMethod
+computeQuery ::= 'compute' computeMethod
 
 variables ::= VARIABLE (',' VARIABLE)*
 
-//computeMethod ::= min | max | median | mean | std | sum | count | path | paths | cluster | degrees
-//
-//min ::= MIN         'of' ofList         ('in' inList)? ';'
-//max ::= MAX         'of' ofList         ('in' inList)? ';'
-//median ::= MEDIAN   'of' ofList         ('in' inList)? ';'
-//mean ::= MEAN       'of' ofList         ('in' inList)? ';'
-//std ::= STD         'of' ofList         ('in' inList)? ';'
-//sum ::= SUM         'of' ofList         ('in' inList)? ';'
-//degrees ::= DEGREES ('of' ofList)?      ('in' inList)? ';'
-//cluster ::= CLUSTER ('of' id    )?      ('in' inList)? ';' clusterParam*
-//path ::= PATH       'from' id 'to' id   ('in' inList)? ';'
-//paths ::= PATHS     'from' id 'to' id   ('in' inList)? ';'
-//count ::= COUNT                         ('in' inList)? ';'
+computeMethod ::= min | max | median | mean | std | sum | count | path | paths | cluster | degrees
+
+min ::= MIN         'of' ofList         ('in' inList)? ';'
+max ::= MAX         'of' ofList         ('in' inList)? ';'
+median ::= MEDIAN   'of' ofList         ('in' inList)? ';'
+mean ::= MEAN       'of' ofList         ('in' inList)? ';'
+std ::= STD         'of' ofList         ('in' inList)? ';'
+sum ::= SUM         'of' ofList         ('in' inList)? ';'
+degrees ::= DEGREES ('of' ofList)?      ('in' inList)? ';'
+cluster ::= CLUSTER ('of' id    )?      ('in' inList)? ';' clusterParam*
+path ::= PATH       'from' id 'to' id   ('in' inList)? ';'
+paths ::= PATHS     'from' id 'to' id   ('in' inList)? ';'
+count ::= COUNT                         ('in' inList)? ';'
 
 clusterParam ::= MEMBERS ';'    // clusterMembers
    | SIZE INTEGER ';'           // clusterSize
@@ -141,51 +153,56 @@ argument ::= VARIABLE  // variableArgument
     | aggregate        // aggregateArgument
 namedAgg ::= aggregate 'as' identifier
 
-patterns ::= (pattern ';')+
+patterns ::= (pattern (','|';')?)+
 pattern ::= varPattern          // varPatternCase
     | orPattern                 // orPattern
     | andPattern                // andPattern
-andPattern ::= '{' patterns '}'
+andPattern ::= LBRACE patterns RBRACE
 orPattern ::= pattern 'or' pattern
 
-varPatterns ::= (varPattern ';')+
+varPatterns ::= (varPattern ';'?)+
 varPattern ::= variable? property (','? property)*
 
 property ::= 'isa' variable             // isa
+    | 'isa' escapedExpression           // isa
     | 'sub' variable                    // sub
     | 'relates' variable                // relates
     | 'plays' variable                  // plays
     | 'id' id                           // propId
     | 'label' label                     // propLabel
     | 'val' predicate                   // propValue
-    | 'when' '{' patterns '}'           // propWhen
-    | 'then' '{' varPatterns '}'        // propThen
+    | 'val' escapedExpression           // propValue
+    | 'when' LBRACE patterns RBRACE     // propWhen
+    | 'then' LBRACE varPatterns RBRACE  // propThen
     | 'has' label predicate             // propHas
+    | 'has' label escapedExpression     // propHas
     | 'has' variable                    // propResource
+    | 'has' property                    // propHasProp?
     | 'key' variable                    // propKey
     | '(' casting (',' casting)* ')'    // propRel
     | 'is-abstract'                     // isAbstract
     | 'datatype' (long|double|string|boolean|date)  // propDatatype
     | 'regex' REGEX                     // propRegex
-    | '!=' variable                     // propNeq
+    | NEQ variable                     // propNeq
+    | ';'
 
 casting ::= variable (':' VARIABLE)?
     | variable VARIABLE
 
 variable ::= label | VARIABLE
 
-predicate ::= '='? value                // predicateEq
-    | '='? VARIABLE                     // predicateVariable
-    | '!=' valueOrVar                   // predicateNeq
+predicate ::= EQ? value                // predicateEq
+    | EQ? VARIABLE                     // predicateVariable
+    | NEQ valueOrVar                   // predicateNeq
     | '>' valueOrVar                    // predicateGt
     | '>=' valueOrVar                   // predicateGte
     | '<' valueOrVar                    // predicateLt
     | '<=' valueOrVar                   // predicateLte
-    | 'contains' (STRING | VARIABLE)    // predicateContains
+    | 'contains' (STRING_LITERAL | VARIABLE)    // predicateContains
     | REGEX                             // predicateRegex
 valueOrVar ::= VARIABLE // valueVariable
     | value             // valuePrimitive
-value ::= STRING   // valueString
+value ::= STRING_LITERAL   // valueString
    | INTEGER  // valueInteger
    | REAL     // valueReal
    | (true|false)  // valueBoolean
@@ -195,11 +212,63 @@ value ::= STRING   // valueString
 label ::= identifier | IMPLICIT_IDENTIFIER
 id ::= identifier
 
-// Some keywords can also be used as identifiers
-identifier ::= ID | STRING
-    | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER
-    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE {
+identifier ::= ID | STRING_LITERAL
+    | MIN | MAX| MEDIAN | MEAN | STD | SUM | COUNT | PATH | CLUSTER | DATE
+    | DEGREES | MEMBERS | SIZE | ENTITY | RELATIONSHIP | RULE | ROLE | ATTRIBUTE | VAL {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]
 }
+
+//Graql template extension
+escapedExpression ::= untypedExpression;
+untypedExpression ::= '<' id accessor* '>'                              //idExpression
+    | MACRO_NOESCP
+    | MACRO_EQUALS
+    | ID_MACRO LPAREN expression? (',' expression)* RPAREN accessor?    //macroExpression
+    | id
+
+ID_MACRO ::= AT (MACRO_NOESCP|ID|int|long|double|boolean|date)
+MACRO_NOESCP ::= AT noescp LPAREN expression? (',' expression)* RPAREN accessor? identifier?
+MACRO_EQUALS ::= AT equals LPAREN expression? (',' expression)* RPAREN accessor?
+
+accessor ::= period id     //mapAccessor
+    | LBR int_ RBR      //listAccessor
+
+block ::= LBRACE blockContents RBRACE ';'?
+blockContents ::= (statement | escapedExpression | query | patterns)*
+
+statement ::= forInStatement
+    | forEachStatement
+    | ifStatement
+
+forInStatement   ::= FOR LPAREN identifier IN escapedExpression RPAREN DO block
+forEachStatement ::= FOR LPAREN escapedExpression RPAREN DO block
+
+ifStatement   ::= ifPartial elseIfPartial* elsePartial?
+ifPartial     ::= IF LPAREN bool RPAREN DO block
+elseIfPartial ::= ELSEIF LPAREN bool RPAREN DO block
+elsePartial   ::= ELSE block
+
+expression    ::= untypedExpression | nil | STRING_LITERAL | number | (true|false)
+number        ::= untypedExpression | int_ | double_
+int_          ::= untypedExpression | INTEGER
+double_       ::= untypedExpression | DOUBLE
+list          ::= untypedExpression
+nil           ::= NULL
+bool ::= expression EQ expression           //eqExpression
+    | expression NEQ expression             //NEQExpression
+    | number GREATER number                 //greaterExpression
+    | number GREATEREQ number               //greaterEqExpression
+    | number LESS number                    //lessExpression
+    | number LESSEQ number                  //lessEqExpression
+    | untypedExpression                     //booleanExpression
+    | (true|false)                          //booleanConstant
+    | orBool
+    | andBool
+    | notBool
+    | groupBool
+groupBool ::= LPAREN bool RPAREN
+orBool ::= groupBool OR groupBool
+andBool ::= groupBool AND groupBool
+notBool ::= NOT groupBool

@@ -11,6 +11,9 @@ public interface GraqlQuery extends PsiElement {
   GraqlAggregateQuery getAggregateQuery();
 
   @Nullable
+  GraqlComputeQuery getComputeQuery();
+
+  @Nullable
   GraqlDefineQuery getDefineQuery();
 
   @Nullable
@@ -21,6 +24,9 @@ public interface GraqlQuery extends PsiElement {
 
   @Nullable
   GraqlInsertQuery getInsertQuery();
+
+  @Nullable
+  GraqlStatement getStatement();
 
   @Nullable
   GraqlUndefineQuery getUndefineQuery();

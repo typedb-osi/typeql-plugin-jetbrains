@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface GraqlMatchPart extends PsiElement {
 
   @Nullable
+  GraqlBlockContents getBlockContents();
+
+  @Nullable
   GraqlMatchLimitOffset getMatchLimitOffset();
 
   @Nullable

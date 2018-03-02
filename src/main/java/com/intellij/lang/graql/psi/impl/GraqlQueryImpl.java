@@ -34,6 +34,12 @@ public class GraqlQueryImpl extends ASTWrapperPsiElement implements GraqlQuery {
 
   @Override
   @Nullable
+  public GraqlComputeQuery getComputeQuery() {
+    return findChildByClass(GraqlComputeQuery.class);
+  }
+
+  @Override
+  @Nullable
   public GraqlDefineQuery getDefineQuery() {
     return findChildByClass(GraqlDefineQuery.class);
   }
@@ -54,6 +60,12 @@ public class GraqlQueryImpl extends ASTWrapperPsiElement implements GraqlQuery {
   @Nullable
   public GraqlInsertQuery getInsertQuery() {
     return findChildByClass(GraqlInsertQuery.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlStatement getStatement() {
+    return findChildByClass(GraqlStatement.class);
   }
 
   @Override
