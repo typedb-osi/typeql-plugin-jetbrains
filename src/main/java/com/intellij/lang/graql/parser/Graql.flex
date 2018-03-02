@@ -25,7 +25,7 @@ import static com.intellij.lang.graql.psi.GraqlTokenTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
-STRING=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
+STRING_LITERAL=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 REGEX="/"([^\\\/]+)"/"
 INTEGER=([-+]?[0-9]+)
 SPACE=[ \t\n\x0B\f\r]+
@@ -37,6 +37,10 @@ VARIABLE=\$[a-zA-Z0-9_-]*
 <YYINITIAL> {
   {WHITE_SPACE}              { return WHITE_SPACE; }
 
+  "@"                        { return AT; }
+  "["                        { return LBR; }
+  "]"                        { return RBR; }
+  "."                        { return PERIOD; }
   ":"                        { return COLON; }
   ";"                        { return SEMICOLON; }
   ","                        { return COMMA; }
@@ -44,10 +48,12 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   ")"                        { return RPAREN; }
   "{"                        { return LBRACE; }
   "}"                        { return RBRACE; }
-  "<"                        { return LTHAN; }
-  "<="                       { return LTHANEQ; }
-  ">"                        { return GTHAN; }
-  ">="                       { return GTHANEQ; }
+  "<"                        { return LESS; }
+  "<="                       { return LESSEQ; }
+  ">"                        { return GREATER; }
+  ">="                       { return GREATEREQ; }
+  "="                        { return EQ; }
+  "!="                       { return NEQ; }
   "sub"                      { return SUB; }
   "key"                      { return KEY; }
   "has"                      { return HAS; }
@@ -103,16 +109,28 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "desc"                     { return DESC; }
   "true"                     { return TRUE; }
   "false"                    { return FALSE; }
+  "for"                      { return FOR; }
+  "do"                       { return DO; }
+  "if"                       { return IF; }
+  "not"                      { return NOT; }
+  "else"                     { return ELSE; }
+  "null"                     { return NULL; }
   "UNDEFINE"                 { return UNDEFINE; }
+  "DEGREES"                  { return DEGREES; }
+  "PATH"                     { return PATH; }
+  "PATHS"                    { return PATHS; }
   "MEMBERS"                  { return MEMBERS; }
   "SIZE"                     { return SIZE; }
   "REAL"                     { return REAL; }
   "DATETIME"                 { return DATETIME; }
   "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
-  "PATH"                     { return PATH; }
-  "DEGREES"                  { return DEGREES; }
+  "int"                      { return INT; }
+  "noescp"                   { return NOESCP; }
+  "equals"                   { return EQUALS; }
+  "ELSEIF"                   { return ELSEIF; }
+  "AND"                      { return AND; }
 
-  {STRING}                   { return STRING; }
+  {STRING_LITERAL}           { return STRING_LITERAL; }
   {REGEX}                    { return REGEX; }
   {INTEGER}                  { return INTEGER; }
   {SPACE}                    { return SPACE; }

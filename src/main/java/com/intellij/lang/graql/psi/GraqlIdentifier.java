@@ -11,7 +11,7 @@ public interface GraqlIdentifier extends GraqlNamedElement {
   PsiElement getId();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getStringLiteral();
 
   String getName();
 

@@ -34,8 +34,8 @@ public class GraqlValueImpl extends ASTWrapperPsiElement implements GraqlValue {
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
   }
 
 }

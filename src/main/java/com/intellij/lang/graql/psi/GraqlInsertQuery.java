@@ -8,9 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface GraqlInsertQuery extends PsiElement {
 
   @Nullable
+  GraqlBlockContents getBlockContents();
+
+  @Nullable
   GraqlMatchPart getMatchPart();
 
-  @NotNull
+  @Nullable
   GraqlVarPatterns getVarPatterns();
+
+  @Nullable
+  GraqlVariable getVariable();
 
 }

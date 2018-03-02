@@ -33,8 +33,8 @@ public class GraqlIdentifierImpl extends GraqlNamedElementImpl implements GraqlI
 
   @Override
   @Nullable
-  public PsiElement getString() {
-    return findChildByType(STRING);
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
   }
 
   public String getName() {

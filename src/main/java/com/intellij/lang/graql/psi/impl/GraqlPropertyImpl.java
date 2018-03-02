@@ -34,6 +34,12 @@ public class GraqlPropertyImpl extends ASTWrapperPsiElement implements GraqlProp
 
   @Override
   @Nullable
+  public GraqlEscapedExpression getEscapedExpression() {
+    return findChildByClass(GraqlEscapedExpression.class);
+  }
+
+  @Override
+  @Nullable
   public GraqlId getId() {
     return findChildByClass(GraqlId.class);
   }
@@ -54,6 +60,12 @@ public class GraqlPropertyImpl extends ASTWrapperPsiElement implements GraqlProp
   @Nullable
   public GraqlPredicate getPredicate() {
     return findChildByClass(GraqlPredicate.class);
+  }
+
+  @Override
+  @Nullable
+  public GraqlProperty getProperty() {
+    return findChildByClass(GraqlProperty.class);
   }
 
   @Override

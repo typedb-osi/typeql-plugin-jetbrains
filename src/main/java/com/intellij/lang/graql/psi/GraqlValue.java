@@ -11,6 +11,6 @@ public interface GraqlValue extends PsiElement {
   PsiElement getInteger();
 
   @Nullable
-  PsiElement getString();
+  PsiElement getStringLiteral();
 
 }
