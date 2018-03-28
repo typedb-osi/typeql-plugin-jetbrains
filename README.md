@@ -1,4 +1,4 @@
-# IntelliJ-Graql-Plugin
+# JetBrains-Graql-Plugin
 Basic support for the Graql language (http://grakn.ai)
 
 ## Features
