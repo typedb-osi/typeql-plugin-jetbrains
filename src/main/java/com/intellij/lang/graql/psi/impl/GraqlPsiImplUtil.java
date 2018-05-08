@@ -76,7 +76,7 @@ public class GraqlPsiImplUtil {
     public static PsiElement setName(GraqlIdentifier element, String newName) {
         ASTNode keyNode = element.getNode().findChildByType(GraqlTokenTypes.IDENTIFIER);
         if (keyNode == null) {
-            keyNode = element.getNode().findChildByType(GraqlTokenTypes.STRING);
+            keyNode = element.getNode().findChildByType(GraqlTokenTypes.STRING_LITERAL);
         }
         if (keyNode != null) {
             GraqlIdentifier property = GraqlElementFactory.createIdentifier(element.getProject(), newName);
