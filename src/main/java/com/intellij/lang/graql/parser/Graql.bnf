@@ -112,6 +112,7 @@
         STRING_LITERAL      = "regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
         REGEX               = "regexp:/([^\\\/]+)/"
         INTEGER             = "regexp:([-+]?\d+)"
+        REAL                = "regexp:([-+]?\d+.\d+)"
         space               = 'regexp:\s+'
         single_line_comment = 'regexp:#.*'
         ID                  = 'regexp:[a-zA-Z_0-9-]*'

@@ -28,6 +28,7 @@ WHITE_SPACE=\s+
 STRING_LITERAL=('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")
 REGEX="/"([^\\\/]+)"/"
 INTEGER=([-+]?[0-9]+)
+REAL=([-+]?[0-9]+.[0-9]+)
 SPACE=[ \t\n\x0B\f\r]+
 SINGLE_LINE_COMMENT=#.*
 ID=[a-zA-Z_0-9-]*
@@ -131,7 +132,6 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "equals"                   { return EQUALS_KEYWORD; }
   "MEMBERS"                  { return MEMBERS; }
   "SIZE"                     { return SIZE; }
-  "REAL"                     { return REAL; }
   "DATE"                     { return DATE; }
   "DATETIME"                 { return DATETIME; }
   "IMPLICIT_IDENTIFIER"      { return IMPLICIT_IDENTIFIER; }
@@ -140,6 +140,7 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   {STRING_LITERAL}           { return STRING_LITERAL; }
   {REGEX}                    { return REGEX; }
   {INTEGER}                  { return INTEGER; }
+  {REAL}                     { return REAL; }
   {SPACE}                    { return SPACE; }
   {SINGLE_LINE_COMMENT}      { return SINGLE_LINE_COMMENT; }
   {ID}                       { return ID; }
