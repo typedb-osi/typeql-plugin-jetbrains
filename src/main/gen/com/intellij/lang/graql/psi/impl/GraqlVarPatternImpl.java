@@ -26,6 +26,12 @@ public class GraqlVarPatternImpl extends GraqlPatternImpl implements GraqlVarPat
   }
 
   @Override
+  @NotNull
+  public List<GraqlBlockContents> getBlockContentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, GraqlBlockContents.class);
+  }
+
+  @Override
   @Nullable
   public GraqlLabelOrVar getLabelOrVar() {
     return findChildByClass(GraqlLabelOrVar.class);

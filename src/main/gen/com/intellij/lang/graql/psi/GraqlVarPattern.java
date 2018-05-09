@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface GraqlVarPattern extends GraqlPattern {
 
+  @NotNull
+  List<GraqlBlockContents> getBlockContentsList();
+
   @Nullable
   GraqlLabelOrVar getLabelOrVar();
 
