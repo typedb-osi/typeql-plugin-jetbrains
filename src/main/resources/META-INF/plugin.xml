@@ -34,6 +34,8 @@
         <completion.contributor language="Graql"
                                 implementationClass="com.intellij.lang.graql.completion.GraqlCompletionContributor"/>
         <lang.commenter language="Graql" implementationClass="com.intellij.lang.graql.refactor.GraqlCommenter"/>
+        <inspectionToolProvider
+                implementation="com.intellij.lang.graql.inspection.unusedDeclaration.GraqlUnusedDeclarationProvider"/>
     </extensions>
 
     <actions>
