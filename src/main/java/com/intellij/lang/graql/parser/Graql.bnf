@@ -189,8 +189,8 @@ property ::= isa_keyword labelOrVar             // isa
     | val_keyword escapedExpression           // propValue
     | when_keyword LBRACE patterns RBRACE     // propWhen
     | then_keyword LBRACE varPatterns RBRACE  // propThen
-    | has_keyword label predicate             // propHas
     | has_keyword label escapedExpression     // propHas
+    | has_keyword label predicate             // propHas
     | has_keyword labelOrVar                    // propResource
     | has_keyword property                    // propHasProp?
     | key_keyword labelOrVar                    // propKey
@@ -237,7 +237,7 @@ identifier ::= ID | STRING_LITERAL {
 
 //Graql template extension
 escapedExpression ::= untypedExpression;
-untypedExpression ::= '<' identifier accessor* '>'                              //idExpression
+untypedExpression ::= '<' identifier accessor* '>'                      //idExpression
     | MACRO_NOESCP
     | MACRO_EQUALS
     | ID_MACRO LPAREN expression? (',' expression)* RPAREN accessor?    //macroExpression

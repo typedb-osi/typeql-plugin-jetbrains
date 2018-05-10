@@ -2081,8 +2081,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   //     | val_keyword escapedExpression           // propValue
   //     | when_keyword LBRACE patterns RBRACE     // propWhen
   //     | then_keyword LBRACE varPatterns RBRACE  // propThen
-  //     | has_keyword label predicate             // propHas
   //     | has_keyword label escapedExpression     // propHas
+  //     | has_keyword label predicate             // propHas
   //     | has_keyword labelOrVar                    // propResource
   //     | has_keyword property                    // propHasProp?
   //     | key_keyword labelOrVar                    // propKey
@@ -2245,26 +2245,26 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // has_keyword label predicate
+  // has_keyword label escapedExpression
   private static boolean property_11(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_11")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
     r = r && label(b, l + 1);
-    r = r && predicate(b, l + 1);
+    r = r && escapedExpression(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // has_keyword label escapedExpression
+  // has_keyword label predicate
   private static boolean property_12(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_12")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
     r = r && label(b, l + 1);
-    r = r && escapedExpression(b, l + 1);
+    r = r && predicate(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2506,7 +2506,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '<' identifier accessor* '>'                              //idExpression
+  // '<' identifier accessor* '>'                      //idExpression
   //     | MACRO_NOESCP
   //     | MACRO_EQUALS
   //     | ID_MACRO LPAREN expression? (',' expression)* RPAREN accessor?    //macroExpression
