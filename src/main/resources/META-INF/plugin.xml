@@ -12,7 +12,6 @@
     ]]>
     </change-notes>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="145.0"/>
     <depends>com.intellij.modules.lang</depends>
 
@@ -34,12 +33,12 @@
         <completion.contributor language="Graql"
                                 implementationClass="com.intellij.lang.graql.completion.GraqlCompletionContributor"/>
         <lang.commenter language="Graql" implementationClass="com.intellij.lang.graql.refactor.GraqlCommenter"/>
+
+        <!-- inspections -->
         <inspectionToolProvider
                 implementation="com.intellij.lang.graql.inspection.unusedDeclaration.GraqlUnusedDeclarationProvider"/>
+        <inspectionToolProvider
+                implementation="com.intellij.lang.graql.inspection.undefinedDeclaration.GraqlUndefinedDeclarationProvider"/>
     </extensions>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
 
 </idea-plugin>
