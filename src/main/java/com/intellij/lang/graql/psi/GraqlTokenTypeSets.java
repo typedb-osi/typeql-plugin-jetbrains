@@ -2,8 +2,15 @@ package com.intellij.lang.graql.psi;
 
 import com.intellij.lang.graql.GraqlLanguage;
 import com.intellij.psi.TokenType;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author github.com/BFergerson
@@ -24,5 +31,9 @@ public interface GraqlTokenTypeSets extends GraqlTokenTypes {
             CONTAINS_KEYWORD, OFFSET_KEYWORD, LIMIT_KEYWORD, ORDER_KEYWORD, ASC_KEYWORD, DESC_KEYWORD, TRUE_KEYWORD,
             FALSE_KEYWORD, BY_KEYWORD, AGGREGATE_KEYWORD, IF_KEYWORD, DO_KEYWORD, NOT_KEYWORD, ELSE_KEYWORD,
             ELSEIF_KEYWORD, NULL_KEYWORD, FOR_KEYWORD);
+
+    Set<String> FULL_KEYWORD_SET = new HashSet<>(Stream.concat(Stream.concat(Arrays.stream(DATATYPES.getTypes()),
+            Arrays.stream(MODEL.getTypes())), Arrays.stream(KEYWORDS.getTypes()))
+            .map(IElementType::toString).collect(Collectors.toList()));
 
 }

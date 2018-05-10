@@ -17,6 +17,7 @@ public interface GraqlIdentifier extends GraqlNamedElement {
 
   PsiElement setName(String newName);
 
+  @Nullable
   PsiElement getNameIdentifier();
 
 }

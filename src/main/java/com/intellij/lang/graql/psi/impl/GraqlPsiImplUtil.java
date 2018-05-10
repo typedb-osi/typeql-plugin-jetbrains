@@ -2,10 +2,7 @@ package com.intellij.lang.graql.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.graql.GraqlFileType;
-import com.intellij.lang.graql.psi.GraqlElementFactory;
-import com.intellij.lang.graql.psi.GraqlFile;
-import com.intellij.lang.graql.psi.GraqlIdentifier;
-import com.intellij.lang.graql.psi.GraqlTokenTypes;
+import com.intellij.lang.graql.psi.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -14,6 +11,8 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.FileBasedIndex;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +68,7 @@ public class GraqlPsiImplUtil {
         return result != null ? result : Collections.emptyList();
     }
 
+    @Contract(pure = true)
     public static String getName(GraqlIdentifier element) {
         return element.getText();
     }
@@ -86,7 +86,12 @@ public class GraqlPsiImplUtil {
         return element;
     }
 
+    @Nullable
     public static PsiElement getNameIdentifier(GraqlIdentifier element) {
-        return element;
+        if (GraqlTokenTypeSets.FULL_KEYWORD_SET.contains(element.getText())) {
+            return null;
+        } else {
+            return element;
+        }
     }
 }

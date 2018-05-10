@@ -1233,34 +1233,13 @@ public class GraqlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ID | STRING_LITERAL
-  //     | min_keyword | max_keyword | median_keyword | mean_keyword | std_keyword | sum_keyword | count_keyword
-  //     | path_keyword | cluster_keyword | date_keyword | degrees_keyword | member_keyword | size_keyword
-  //     | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword | val_keyword
   public static boolean identifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "identifier")) return false;
+    if (!nextTokenIs(b, "<identifier>", ID, STRING_LITERAL)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENTIFIER, "<identifier>");
     r = consumeToken(b, ID);
     if (!r) r = consumeToken(b, STRING_LITERAL);
-    if (!r) r = consumeToken(b, MIN_KEYWORD);
-    if (!r) r = consumeToken(b, MAX_KEYWORD);
-    if (!r) r = consumeToken(b, MEDIAN_KEYWORD);
-    if (!r) r = consumeToken(b, MEAN_KEYWORD);
-    if (!r) r = consumeToken(b, STD_KEYWORD);
-    if (!r) r = consumeToken(b, SUM_KEYWORD);
-    if (!r) r = consumeToken(b, COUNT_KEYWORD);
-    if (!r) r = consumeToken(b, PATH_KEYWORD);
-    if (!r) r = consumeToken(b, CLUSTER_KEYWORD);
-    if (!r) r = consumeToken(b, DATE_KEYWORD);
-    if (!r) r = consumeToken(b, DEGREES_KEYWORD);
-    if (!r) r = consumeToken(b, MEMBER_KEYWORD);
-    if (!r) r = consumeToken(b, SIZE_KEYWORD);
-    if (!r) r = consumeToken(b, ENTITY_KEYWORD);
-    if (!r) r = consumeToken(b, RELATIONSHIP_KEYWORD);
-    if (!r) r = consumeToken(b, RULE_KEYWORD);
-    if (!r) r = consumeToken(b, ROLE_KEYWORD);
-    if (!r) r = consumeToken(b, ATTRIBUTE_KEYWORD);
-    if (!r) r = consumeToken(b, VAL_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1439,12 +1418,34 @@ public class GraqlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // label | VARIABLE
+  //     | min_keyword | max_keyword | median_keyword | mean_keyword | std_keyword | sum_keyword | count_keyword
+  //     | path_keyword | cluster_keyword | date_keyword | degrees_keyword | member_keyword | size_keyword
+  //     | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword | val_keyword
   public static boolean labelOrVar(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "labelOrVar")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LABEL_OR_VAR, "<label or var>");
     r = label(b, l + 1);
     if (!r) r = consumeToken(b, VARIABLE);
+    if (!r) r = consumeToken(b, MIN_KEYWORD);
+    if (!r) r = consumeToken(b, MAX_KEYWORD);
+    if (!r) r = consumeToken(b, MEDIAN_KEYWORD);
+    if (!r) r = consumeToken(b, MEAN_KEYWORD);
+    if (!r) r = consumeToken(b, STD_KEYWORD);
+    if (!r) r = consumeToken(b, SUM_KEYWORD);
+    if (!r) r = consumeToken(b, COUNT_KEYWORD);
+    if (!r) r = consumeToken(b, PATH_KEYWORD);
+    if (!r) r = consumeToken(b, CLUSTER_KEYWORD);
+    if (!r) r = consumeToken(b, DATE_KEYWORD);
+    if (!r) r = consumeToken(b, DEGREES_KEYWORD);
+    if (!r) r = consumeToken(b, MEMBER_KEYWORD);
+    if (!r) r = consumeToken(b, SIZE_KEYWORD);
+    if (!r) r = consumeToken(b, ENTITY_KEYWORD);
+    if (!r) r = consumeToken(b, RELATIONSHIP_KEYWORD);
+    if (!r) r = consumeToken(b, RULE_KEYWORD);
+    if (!r) r = consumeToken(b, ROLE_KEYWORD);
+    if (!r) r = consumeToken(b, ATTRIBUTE_KEYWORD);
+    if (!r) r = consumeToken(b, VAL_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

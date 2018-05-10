@@ -45,6 +45,7 @@ public class GraqlIdentifierImpl extends GraqlNamedElementImpl implements GraqlI
     return GraqlPsiImplUtil.setName(this, newName);
   }
 
+  @Nullable
   public PsiElement getNameIdentifier() {
     return GraqlPsiImplUtil.getNameIdentifier(this);
   }

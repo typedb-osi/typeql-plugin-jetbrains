@@ -205,6 +205,9 @@ casting ::= labelOrVar (':' VARIABLE)?
     | labelOrVar VARIABLE
 
 labelOrVar ::= label | VARIABLE
+    | min_keyword | max_keyword | median_keyword | mean_keyword | std_keyword | sum_keyword | count_keyword
+    | path_keyword | cluster_keyword | date_keyword | degrees_keyword | member_keyword | size_keyword
+    | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword | val_keyword
 
 predicate ::= EQ? value                // predicateEq
     | EQ? VARIABLE                     // predicateVariable
@@ -226,10 +229,7 @@ value ::= STRING_LITERAL   // valueString
 
 label ::= identifier | IMPLICIT_IDENTIFIER
 
-identifier ::= ID | STRING_LITERAL
-    | min_keyword | max_keyword | median_keyword | mean_keyword | std_keyword | sum_keyword | count_keyword
-    | path_keyword | cluster_keyword | date_keyword | degrees_keyword | member_keyword | size_keyword
-    | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword | val_keyword {
+identifier ::= ID | STRING_LITERAL {
     mixin="com.intellij.lang.graql.psi.impl.GraqlNamedElementImpl"
     implements="com.intellij.lang.graql.psi.GraqlNamedElement"
     methods=[getName setName getNameIdentifier]

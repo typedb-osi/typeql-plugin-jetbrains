@@ -5,6 +5,7 @@ import com.intellij.lang.cacheBuilder.WordsScanner;
 import com.intellij.lang.findUsages.FindUsagesProvider;
 import com.intellij.lang.graql.parser.GraqlLexer;
 import com.intellij.lang.graql.psi.GraqlIdentifier;
+import com.intellij.lang.graql.psi.GraqlTokenTypeSets;
 import com.intellij.lang.graql.psi.GraqlTokenTypes;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
@@ -27,7 +28,11 @@ public class GraqlFindUsagesProvider implements FindUsagesProvider {
 
     @Override
     public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
-        return psiElement instanceof GraqlIdentifier;
+        if (GraqlTokenTypeSets.FULL_KEYWORD_SET.contains(psiElement.getText())) {
+            return false;
+        } else {
+            return psiElement instanceof GraqlIdentifier;
+        }
     }
 
     @Nullable
