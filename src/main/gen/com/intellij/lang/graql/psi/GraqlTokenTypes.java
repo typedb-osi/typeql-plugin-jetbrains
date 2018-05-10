@@ -184,7 +184,6 @@ public interface GraqlTokenTypes {
   IElementType TO_KEYWORD = new GraqlTokenType("to");
   IElementType TRUE_KEYWORD = new GraqlTokenType("true");
   IElementType UNDEFINE_KEYWORD = new GraqlTokenType("undefine");
-  IElementType VAL_KEYWORD = new GraqlTokenType("val");
   IElementType VARIABLE = new GraqlTokenType("VARIABLE");
   IElementType VIA_KEYWORD = new GraqlTokenType("via");
   IElementType WHEN_KEYWORD = new GraqlTokenType("when");

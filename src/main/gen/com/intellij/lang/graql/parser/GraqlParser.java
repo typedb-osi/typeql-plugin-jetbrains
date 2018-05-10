@@ -1420,7 +1420,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   // label | VARIABLE
   //     | min_keyword | max_keyword | median_keyword | mean_keyword | std_keyword | sum_keyword | count_keyword
   //     | path_keyword | cluster_keyword | date_keyword | degrees_keyword | member_keyword | size_keyword
-  //     | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword | val_keyword
+  //     | entity_keyword | relationship_keyword | rule_keyword | role_keyword | attribute_keyword
   public static boolean labelOrVar(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "labelOrVar")) return false;
     boolean r;
@@ -1445,7 +1445,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, RULE_KEYWORD);
     if (!r) r = consumeToken(b, ROLE_KEYWORD);
     if (!r) r = consumeToken(b, ATTRIBUTE_KEYWORD);
-    if (!r) r = consumeToken(b, VAL_KEYWORD);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2077,8 +2076,6 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   //     | plays_keyword labelOrVar                  // plays
   //     | id_keyword identifier                   // propId
   //     | label_keyword label                     // propLabel
-  //     | val_keyword predicate                   // propValue
-  //     | val_keyword escapedExpression           // propValue
   //     | when_keyword LBRACE patterns RBRACE     // propWhen
   //     | then_keyword LBRACE varPatterns RBRACE  // propThen
   //     | has_keyword label escapedExpression     // propHas
@@ -2111,12 +2108,10 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     if (!r) r = property_12(b, l + 1);
     if (!r) r = property_13(b, l + 1);
     if (!r) r = property_14(b, l + 1);
-    if (!r) r = property_15(b, l + 1);
-    if (!r) r = property_16(b, l + 1);
     if (!r) r = consumeToken(b, IS_ABSTRACT_KEYWORD);
-    if (!r) r = property_18(b, l + 1);
+    if (!r) r = property_16(b, l + 1);
     if (!r) r = parseTokens(b, 0, REGEX_KEYWORD, REGEX);
-    if (!r) r = property_20(b, l + 1);
+    if (!r) r = property_18(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -2199,31 +2194,9 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // val_keyword predicate
+  // when_keyword LBRACE patterns RBRACE
   private static boolean property_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_7")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, VAL_KEYWORD);
-    r = r && predicate(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // val_keyword escapedExpression
-  private static boolean property_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_8")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, VAL_KEYWORD);
-    r = r && escapedExpression(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // when_keyword LBRACE patterns RBRACE
-  private static boolean property_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_9")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, WHEN_KEYWORD, LBRACE);
@@ -2234,8 +2207,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // then_keyword LBRACE varPatterns RBRACE
-  private static boolean property_10(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_10")) return false;
+  private static boolean property_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_8")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, THEN_KEYWORD, LBRACE);
@@ -2246,8 +2219,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // has_keyword label escapedExpression
-  private static boolean property_11(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_11")) return false;
+  private static boolean property_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_9")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
@@ -2258,8 +2231,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // has_keyword label predicate
-  private static boolean property_12(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_12")) return false;
+  private static boolean property_10(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_10")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
@@ -2270,8 +2243,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // has_keyword labelOrVar
-  private static boolean property_13(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_13")) return false;
+  private static boolean property_11(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_11")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
@@ -2281,8 +2254,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // has_keyword property
-  private static boolean property_14(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_14")) return false;
+  private static boolean property_12(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_12")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HAS_KEYWORD);
@@ -2292,8 +2265,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // key_keyword labelOrVar
-  private static boolean property_15(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_15")) return false;
+  private static boolean property_13(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_13")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, KEY_KEYWORD);
@@ -2303,33 +2276,33 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // '(' casting (',' casting)* ')'
-  private static boolean property_16(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_16")) return false;
+  private static boolean property_14(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_14")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPAREN);
     r = r && casting(b, l + 1);
-    r = r && property_16_2(b, l + 1);
+    r = r && property_14_2(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (',' casting)*
-  private static boolean property_16_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_16_2")) return false;
+  private static boolean property_14_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_14_2")) return false;
     int c = current_position_(b);
     while (true) {
-      if (!property_16_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "property_16_2", c)) break;
+      if (!property_14_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "property_14_2", c)) break;
       c = current_position_(b);
     }
     return true;
   }
 
   // ',' casting
-  private static boolean property_16_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_16_2_0")) return false;
+  private static boolean property_14_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_14_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
@@ -2339,19 +2312,19 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // datatype_keyword (long_keyword|double_keyword|string_keyword|boolean_keyword|date_keyword)
-  private static boolean property_18(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_18")) return false;
+  private static boolean property_16(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_16")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DATATYPE_KEYWORD);
-    r = r && property_18_1(b, l + 1);
+    r = r && property_16_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // long_keyword|double_keyword|string_keyword|boolean_keyword|date_keyword
-  private static boolean property_18_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_18_1")) return false;
+  private static boolean property_16_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_16_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LONG_KEYWORD);
@@ -2364,8 +2337,8 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   // NEQ labelOrVar
-  private static boolean property_20(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_20")) return false;
+  private static boolean property_18(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "property_18")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, NEQ);

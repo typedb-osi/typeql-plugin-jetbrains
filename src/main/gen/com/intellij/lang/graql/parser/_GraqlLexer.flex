@@ -100,7 +100,6 @@ VARIABLE=\$[a-zA-Z0-9_-]*
   "group"                    { return GROUP_KEYWORD; }
   "of"                       { return OF_KEYWORD; }
   "std"                      { return STD_KEYWORD; }
-  "val"                      { return VAL_KEYWORD; }
   "contains"                 { return CONTAINS_KEYWORD; }
   "and"                      { return AND_KEYWORD; }
   "or"                       { return OR_KEYWORD; }
