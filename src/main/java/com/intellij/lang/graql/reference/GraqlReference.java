@@ -28,7 +28,6 @@ public class GraqlReference extends PsiReferenceBase<GraqlIdentifier> implements
                           @NotNull String identifier) {
         super(element, textRange);
         this.identifier = identifier;
-
     }
 
     @NotNull
@@ -42,19 +41,17 @@ public class GraqlReference extends PsiReferenceBase<GraqlIdentifier> implements
     @Override
     public ResolveResult[] multiResolve(boolean incompleteCode) {
         Project project = myElement.getProject();
-        final List<GraqlIdentifier> properties = GraqlPsiImplUtil.findIdentifiers(project, identifier);
         List<ResolveResult> results = new ArrayList<>();
-        for (GraqlIdentifier property : properties) {
-            results.add(new PsiElementResolveResult(property));
+        for (GraqlIdentifier identifier : GraqlPsiImplUtil.findUsages(project, identifier)) {
+            results.add(new PsiElementResolveResult(identifier));
         }
-        return results.toArray(new ResolveResult[results.size()]);
+        return results.toArray(new ResolveResult[0]);
     }
 
     @Nullable
     @Override
     public PsiElement resolve() {
-        ResolveResult[] resolveResults = multiResolve(false);
-        return resolveResults.length > 0 ? resolveResults[0].getElement() : null;
+        return GraqlPsiImplUtil.findDeclaration(myElement.getProject(), identifier);
     }
 
     @NotNull

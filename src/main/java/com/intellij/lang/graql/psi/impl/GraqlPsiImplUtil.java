@@ -6,11 +6,12 @@ import com.intellij.lang.graql.psi.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.indexing.FileBasedIndex;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,11 +25,40 @@ import java.util.List;
  */
 public class GraqlPsiImplUtil {
 
-    public static List<GraqlIdentifier> findIdentifiers(Project project, String name) {
+    @Nullable
+    public static GraqlIdentifier findDeclaration(Project project, String name) {
+        Collection<VirtualFile> virtualFiles =
+                FileTypeIndex.getFiles(GraqlFileType.INSTANCE, GlobalSearchScope.allScope(project));
+        for (VirtualFile virtualFile : virtualFiles) {
+            GraqlFile graqlFile = (GraqlFile) PsiManager.getInstance(project).findFile(virtualFile);
+            if (graqlFile != null) {
+                Collection<GraqlIdentifier> identifiers = PsiTreeUtil.collectElementsOfType(
+                        graqlFile, GraqlIdentifier.class);
+                for (GraqlIdentifier identifier : identifiers) {
+                    if (name.equals(identifier.getName())) {
+                        PsiFile psiFile = identifier.getContainingFile();
+                        PsiElement nextElement = psiFile.findElementAt(identifier.getTextRange().getEndOffset() + 1);
+                        while (nextElement != null) {
+                            if (nextElement instanceof PsiWhiteSpace) {
+                                nextElement = psiFile.findElementAt(nextElement.getTextRange().getEndOffset() + 1);
+                            } else {
+                                if ("sub".equals(nextElement.getText())) {
+                                    return identifier;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static List<GraqlIdentifier> findUsages(Project project, String name) {
         List<GraqlIdentifier> result = null;
         Collection<VirtualFile> virtualFiles =
-                FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, GraqlFileType.INSTANCE,
-                        GlobalSearchScope.allScope(project));
+                FileTypeIndex.getFiles(GraqlFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
             GraqlFile graqlFile = (GraqlFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (graqlFile != null) {
@@ -39,7 +69,19 @@ public class GraqlPsiImplUtil {
                         if (result == null) {
                             result = new ArrayList<>();
                         }
-                        result.add(identifier);
+
+                        PsiFile psiFile = identifier.getContainingFile();
+                        PsiElement nextElement = psiFile.findElementAt(identifier.getTextRange().getEndOffset() + 1);
+                        while (nextElement != null) {
+                            if (nextElement instanceof PsiWhiteSpace) {
+                                nextElement = psiFile.findElementAt(nextElement.getTextRange().getEndOffset() + 1);
+                            } else {
+                                if (!"sub".equals(nextElement.getText())) {
+                                    result.add(identifier);
+                                }
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -50,8 +92,7 @@ public class GraqlPsiImplUtil {
     public static List<GraqlIdentifier> findIdentifiers(Project project) {
         List<GraqlIdentifier> result = null;
         Collection<VirtualFile> virtualFiles =
-                FileBasedIndex.getInstance().getContainingFiles(FileTypeIndex.NAME, GraqlFileType.INSTANCE,
-                        GlobalSearchScope.allScope(project));
+                FileTypeIndex.getFiles(GraqlFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
             GraqlFile graqlFile = (GraqlFile) PsiManager.getInstance(project).findFile(virtualFile);
             if (graqlFile != null) {
