@@ -11,7 +11,7 @@ public interface GraqlAggregate extends PsiElement {
   List<GraqlArgument> getArgumentList();
 
   @Nullable
-  GraqlIdentifier getIdentifier();
+  GraqlLabelOrVar getLabelOrVar();
 
   @NotNull
   List<GraqlNamedAgg> getNamedAggList();

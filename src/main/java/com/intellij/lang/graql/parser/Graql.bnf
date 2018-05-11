@@ -161,7 +161,7 @@ ofList ::= labelList
 inList ::= labelList
 labelList ::= label (',' label)*
 
-aggregate ::= identifier argument*      // customAgg
+aggregate ::= labelOrVar argument*      // customAgg
     | '(' namedAgg (',' namedAgg)* ')'  // selectAgg
 argument ::= VARIABLE  // variableArgument
     | aggregate        // aggregateArgument

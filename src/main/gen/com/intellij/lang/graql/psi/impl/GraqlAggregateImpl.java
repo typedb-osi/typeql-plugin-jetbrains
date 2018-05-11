@@ -34,8 +34,8 @@ public class GraqlAggregateImpl extends ASTWrapperPsiElement implements GraqlAgg
 
   @Override
   @Nullable
-  public GraqlIdentifier getIdentifier() {
-    return findChildByClass(GraqlIdentifier.class);
+  public GraqlLabelOrVar getLabelOrVar() {
+    return findChildByClass(GraqlLabelOrVar.class);
   }
 
   @Override

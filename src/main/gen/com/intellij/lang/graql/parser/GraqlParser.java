@@ -475,7 +475,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier argument*      // customAgg
+  // labelOrVar argument*      // customAgg
   //     | '(' namedAgg (',' namedAgg)* ')'
   public static boolean aggregate(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "aggregate")) return false;
@@ -487,12 +487,12 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // identifier argument*
+  // labelOrVar argument*
   private static boolean aggregate_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "aggregate_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
+    r = labelOrVar(b, l + 1);
     r = r && aggregate_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
