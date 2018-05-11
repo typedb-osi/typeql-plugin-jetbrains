@@ -25,6 +25,23 @@ import java.util.List;
  */
 public class GraqlPsiImplUtil {
 
+    public static boolean isIdIdentifier(GraqlIdentifier identifier) {
+        PsiFile psiFile = identifier.getContainingFile();
+        PsiElement previousElement = psiFile.findElementAt(identifier.getTextRange().getStartOffset() - 1);
+        while (previousElement != null) {
+            if (previousElement instanceof PsiWhiteSpace) {
+                previousElement = psiFile.findElementAt(previousElement.getTextRange().getStartOffset() - 1);
+            } else {
+                switch (previousElement.getText()) {
+                    case "id":
+                        return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
     @Nullable
     public static String determineDeclarationType(GraqlIdentifier identifier) {
         PsiFile psiFile = identifier.getContainingFile();

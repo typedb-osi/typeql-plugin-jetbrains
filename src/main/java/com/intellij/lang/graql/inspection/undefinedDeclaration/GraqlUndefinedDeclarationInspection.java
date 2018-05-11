@@ -9,10 +9,13 @@ import com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 /**
  * @author github.com/BFergerson
  */
 public class GraqlUndefinedDeclarationInspection extends LocalInspectionTool {
+    private final static Pattern GRAQL_TEMPLATE_ID = Pattern.compile("<.+>");
 
     @NotNull
     @Override
@@ -23,8 +26,11 @@ public class GraqlUndefinedDeclarationInspection extends LocalInspectionTool {
             public void visitIdentifier(@NotNull GraqlIdentifier identifier) {
                 GraqlIdentifier declaration = GraqlPsiImplUtil.findDeclaration(identifier.getProject(), identifier.getText());
                 if (declaration == null) {
-                    holder.registerProblem(identifier, "Concept <code>#ref</code> has not been defined",
-                            ProblemHighlightType.GENERIC_ERROR);
+                    if (!GRAQL_TEMPLATE_ID.matcher(identifier.getText()).find()
+                            && !GraqlPsiImplUtil.isIdIdentifier(identifier)) {
+                        holder.registerProblem(identifier, "Concept <code>#ref</code> has not been defined",
+                                ProblemHighlightType.GENERIC_ERROR);
+                    }
                 }
             }
         };
