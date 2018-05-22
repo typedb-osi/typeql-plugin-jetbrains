@@ -49,7 +49,8 @@ public class GraqlUnplayedRoleInspection extends LocalInspectionTool {
                                 }
                             }
 
-                            if (!problemAlreadyRegistered) {
+                            if (!problemAlreadyRegistered
+                                    && declaration.getContainingFile().isEquivalentTo(identifier.getContainingFile())) {
                                 holder.registerProblem(declaration, getDescriptionTemplate());
                             }
                         }

@@ -57,7 +57,7 @@ public class GraqlPsiImplUtil {
                     case "relates":
                         return "relates";
                     default:
-                        throw new RuntimeException("what?");
+                        return null;
                 }
             }
         }
