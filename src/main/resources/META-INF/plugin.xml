@@ -39,6 +39,8 @@
                 implementation="com.intellij.lang.graql.inspection.unusedDeclaration.GraqlUnusedDeclarationProvider"/>
         <inspectionToolProvider
                 implementation="com.intellij.lang.graql.inspection.undefinedDeclaration.GraqlUndefinedDeclarationProvider"/>
+        <inspectionToolProvider
+                implementation="com.intellij.lang.graql.inspection.duplicateDeclaration.GraqlDuplicateDeclarationProvider"/>
     </extensions>
 
 </idea-plugin>
