@@ -44,6 +44,27 @@ public class GraqlPsiImplUtil {
     }
 
     @Nullable
+    public static String determineUsageType(GraqlIdentifier identifier) {
+        PsiFile psiFile = identifier.getContainingFile();
+        PsiElement previousElement = psiFile.findElementAt(identifier.getTextRange().getStartOffset() - 1);
+        while (previousElement != null) {
+            if (previousElement instanceof PsiWhiteSpace) {
+                previousElement = psiFile.findElementAt(previousElement.getTextRange().getStartOffset() - 1);
+            } else {
+                switch (previousElement.getText()) {
+                    case "plays":
+                        return "plays";
+                    case "relates":
+                        return "relates";
+                    default:
+                        throw new RuntimeException("what?");
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     public static String determineDeclarationType(GraqlIdentifier identifier) {
         PsiFile psiFile = identifier.getContainingFile();
         PsiElement nextElement = psiFile.findElementAt(identifier.getTextRange().getEndOffset() + 1);

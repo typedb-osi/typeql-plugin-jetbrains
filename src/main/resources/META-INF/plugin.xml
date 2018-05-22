@@ -41,6 +41,8 @@
                 implementation="com.intellij.lang.graql.inspection.undefinedDeclaration.GraqlUndefinedDeclarationProvider"/>
         <inspectionToolProvider
                 implementation="com.intellij.lang.graql.inspection.duplicateDeclaration.GraqlDuplicateDeclarationProvider"/>
+        <inspectionToolProvider
+                implementation="com.intellij.lang.graql.inspection.unplayedRole.GraqlUnplayedRoleProvider"/>
     </extensions>
 
 </idea-plugin>
