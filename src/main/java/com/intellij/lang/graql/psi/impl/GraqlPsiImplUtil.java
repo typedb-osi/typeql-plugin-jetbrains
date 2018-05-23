@@ -56,6 +56,8 @@ public class GraqlPsiImplUtil {
                         return "plays";
                     case "relates":
                         return "relates";
+                    case "has":
+                        return "has";
                     default:
                         return null;
                 }

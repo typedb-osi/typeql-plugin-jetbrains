@@ -43,6 +43,8 @@
                 implementation="com.intellij.lang.graql.inspection.duplicateDeclaration.GraqlDuplicateDeclarationProvider"/>
         <inspectionToolProvider
                 implementation="com.intellij.lang.graql.inspection.unplayedRole.GraqlUnplayedRoleProvider"/>
+        <inspectionToolProvider
+                implementation="com.intellij.lang.graql.inspection.invalidTypeUsage.GraqlInvalidTypeUsageProvider"/>
     </extensions>
 
 </idea-plugin>
