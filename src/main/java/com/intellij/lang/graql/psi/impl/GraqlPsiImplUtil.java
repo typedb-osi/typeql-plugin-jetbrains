@@ -190,6 +190,9 @@ public class GraqlPsiImplUtil {
                                 break;
                             }
                         }
+                        if (nextElement == null) {
+                            result.add(identifier); //reached end of file; is usage
+                        }
                     }
                 }
             }
