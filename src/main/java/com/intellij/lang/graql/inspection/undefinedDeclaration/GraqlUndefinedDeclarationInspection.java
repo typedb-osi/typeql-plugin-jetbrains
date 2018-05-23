@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  * @author github.com/BFergerson
  */
 public class GraqlUndefinedDeclarationInspection extends LocalInspectionTool {
+
     private final static Pattern GRAQL_TEMPLATE_ID = Pattern.compile("<.+>");
 
     @NotNull
@@ -28,7 +29,7 @@ public class GraqlUndefinedDeclarationInspection extends LocalInspectionTool {
                 if (declaration == null && identifier.getParent() != null) {
                     if (!GRAQL_TEMPLATE_ID.matcher(identifier.getParent().getText()).find()
                             && !GraqlPsiImplUtil.isIdIdentifier(identifier)) {
-                        holder.registerProblem(identifier, 
+                        holder.registerProblem(identifier,
                                 "Concept <code>#ref</code> has not been defined",
                                 ProblemHighlightType.GENERIC_ERROR);
                     }
