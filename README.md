@@ -6,8 +6,13 @@ Basic support for the Graql language (http://grakn.ai)
 - Find usages support
 - Basic code completion
 - Code commenting
-- Undefined concept declaration inspection
-- Unused attribute/role declaration inspection
+
+### Inspections
+- Undefined concept declaration
+- Unused attribute/role declaration
+- Duplicate concept declaration
+- Unplayed role declaration
+- Invalid concept type usage
 
 ## Screencast
 ![Example](https://i.imgur.com/45bS8au.gif)
