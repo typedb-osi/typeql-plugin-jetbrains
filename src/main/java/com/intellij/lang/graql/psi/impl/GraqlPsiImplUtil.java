@@ -13,6 +13,7 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -40,6 +41,29 @@ public class GraqlPsiImplUtil {
             }
         }
         return false;
+    }
+
+    @Nullable
+    public static String determineUsageType(GraqlIdentifier identifier) {
+        PsiFile psiFile = identifier.getContainingFile();
+        PsiElement previousElement = psiFile.findElementAt(identifier.getTextRange().getStartOffset() - 1);
+        while (previousElement != null) {
+            if (previousElement instanceof PsiWhiteSpace) {
+                previousElement = psiFile.findElementAt(previousElement.getTextRange().getStartOffset() - 1);
+            } else {
+                switch (previousElement.getText()) {
+                    case "plays":
+                        return "plays";
+                    case "relates":
+                        return "relates";
+                    case "has":
+                        return "has";
+                    default:
+                        return null;
+                }
+            }
+        }
+        return null;
     }
 
     @Nullable
@@ -78,6 +102,17 @@ public class GraqlPsiImplUtil {
 
     @Nullable
     public static GraqlIdentifier findDeclaration(Project project, String name) {
+        List<GraqlIdentifier> declarations = findDeclarations(project, name);
+        if (declarations.isEmpty()) {
+            return null;
+        } else {
+            return declarations.get(0);
+        }
+    }
+
+    @NotNull
+    public static List<GraqlIdentifier> findDeclarations(Project project, String name) {
+        List<GraqlIdentifier> declarations = new ArrayList<>();
         Collection<VirtualFile> virtualFiles =
                 FileTypeIndex.getFiles(GraqlFileType.INSTANCE, GlobalSearchScope.allScope(project));
         for (VirtualFile virtualFile : virtualFiles) {
@@ -87,7 +122,6 @@ public class GraqlPsiImplUtil {
                         graqlFile, GraqlIdentifier.class);
                 for (GraqlIdentifier identifier : identifiers) {
                     if (name.equals(identifier.getName())) {
-
                         boolean isUsage = false;
                         PsiFile psiFile = identifier.getContainingFile();
                         PsiElement nextElement = psiFile.findElementAt(identifier.getTextRange().getEndOffset() + 1);
@@ -100,7 +134,7 @@ public class GraqlPsiImplUtil {
                                         nextElement = psiFile.findElementAt(nextElement.getTextRange().getEndOffset() + 1);
                                         break;
                                     case "sub":
-                                        return identifier;
+                                        declarations.add(identifier);
                                     default:
                                         isUsage = true;
                                 }
@@ -113,7 +147,7 @@ public class GraqlPsiImplUtil {
                 }
             }
         }
-        return null;
+        return declarations;
     }
 
     public static List<GraqlIdentifier> findUsages(Project project, String name) {
@@ -155,6 +189,9 @@ public class GraqlPsiImplUtil {
                             if (isDeclaration || isUsage) {
                                 break;
                             }
+                        }
+                        if (nextElement == null) {
+                            result.add(identifier); //reached end of file; is usage
                         }
                     }
                 }

@@ -2725,7 +2725,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // labelOrVar? property (','? property blockContents?)*
+  // labelOrVar? property (','? (property|statement))*
   public static boolean varPattern(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "varPattern")) return false;
     boolean r;
@@ -2744,7 +2744,7 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (','? property blockContents?)*
+  // (','? (property|statement))*
   private static boolean varPattern_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "varPattern_2")) return false;
     int c = current_position_(b);
@@ -2756,14 +2756,13 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // ','? property blockContents?
+  // ','? (property|statement)
   private static boolean varPattern_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "varPattern_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = varPattern_2_0_0(b, l + 1);
-    r = r && property(b, l + 1);
-    r = r && varPattern_2_0_2(b, l + 1);
+    r = r && varPattern_2_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2775,11 +2774,15 @@ public class GraqlParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // blockContents?
-  private static boolean varPattern_2_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "varPattern_2_0_2")) return false;
-    blockContents(b, l + 1);
-    return true;
+  // property|statement
+  private static boolean varPattern_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "varPattern_2_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = property(b, l + 1);
+    if (!r) r = statement(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // LBRACE patterns RBRACE
