@@ -1,8 +1,5 @@
 package com.intellij.lang.graql.reference;
 
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.lang.graql.GraqlFileType;
 import com.intellij.lang.graql.psi.GraqlIdentifier;
 import com.intellij.lang.graql.psi.impl.GraqlPsiImplUtil;
 import com.intellij.openapi.project.Project;
@@ -13,9 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author github.com/BFergerson
@@ -57,21 +52,7 @@ public class GraqlReference extends PsiReferenceBase<GraqlIdentifier> implements
     @NotNull
     @Override
     public Object[] getVariants() {
-        Project project = myElement.getProject();
-        List<LookupElement> variants = new ArrayList<>();
-        List<GraqlIdentifier> identifiers = GraqlPsiImplUtil.findIdentifiers(project);
-        Set<String> distinctVariants = new HashSet<>();
-
-        for (GraqlIdentifier identifier : identifiers) {
-            if (!distinctVariants.contains(identifier.getText())) {
-                distinctVariants.add(identifier.getText());
-                variants.add(LookupElementBuilder.create(identifier).
-                        withIcon(GraqlFileType.INSTANCE.getIcon()).
-                        withTypeText("entity|relationship|role|attribute") //todo: more specific
-                );
-            }
-        }
-        return variants.toArray();
+        return new Object[0];
     }
 
 }
