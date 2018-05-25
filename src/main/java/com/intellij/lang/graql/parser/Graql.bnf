@@ -175,7 +175,7 @@ andPattern ::= LBRACE patterns RBRACE
 orPattern ::= pattern or_keyword pattern
 
 varPatterns ::= (varPattern ';'?)+
-varPattern ::= labelOrVar? property (','? property blockContents?)*
+varPattern ::= labelOrVar? property (','? (property|statement))*
 
 property ::= isa_keyword labelOrVar             // isa
     | isa_keyword escapedExpression           // isa
