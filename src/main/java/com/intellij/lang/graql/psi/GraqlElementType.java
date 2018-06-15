@@ -6,8 +6,6 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * todo: description
- *
  * @author github.com/BFergerson
  */
 public class GraqlElementType extends IElementType {
