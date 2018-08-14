@@ -39,7 +39,7 @@ public class GraqlFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return IconLoader.findIcon("/icons/bot.png");
+        return IconLoader.getIcon("/icons/grakn.png");
     }
 
 }
