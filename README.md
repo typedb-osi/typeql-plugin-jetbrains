@@ -26,7 +26,7 @@ Build the plugin zip file:
 $ ./gradlew buildPlugin
 ```
 
-Install the plugin from `./build/distributions/Jetbrains-TypeQL-Plugin-*.zip`:
+Install the plugin from `./build/distributions/typeql-plugin-jetbrains-*.zip`:
 
     Preferences → Plugins → Install plugin from disk
 
@@ -35,7 +35,7 @@ Install the plugin from `./build/distributions/Jetbrains-TypeQL-Plugin-*.zip`:
 Execute an IntelliJ IDEA instance with the plugin you're developing installed:
 
 ```bash
-$ ./gradlew runIdea
+$ ./gradlew runIde
 ```
 
 Run the tests:
