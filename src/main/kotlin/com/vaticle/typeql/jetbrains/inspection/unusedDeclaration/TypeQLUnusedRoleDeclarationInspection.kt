@@ -25,17 +25,10 @@ class TypeQLUnusedRoleDeclarationInspection : LocalInspectionTool() {
                         if ("role" == type) {
                             val usages = TypeQLPsiUtils.findUsages(declaration)
                             if (usages.isEmpty()) {
-//                                if (declaration is PsiTypeConstraint) {
-//                                    holder.registerProblem(
-//                                        declaration.getFirstChild(),
-//                                        "Role <code>#ref</code> is never used"
-//                                    )
-//                                } else {
                                 holder.registerProblem(
                                     declaration.firstChild.nextSibling.nextSibling,
                                     "Role <code>#ref</code> is never used"
                                 )
-//                                }
                             }
                         }
                     }
