@@ -1,5 +1,4 @@
-# IntelliJ project files
+.gradle
 .idea
-out
-/.gradle/
-/build/
+.qodana
+build
