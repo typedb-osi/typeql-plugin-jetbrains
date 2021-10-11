@@ -1,50 +1,42 @@
 <idea-plugin>
-    <id>com.intellij.lang.graql</id>
-    <name>Graql</name>
-    <version>1.4.1</version>
-    <vendor email="support@sourceplusplus.com" url="https://sourceplusplus.com">Source++</vendor>
+    <id>com.intellij.lang.typeql</id>
+    <name>TypeQL</name>
+    <vendor email="community@vaticle.com" url="https://vaticle.com">Vaticle</vendor>
 
-    <description><![CDATA[
-      Graql language support
-    ]]></description>
-
-    <change-notes><![CDATA[
-    ]]>
-    </change-notes>
-
-    <idea-version since-build="145.0"/>
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory implementation="com.intellij.lang.graql.GraqlFileTypeFactory"/>
-        <lang.syntaxHighlighterFactory language="Graql"
-                                       implementationClass="com.intellij.lang.graql.highlighter.GraqlSyntaxHighlighterFactory"/>
-        <lang.parserDefinition language="Graql"
-                               implementationClass="com.intellij.lang.graql.GraqlParserDefinition"/>
-        <psi.referenceContributor language="Graql"
-                                  order="first"
-                                  implementation="com.intellij.lang.graql.reference.GraqlReferenceContributor"/>
-        <lang.findUsagesProvider language="Graql"
-                                 implementationClass="com.intellij.lang.graql.usage.GraqlFindUsagesProvider"/>
-        <lang.refactoringSupport language="Graql"
-                                 implementationClass="com.intellij.lang.graql.refactor.GraqlRefactoringSupportProvider"/>
-        <lang.namesValidator language="Graql"
-                             implementationClass="com.intellij.lang.graql.refactor.GraqlNamesValidator"/>
-        <completion.contributor language="Graql"
-                                implementationClass="com.intellij.lang.graql.completion.GraqlCompletionContributor"/>
-        <lang.commenter language="Graql" implementationClass="com.intellij.lang.graql.refactor.GraqlCommenter"/>
+        <fileType name="TypeQL" implementationClass="com.vaticle.typeql.jetbrains.TypeQLFileType" fieldName="INSTANCE"
+                  language="TypeQL" extensions="tql"/>
+        <fileTypeFactory implementation="com.vaticle.typeql.jetbrains.TypeQLFileTypeFactory"/>
+        <lang.syntaxHighlighterFactory language="TypeQL"
+                                       implementationClass="com.vaticle.typeql.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="com.vaticle.typeql.jetbrains.highlighter.TypeQLColorSettingsPage"/>
+        <lang.parserDefinition language="TypeQL"
+                               implementationClass="com.vaticle.typeql.jetbrains.TypeQLParserDefinition"/>
+        <psi.referenceContributor language="TypeQL"
+                                  implementation="com.vaticle.typeql.jetbrains.reference.TypeQLReferenceContributor"/>
+        <lang.findUsagesProvider language="TypeQL"
+                                 implementationClass="com.vaticle.typeql.jetbrains.usage.TypeQLFindUsagesProvider"/>
+        <lang.refactoringSupport language="TypeQL"
+                                 implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
+        <lang.namesValidator language="TypeQL"
+                             implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLNamesValidator"/>
+        <completion.contributor language="TypeQL"
+                                implementationClass="com.vaticle.typeql.jetbrains.completion.TypeQLCompletionContributor"/>
+        <lang.commenter language="TypeQL" implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLCommenter"/>
 
         <!-- inspections -->
         <inspectionToolProvider
-                implementation="com.intellij.lang.graql.inspection.unusedDeclaration.GraqlUnusedDeclarationProvider"/>
+                implementation="com.vaticle.typeql.jetbrains.inspection.unusedDeclaration.TypeQLUnusedDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.intellij.lang.graql.inspection.undefinedDeclaration.GraqlUndefinedDeclarationProvider"/>
+                implementation="com.vaticle.typeql.jetbrains.inspection.undefinedDeclaration.TypeQLUndefinedDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.intellij.lang.graql.inspection.duplicateDeclaration.GraqlDuplicateDeclarationProvider"/>
+                implementation="com.vaticle.typeql.jetbrains.inspection.duplicateDeclaration.TypeQLDuplicateDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.intellij.lang.graql.inspection.unplayedRole.GraqlUnplayedRoleProvider"/>
+                implementation="com.vaticle.typeql.jetbrains.inspection.unplayedRole.TypeQLUnplayedRoleProvider"/>
         <inspectionToolProvider
-                implementation="com.intellij.lang.graql.inspection.invalidTypeUsage.GraqlInvalidTypeUsageProvider"/>
+                implementation="com.vaticle.typeql.jetbrains.inspection.invalidTypeUsage.TypeQLInvalidTypeUsageProvider"/>
     </extensions>
 
 </idea-plugin>
