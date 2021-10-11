@@ -47,5 +47,6 @@ $ ./gradlew test
 ## Information
 
 For more information about how this plugin works and how to add additional functionality please see:
+ - https://github.com/JetBrains/intellij-platform-plugin-template
  - https://www.jetbrains.org/intellij/sdk/docs/basics.html
  - https://www.jetbrains.org/intellij/sdk/docs/tutorials/custom_language_support_tutorial.html
