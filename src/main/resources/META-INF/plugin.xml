@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.intellij.lang.typeql</id>
     <name>TypeQL</name>
-    <vendor email="community@vaticle.com" url="https://vaticle.com">Vaticle</vendor>
+    <vendor email="community@typedb.org" url="https://typedb.org">typedb-osi</vendor>
 
     <depends>com.intellij.modules.lang</depends>
 
