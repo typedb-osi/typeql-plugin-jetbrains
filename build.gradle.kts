@@ -124,8 +124,8 @@ tasks {
     }
 
     generateGrammarSource {
-        outputDirectory = file("build/generated-src/antlr/main/com/vaticle/typeql/jetbrains")
-        arguments = mutableListOf("-package", "com.vaticle.typeql.jetbrains", "-visitor")
+        outputDirectory = file("build/generated-src/antlr/main/org/typedb/typeql/plugin/jetbrains")
+        arguments = mutableListOf("-package", "org.typedb.typeql.plugin.jetbrains", "-visitor")
     }
     getByName("compileKotlin").dependsOn("generateGrammarSource")
 }
