@@ -1,42 +1,42 @@
 <idea-plugin>
-    <id>com.intellij.lang.typeql</id>
+    <id>org.typedb.typeql.plugin.jetbrains</id>
     <name>TypeQL</name>
     <vendor email="community@typedb.org" url="https://typedb.org">typedb-osi</vendor>
 
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="TypeQL" implementationClass="com.vaticle.typeql.jetbrains.TypeQLFileType" fieldName="INSTANCE"
+        <fileType name="TypeQL" implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFileType" fieldName="INSTANCE"
                   language="TypeQL" extensions="tql"/>
-        <fileTypeFactory implementation="com.vaticle.typeql.jetbrains.TypeQLFileTypeFactory"/>
+        <fileTypeFactory implementation="org.typedb.typeql.plugin.jetbrains.TypeQLFileTypeFactory"/>
         <lang.syntaxHighlighterFactory language="TypeQL"
-                                       implementationClass="com.vaticle.typeql.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
-        <colorSettingsPage implementation="com.vaticle.typeql.jetbrains.highlighter.TypeQLColorSettingsPage"/>
+                                       implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLColorSettingsPage"/>
         <lang.parserDefinition language="TypeQL"
-                               implementationClass="com.vaticle.typeql.jetbrains.TypeQLParserDefinition"/>
+                               implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition"/>
         <psi.referenceContributor language="TypeQL"
-                                  implementation="com.vaticle.typeql.jetbrains.reference.TypeQLReferenceContributor"/>
+                                  implementation="org.typedb.typeql.plugin.jetbrains.reference.TypeQLReferenceContributor"/>
         <lang.findUsagesProvider language="TypeQL"
-                                 implementationClass="com.vaticle.typeql.jetbrains.usage.TypeQLFindUsagesProvider"/>
+                                 implementationClass="org.typedb.typeql.plugin.jetbrains.usage.TypeQLFindUsagesProvider"/>
         <lang.refactoringSupport language="TypeQL"
-                                 implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
+                                 implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
         <lang.namesValidator language="TypeQL"
-                             implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLNamesValidator"/>
+                             implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>
         <completion.contributor language="TypeQL"
-                                implementationClass="com.vaticle.typeql.jetbrains.completion.TypeQLCompletionContributor"/>
-        <lang.commenter language="TypeQL" implementationClass="com.vaticle.typeql.jetbrains.refactor.TypeQLCommenter"/>
+                                implementationClass="org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionContributor"/>
+        <lang.commenter language="TypeQL" implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLCommenter"/>
 
         <!-- inspections -->
         <inspectionToolProvider
-                implementation="com.vaticle.typeql.jetbrains.inspection.unusedDeclaration.TypeQLUnusedDeclarationProvider"/>
+                implementation="org.typedb.typeql.plugin.jetbrains.inspection.unusedDeclaration.TypeQLUnusedDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.vaticle.typeql.jetbrains.inspection.undefinedDeclaration.TypeQLUndefinedDeclarationProvider"/>
+                implementation="org.typedb.typeql.plugin.jetbrains.inspection.undefinedDeclaration.TypeQLUndefinedDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.vaticle.typeql.jetbrains.inspection.duplicateDeclaration.TypeQLDuplicateDeclarationProvider"/>
+                implementation="org.typedb.typeql.plugin.jetbrains.inspection.duplicateDeclaration.TypeQLDuplicateDeclarationProvider"/>
         <inspectionToolProvider
-                implementation="com.vaticle.typeql.jetbrains.inspection.unplayedRole.TypeQLUnplayedRoleProvider"/>
+                implementation="org.typedb.typeql.plugin.jetbrains.inspection.unplayedRole.TypeQLUnplayedRoleProvider"/>
         <inspectionToolProvider
-                implementation="com.vaticle.typeql.jetbrains.inspection.invalidTypeUsage.TypeQLInvalidTypeUsageProvider"/>
+                implementation="org.typedb.typeql.plugin.jetbrains.inspection.invalidTypeUsage.TypeQLInvalidTypeUsageProvider"/>
     </extensions>
 
 </idea-plugin>
