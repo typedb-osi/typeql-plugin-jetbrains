@@ -134,13 +134,6 @@ jobs:
       - name: Build Plugin
         run: ./gradlew buildPlugin
 
-      # Store built plugin as an artifact for downloading
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2.2.4
-        with:
-          name: "${{ steps.properties.outputs.name }} - ${{ steps.properties.outputs.version }}"
-          path: ./build/distributions/*
-
   # Prepare a draft release for GitHub Releases page for the manual verification
   # If accepted and published, release workflow would be triggered
   releaseDraft:
