@@ -9,11 +9,11 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
+import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
-import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import java.util.function.Consumer
 import java.util.stream.Collectors
 
@@ -275,8 +275,8 @@ object TypeQLPsiUtils {
         element: PsiElement,
         ruleElementType: RuleIElementType
     ): PsiTypeQLElement? {
-        var parent = element
-        while (parent.parent.also { parent = it } != null) {
+        var parent: PsiElement? = element
+        while (parent?.parent.also { parent = it } != null) {
             if (parent is PsiTypeQLElement) {
                 val compositeElement = (parent as PsiTypeQLElement).node
                 if (compositeElement.elementType === ruleElementType) {
