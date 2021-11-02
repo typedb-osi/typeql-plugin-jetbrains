@@ -3,6 +3,8 @@
 # typeql-plugin-jetbrains Changelog
 
 ## [Unreleased]
+### Fixed
+- [Usage highlighting off](#8)
 
 ## [0.1.1]
 ### Added
