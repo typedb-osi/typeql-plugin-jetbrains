@@ -2,7 +2,7 @@
 
 <!-- Plugin description -->
 
-Basic support for the [TypeQL language](https://github.com/typedb/typeql) on JetBrains-based IDEs
+Basic support for the [TypeQL language](https://github.com/vaticle/typeql) on JetBrains-based IDEs
 
 <!-- Plugin description end -->
 
