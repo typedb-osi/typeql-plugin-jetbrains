@@ -2,13 +2,13 @@
 
 <!-- Plugin description -->
 
-Basic support for the TypeQL language (https://vaticle.com) on JetBrains-based IDEs
+Basic support for the [TypeQL language](https://github.com/typedb/typeql) on JetBrains-based IDEs
 
 <!-- Plugin description end -->
 
 ## Installation
 
-This plugin is published on the [JetBrains Plugin Repository](#todo):
+This plugin is published on the [JetBrains Plugin Repository](https://plugins.jetbrains.com/plugin/17912-typeql):
 
     Preferences → Plugins → Browse Repositories → Search for "TypeQL"
 
