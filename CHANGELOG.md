@@ -4,7 +4,7 @@
 
 ## [Unreleased]
 ### Fixed
-- [Usage highlighting off](#8)
+- [Usage highlighting off](https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/8)
 
 ## [0.1.1]
 ### Added
