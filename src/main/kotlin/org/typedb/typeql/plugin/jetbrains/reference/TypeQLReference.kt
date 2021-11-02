@@ -5,12 +5,22 @@ import com.intellij.psi.*
 import com.intellij.util.IncorrectOperationException
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
     PsiReferenceBase<PsiTypeQLElement?>(element, textRange), PsiPolyVariantReference {
+
+    override fun getRangeInElement(): TextRange {
+        return if (element is PsiOwnsTypeConstraint) {
+            TextRange(super.getRangeInElement().startOffset + 1, super.getRangeInElement().endOffset + 1)
+        } else {
+            super.getRangeInElement()
+        }
+    }
+
     @Throws(IncorrectOperationException::class)
     override fun handleElementRename(newElementName: String): PsiElement {
         return TypeQLPsiUtils.setName(myElement!!, newElementName)
