@@ -1,4 +1,4 @@
-# JetBrains-TypeQL-Plugin
+# TypeQL Plugin for JetBrains
 
 <!-- Plugin description -->
 
