@@ -7,7 +7,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="TypeQL" implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFileType" fieldName="INSTANCE"
-                  language="TypeQL" extensions="tql"/>
+                  language="TypeQL" extensions="tql;typeql"/>
         <fileTypeFactory implementation="org.typedb.typeql.plugin.jetbrains.TypeQLFileTypeFactory"/>
         <lang.syntaxHighlighterFactory language="TypeQL"
                                        implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>

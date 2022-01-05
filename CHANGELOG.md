@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 ### Fixed
+- Added `.typeql` extension to supported file types
 - [Usage highlighting off](https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/8)
 
 ## [0.1.1]
