@@ -1,5 +1,6 @@
 package org.typedb.typeql.plugin.jetbrains.highlighter
 
+import com.intellij.openapi.editor.colors.ColorKey
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
 import com.intellij.openapi.options.colors.AttributesDescriptor
