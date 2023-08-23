@@ -22,24 +22,22 @@ class TypeQLColorSettingsPage : ColorSettingsPage {
     }
 
     override fun getDemoText(): String {
-        //todo: better demo text; doesn't show numbers/text/bad chars/etc
-        return """#Example comment
-define
+        return """define
 
-school-mutuality sub relation,
-  relates schoolmate,
-  relates mutual-school;
-
-people-gone-to-the-same-school sub rule,
-  when {
-    (student: ${"$"}p1, enrolled-course: ${"$"}c1) isa school-course-enrollment;
-    (student: ${"$"}p2, enrolled-course: ${"$"}c2) isa school-course-enrollment;
-    (offered-course: ${"$"}c1, offering-school: ${"$"}s) isa school-course-offering;
-    (offered-course: ${"$"}c2, offering-school: ${"$"}s) isa school-course-offering;
-    ${"$"}p1 != ${"$"}p2;
-  }, then {
-    (schoolmate: ${"$"}p1, schoolmate: ${"$"}p2, mutual-school: ${"$"}s) isa school-mutuality;
-  };"""
+person sub entity, owns age, owns name;
+    name sub attribute, value string;
+    age sub attribute, value long;
+    
+# Lorem ipsum dolor sit amet
+match
+${"$"}p isa person, has name "Kevin Morrison", has age != 25;
+${"$"}c isa car, has reg-date < 2020-02-29T18:01:28.577;
+{ ${"$"}c has reg "VATICLE1"; } or { ${"$"}c has reg "TYPEDB1"; };
+(owner: ${"$"}p, property: ${"$"}c) isa ownership, has certified true;
+${"$"}p has age = 4 + 4;
+group ${"$"}p;
+sort asc;
+"""
     }
 
     override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? {
@@ -67,6 +65,9 @@ people-gone-to-the-same-school sub rule,
             AttributesDescriptor("Id", TypeQLSyntaxHighlighter.Companion.ID),
             AttributesDescriptor("Thing", TypeQLSyntaxHighlighter.Companion.THING),
             AttributesDescriptor("Var", TypeQLSyntaxHighlighter.Companion.VAR),
+            AttributesDescriptor("Boolean", TypeQLSyntaxHighlighter.Companion.BOOLEAN),
+            AttributesDescriptor("Aggregate", TypeQLSyntaxHighlighter.Companion.AGGREGATE),
+            AttributesDescriptor("Type", TypeQLSyntaxHighlighter.Companion.TYPE),
             AttributesDescriptor("Bad Value", TypeQLSyntaxHighlighter.Companion.BAD_CHARACTER)
         )
     }

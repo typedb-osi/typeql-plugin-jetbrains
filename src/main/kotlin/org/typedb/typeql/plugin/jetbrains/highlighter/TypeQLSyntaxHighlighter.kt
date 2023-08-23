@@ -34,24 +34,31 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             -> THING
 
             TypeQLLexer.DEFINE, TypeQLLexer.UNDEFINE, TypeQLLexer.MATCH, TypeQLLexer.GET, TypeQLLexer.INSERT,
-                TypeQLLexer.DELETE, TypeQLLexer.COMPUTE, TypeQLLexer.OFFSET, TypeQLLexer.LIMIT, TypeQLLexer.GROUP,
+                TypeQLLexer.DELETE, TypeQLLexer.COMPUTE, TypeQLLexer.OFFSET, TypeQLLexer.LIMIT,
                 TypeQLLexer.SORT, TypeQLLexer.ASC, TypeQLLexer.DESC, TypeQLLexer.ABSTRACT, TypeQLLexer.AS,
                 TypeQLLexer.TYPE, TypeQLLexer.ISA_, TypeQLLexer.SUB_,
                 TypeQLLexer.OWNS, TypeQLLexer.PLAYS, TypeQLLexer.RELATES, TypeQLLexer.VALUE, TypeQLLexer.REGEX,
-                TypeQLLexer.WHEN, TypeQLLexer.THEN, TypeQLLexer.LONG, TypeQLLexer.DOUBLE, TypeQLLexer.STRING,
-                TypeQLLexer.BOOLEAN, TypeQLLexer.DATETIME, TypeQLLexer.HAS, TypeQLLexer.PAREN_OPEN,
-                TypeQLLexer.PAREN_CLOSE, TypeQLLexer.UNRECOGNISED, TypeQLLexer.COUNT, TypeQLLexer.NOT, TypeQLLexer.RULE,
+                TypeQLLexer.WHEN, TypeQLLexer.THEN, TypeQLLexer.HAS, TypeQLLexer.PAREN_OPEN,
+                TypeQLLexer.PAREN_CLOSE, TypeQLLexer.UNRECOGNISED, TypeQLLexer.NOT, TypeQLLexer.RULE,
                 TypeQLLexer.OR, TypeQLLexer.EQ, TypeQLLexer.NEQ, TypeQLLexer.GT, TypeQLLexer.GTE, TypeQLLexer.LT,
                 TypeQLLexer.LTE, TypeQLLexer.LIKE, TypeQLLexer.CONTAINS, TypeQLLexer.ASSIGN, TypeQLLexer.ADD,
                 TypeQLLexer.SUBTRACT, TypeQLLexer.DIVIDE, TypeQLLexer.MULTIPLY, TypeQLLexer.POWER, TypeQLLexer.MODULO,
-                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ANY_
+                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ORDER_, TypeQLLexer.ANY_
             -> KEYWORD
 
+            TypeQLLexer.COUNT, TypeQLLexer.MAX, TypeQLLexer.MIN, TypeQLLexer.MEAN, TypeQLLexer.MEDIAN, TypeQLLexer.STD,
+                TypeQLLexer.SUM, TypeQLLexer.GROUP
+            -> AGGREGATE
+
+            TypeQLLexer.LONG, TypeQLLexer.DOUBLE, TypeQLLexer.STRING, TypeQLLexer.BOOLEAN, TypeQLLexer.DATETIME
+            -> TYPE
 
             TypeQLLexer.COMMENT -> LINE_COMMENT
 
-            TypeQLLexer.LONG_, TypeQLLexer.DOUBLE_, TypeQLLexer.BOOLEAN_, TypeQLLexer.DATE_, TypeQLLexer.DATETIME_
+            TypeQLLexer.LONG_, TypeQLLexer.DOUBLE_, TypeQLLexer.DATE_, TypeQLLexer.DATETIME_
             -> NUMBER
+
+            TypeQLLexer.BOOLEAN_ -> BOOLEAN
 
             TypeQLLexer.STRING_ -> STRING
 
@@ -73,8 +80,10 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
         val ID = TextAttributesKey.createTextAttributesKey("GQL_IDENTIFIER", DefaultLanguageHighlighterColors.CONSTANT)
         val THING = TextAttributesKey.createTextAttributesKey("GQL_THING", DefaultLanguageHighlighterColors.IDENTIFIER)
         val VAR = TextAttributesKey.createTextAttributesKey("GQL_VAR", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
-        val BAD_CHARACTER =
-            TextAttributesKey.createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+        val BOOLEAN = TextAttributesKey.createTextAttributesKey("GQL_BOOLEAN", DefaultLanguageHighlighterColors.PARAMETER)
+        val AGGREGATE = TextAttributesKey.createTextAttributesKey("GQL_AGGREGATE", DefaultLanguageHighlighterColors.LABEL)
+        val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+        val TYPE = TextAttributesKey.createTextAttributesKey("GQL_TYPE", DefaultLanguageHighlighterColors.MARKUP_TAG)
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(
                 TypeQLLanguage.INSTANCE, TypeQLLexer.tokenNames, TypeQLLexer.ruleNames
