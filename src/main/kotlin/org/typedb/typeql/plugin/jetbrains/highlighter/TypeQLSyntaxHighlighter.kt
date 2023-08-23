@@ -43,7 +43,8 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
                 TypeQLLexer.PAREN_CLOSE, TypeQLLexer.UNRECOGNISED, TypeQLLexer.COUNT, TypeQLLexer.NOT, TypeQLLexer.RULE,
                 TypeQLLexer.OR, TypeQLLexer.EQ, TypeQLLexer.NEQ, TypeQLLexer.GT, TypeQLLexer.GTE, TypeQLLexer.LT,
                 TypeQLLexer.LTE, TypeQLLexer.LIKE, TypeQLLexer.CONTAINS, TypeQLLexer.ASSIGN, TypeQLLexer.ADD,
-                TypeQLLexer.SUBTRACT, TypeQLLexer.DIVIDE, TypeQLLexer.MULTIPLY, TypeQLLexer.POWER, TypeQLLexer.MODULO
+                TypeQLLexer.SUBTRACT, TypeQLLexer.DIVIDE, TypeQLLexer.MULTIPLY, TypeQLLexer.POWER, TypeQLLexer.MODULO,
+                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ANY_
             -> KEYWORD
 
 
@@ -74,8 +75,6 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
         val VAR = TextAttributesKey.createTextAttributesKey("GQL_VAR", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
         val BAD_CHARACTER =
             TextAttributesKey.createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
-
-
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(
                 TypeQLLanguage.INSTANCE, TypeQLLexer.tokenNames, TypeQLLexer.ruleNames
