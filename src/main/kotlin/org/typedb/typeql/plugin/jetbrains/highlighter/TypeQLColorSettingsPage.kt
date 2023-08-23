@@ -65,6 +65,7 @@ people-gone-to-the-same-school sub rule,
             AttributesDescriptor("Number", TypeQLSyntaxHighlighter.Companion.NUMBER),
             AttributesDescriptor("Id", TypeQLSyntaxHighlighter.Companion.ID),
             AttributesDescriptor("Thing", TypeQLSyntaxHighlighter.Companion.THING),
+            AttributesDescriptor("Var", TypeQLSyntaxHighlighter.Companion.VAR),
             AttributesDescriptor("Bad Value", TypeQLSyntaxHighlighter.Companion.BAD_CHARACTER)
         )
     }
