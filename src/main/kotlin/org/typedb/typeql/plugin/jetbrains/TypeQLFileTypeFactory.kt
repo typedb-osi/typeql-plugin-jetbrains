@@ -8,6 +8,6 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
  */
 class TypeQLFileTypeFactory : FileTypeFactory() {
     override fun createFileTypes(fileTypeConsumer: FileTypeConsumer) {
-        fileTypeConsumer.consume(TypeQLFileType.Companion.INSTANCE, "tql")
+        fileTypeConsumer.consume(TypeQLFileType.Util.INSTANCE, "tql")
     }
 }

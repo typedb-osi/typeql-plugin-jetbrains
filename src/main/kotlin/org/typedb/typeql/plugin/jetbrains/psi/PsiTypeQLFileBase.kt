@@ -17,15 +17,15 @@ import javax.swing.Icon
 class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, TypeQLLanguage.INSTANCE),
     ScopeNode {
     override fun getFileType(): FileType {
-        return TypeQLFileType.Companion.INSTANCE
+        return TypeQLFileType.Util.INSTANCE
     }
 
     override fun toString(): String {
         return "TypeQL Language file"
     }
 
-    override fun getIcon(flags: Int): Icon? {
-        return IconLoader.findIcon("/icons/typedb.svg")
+    override fun getIcon(flags: Int): Icon {
+        return IconLoader.findIcon("/icons/typedb.svg")!!
     }
 
     /**
