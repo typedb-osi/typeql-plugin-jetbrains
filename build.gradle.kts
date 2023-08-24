@@ -6,9 +6,9 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     id("antlr")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.30"
+    id("org.jetbrains.kotlin.jvm") version "1.8.0"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.1.6"
+    id("org.jetbrains.intellij") version "1.15.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.0"
     // Gradle Qodana Plugin
@@ -128,4 +128,5 @@ tasks {
         arguments = mutableListOf("-package", "org.typedb.typeql.plugin.jetbrains", "-visitor")
     }
     getByName("compileKotlin").dependsOn("generateGrammarSource")
+    getByName("compileTestKotlin").dependsOn("generateTestGrammarSource")
 }

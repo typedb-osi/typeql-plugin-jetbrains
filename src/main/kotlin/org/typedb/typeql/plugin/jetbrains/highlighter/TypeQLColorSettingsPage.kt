@@ -13,7 +13,7 @@ import javax.swing.Icon
  */
 class TypeQLColorSettingsPage : ColorSettingsPage {
     override fun getIcon(): Icon? {
-        return IconLoader.findIcon("/icons/typedb.svg")
+        return IconLoader.findIcon("/icons/typedb.svg", TypeQLColorSettingsPage::class.java.classLoader)
     }
 
     override fun getHighlighter(): SyntaxHighlighter {
