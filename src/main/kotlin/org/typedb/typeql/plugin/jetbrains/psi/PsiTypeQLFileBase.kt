@@ -25,7 +25,7 @@ class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvid
     }
 
     override fun getIcon(flags: Int): Icon {
-        return IconLoader.findIcon("/icons/typedb.svg")!!
+        return IconLoader.findIcon("/icons/typedb.svg", PsiTypeQLFileBase::class.java.classLoader)!!
     }
 
     /**

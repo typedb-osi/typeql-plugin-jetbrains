@@ -35,7 +35,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
     }
 
     override fun resolve(): PsiElement? {
-        return TypeQLPsiUtils.findDeclaration(myElement!!.project, myElement)
+        return TypeQLPsiUtils.findDeclaration(myElement!!.project, myElement!!)
     }
 
     override fun getVariants(): Array<Any> {

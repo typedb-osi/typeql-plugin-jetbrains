@@ -128,4 +128,5 @@ tasks {
         arguments = mutableListOf("-package", "org.typedb.typeql.plugin.jetbrains", "-visitor")
     }
     getByName("compileKotlin").dependsOn("generateGrammarSource")
+    getByName("compileTestKotlin").dependsOn("generateTestGrammarSource")
 }
