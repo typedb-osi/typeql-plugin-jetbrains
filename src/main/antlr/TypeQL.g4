@@ -361,6 +361,7 @@ fragment SECOND_          : [0-6][0-9] ;
 fragment SECOND_FRACTION_ : [0-9] ([0-9] ([0-9])?)?; // between 1 and 3 digits
 fragment ESCAPE_SEQ_      : '\\' . ;
 
+
 COMMENT                   : '#' .*? '\r'? ('\n' | EOF)    -> channel(HIDDEN) ;
 WS                        : [ \t\r\n]+                    -> channel(HIDDEN) ;
 UNRECOGNISED              : . ;

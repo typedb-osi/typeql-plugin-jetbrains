@@ -73,17 +73,17 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
     companion object {
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
         val LINE_COMMENT =
-            TextAttributesKey.createTextAttributesKey("LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
-        val KEYWORD = TextAttributesKey.createTextAttributesKey("GQL_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
-        val STRING = TextAttributesKey.createTextAttributesKey("GQL_STRING", DefaultLanguageHighlighterColors.STRING)
-        val NUMBER = TextAttributesKey.createTextAttributesKey("GQL_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
-        val ID = TextAttributesKey.createTextAttributesKey("GQL_IDENTIFIER", DefaultLanguageHighlighterColors.CONSTANT)
-        val THING = TextAttributesKey.createTextAttributesKey("GQL_THING", DefaultLanguageHighlighterColors.IDENTIFIER)
-        val VAR = TextAttributesKey.createTextAttributesKey("GQL_VAR", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
-        val BOOLEAN = TextAttributesKey.createTextAttributesKey("GQL_BOOLEAN", DefaultLanguageHighlighterColors.PARAMETER)
-        val AGGREGATE = TextAttributesKey.createTextAttributesKey("GQL_AGGREGATE", DefaultLanguageHighlighterColors.LABEL)
-        val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
-        val TYPE = TextAttributesKey.createTextAttributesKey("GQL_TYPE", DefaultLanguageHighlighterColors.MARKUP_TAG)
+            TextAttributesKey.createTextAttributesKey("TYPEQL_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
+        val KEYWORD = TextAttributesKey.createTextAttributesKey("TYPEQL_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+        val STRING = TextAttributesKey.createTextAttributesKey("TYPEQL_STRING", DefaultLanguageHighlighterColors.STRING)
+        val NUMBER = TextAttributesKey.createTextAttributesKey("TYPEQL_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
+        val ID = TextAttributesKey.createTextAttributesKey("TYPEQL_IDENTIFIER", DefaultLanguageHighlighterColors.CONSTANT)
+        val THING = TextAttributesKey.createTextAttributesKey("TYPEQL_THING", DefaultLanguageHighlighterColors.IDENTIFIER)
+        val VAR = TextAttributesKey.createTextAttributesKey("TYPEQL_VAR", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
+        val BOOLEAN = TextAttributesKey.createTextAttributesKey("TYPEQL_BOOLEAN", DefaultLanguageHighlighterColors.PARAMETER)
+        val AGGREGATE = TextAttributesKey.createTextAttributesKey("TYPEQL_AGGREGATE", DefaultLanguageHighlighterColors.LABEL)
+        val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("TYPEQL_SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
+        val TYPE = TextAttributesKey.createTextAttributesKey("TYPEQL_TYPE", DefaultLanguageHighlighterColors.MARKUP_TAG)
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(
                 TypeQLLanguage.INSTANCE, TypeQLLexer.tokenNames, TypeQLLexer.ruleNames
