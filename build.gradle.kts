@@ -6,7 +6,7 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     id("antlr")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.30"
+    id("org.jetbrains.kotlin.jvm") version "1.8.0"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.1.6"
     // Gradle Changelog Plugin
