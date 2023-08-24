@@ -43,7 +43,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
                 TypeQLLexer.OR, TypeQLLexer.EQ, TypeQLLexer.NEQ, TypeQLLexer.GT, TypeQLLexer.GTE, TypeQLLexer.LT,
                 TypeQLLexer.LTE, TypeQLLexer.LIKE, TypeQLLexer.CONTAINS, TypeQLLexer.ASSIGN, TypeQLLexer.ADD,
                 TypeQLLexer.SUBTRACT, TypeQLLexer.DIVIDE, TypeQLLexer.MULTIPLY, TypeQLLexer.POWER, TypeQLLexer.MODULO,
-                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ORDER_, TypeQLLexer.ANY_
+                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ORDER_
             -> KEYWORD
 
             TypeQLLexer.COUNT, TypeQLLexer.MAX, TypeQLLexer.MIN, TypeQLLexer.MEAN, TypeQLLexer.MEDIAN, TypeQLLexer.STD,

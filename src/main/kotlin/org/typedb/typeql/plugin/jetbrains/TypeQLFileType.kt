@@ -27,4 +27,8 @@ class TypeQLFileType private constructor() : LanguageFileType(TypeQLLanguage.INS
     object Util {
         val INSTANCE = TypeQLFileType()
     }
+
+    companion object {
+        val INSTANCE = Util.INSTANCE //todo: idk why this is needed
+    }
 }
