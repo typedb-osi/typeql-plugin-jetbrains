@@ -50,6 +50,8 @@ The following colours are suggested for the best experience, but are not require
 
 You can add these colours to your IDE colour scheme by going to `Preferences → Editor → Color Scheme`, downloading your current scheme. Then, add the following to the `attributes` section of the downloaded scheme:
 
+- Dark Theme
+
 ```
 <option name="TYPEQL_AGGREGATE">
       <value>
@@ -65,7 +67,6 @@ You can add these colours to your IDE colour scheme by going to `Preferences →
     <option name="TYPEQL_IDENTIFIER">
       <value>
         <option name="FOREGROUND" value="d5ccff" />
-        <option name="FONT_TYPE" value="2" />
       </value>
     </option>
     <option name="TYPEQL_KEYWORD">
@@ -103,6 +104,65 @@ You can add these colours to your IDE colour scheme by going to `Preferences →
     <option name="TYPEQL_VAR">
       <value>
         <option name="FOREGROUND" value="55eae2" />
+      </value>
+    </option>
+  </attributes>
+```
+
+- Light Theme
+
+```
+<option name="TYPEQL_AGGREGATE">
+      <value>
+        <option name="FOREGROUND" value="fb3196" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_BOOLEAN">
+      <value>
+        <option name="FOREGROUND" value="ff6b00" />
+      </value>
+    </option>
+    <option name="TYPEQL_IDENTIFIER">
+      <value>
+        <option name="FOREGROUND" value="392d67" />
+      </value>
+    </option>
+    <option name="TYPEQL_KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="fb3196" />
+      </value>
+    </option>
+    <option name="TYPEQL_LINE_COMMENT">
+      <value>
+        <option name="FOREGROUND" value="309c59" />
+      </value>
+    </option>
+    <option name="TYPEQL_NUMBER">
+      <value>
+        <option name="FOREGROUND" value="82b6ff" />
+      </value>
+    </option>
+    <option name="TYPEQL_STRING">
+      <value>
+        <option name="FOREGROUND" value="f1be05" />
+      </value>
+    </option>
+    <option name="TYPEQL_THING">
+      <value>
+        <option name="FOREGROUND" value="28c9c0" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_TYPE">
+      <value>
+        <option name="FOREGROUND" value="82b6ff" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_VAR">
+      <value>
+        <option name="FOREGROUND" value="28c9c0" />
       </value>
     </option>
   </attributes>
