@@ -20,11 +20,15 @@ class TypeQLFileType private constructor() : LanguageFileType(TypeQLLanguage.INS
         return "tql"
     }
 
-    override fun getIcon(): Icon? {
-        return IconLoader.findIcon("/icons/typedb.svg", TypeQLFileType::class.java.classLoader)
+    override fun getIcon(): Icon {
+        return IconLoader.findIcon("/icons/typedb.svg", TypeQLFileType::class.java.classLoader)!!
+    }
+
+    object Util {
+        val INSTANCE = TypeQLFileType()
     }
 
     companion object {
-        val INSTANCE = TypeQLFileType()
+        val INSTANCE = Util.INSTANCE //todo: idk why this is needed
     }
 }

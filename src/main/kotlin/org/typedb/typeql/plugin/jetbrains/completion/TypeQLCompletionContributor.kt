@@ -81,7 +81,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                     LookupElementBuilder.create(
                                         keyword!!
                                     )
-                                        .withIcon(TypeQLFileType.INSTANCE.icon)
+                                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                                         .withTypeText(keyword)
                                         .withBoldness(true)
                                 )
@@ -115,7 +115,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                         LookupElementBuilder.create(
                                             keyword!!
                                         )
-                                            .withIcon(TypeQLFileType.INSTANCE.icon)
+                                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                                             .withTypeText(keyword)
                                             .withBoldness(true)
                                     )
@@ -140,7 +140,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.INSTANCE,
+                TypeQLFileType.Util.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
@@ -150,7 +150,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                 val declarationType = TypeQLPsiUtils.determineDeclarationType(it)
                 resultSet.addElement(
                     LookupElementBuilder.create(it)
-                        .withIcon(TypeQLFileType.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                         .withTypeText(declarationType ?: "unknown")
                         .withStrikeoutness(declarationType == null)
                 )
@@ -167,7 +167,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.INSTANCE,
+                TypeQLFileType.Util.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
@@ -178,7 +178,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                 if (declarationType != null) {
                     resultSet.addElement(
                         LookupElementBuilder.create(it)
-                            .withIcon(TypeQLFileType.INSTANCE.icon)
+                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                             .withTypeText(declarationType)
                     )
                 }
@@ -191,7 +191,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                 LookupElementBuilder.create(
                     it!!
                 )
-                    .withIcon(TypeQLFileType.INSTANCE.icon)
+                    .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                     .withTypeText(it)
                     .withBoldness(true)
             )
@@ -203,7 +203,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.playsType!!)
-                        .withIcon(TypeQLFileType.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
@@ -214,7 +214,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.name!!)
-                        .withIcon(TypeQLFileType.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
@@ -223,31 +223,31 @@ class TypeQLCompletionContributor : CompletionContributor() {
     private fun includeQueryTypes(resultSet: CompletionResultSet) {
         resultSet.addElement(
             LookupElementBuilder.create("define")
-                .withIcon(TypeQLFileType.INSTANCE.icon)
+                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                 .withTypeText("define")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("compute")
-                .withIcon(TypeQLFileType.INSTANCE.icon)
+                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                 .withTypeText("compute")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("insert")
-                .withIcon(TypeQLFileType.INSTANCE.icon)
+                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                 .withTypeText("insert")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("match")
-                .withIcon(TypeQLFileType.INSTANCE.icon)
+                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                 .withTypeText("match")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("undefine")
-                .withIcon(TypeQLFileType.INSTANCE.icon)
+                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
                 .withTypeText("undefine")
                 .withBoldness(true)
         )

@@ -66,7 +66,7 @@ object TypeQLPsiUtils {
             findUsages(
                 identifier.project, identifier, identifier.scopedName,
                 FileTypeIndex.getFiles(
-                    TypeQLFileType.Companion.INSTANCE,
+                    TypeQLFileType.Util.INSTANCE,
                     GlobalSearchScope.allScope(identifier.project)
                 )
             )
@@ -190,7 +190,7 @@ object TypeQLPsiUtils {
         } else {
             findDeclarations(
                 project, identifier.scopedName, FileTypeIndex.getFiles(
-                    TypeQLFileType.Companion.INSTANCE, GlobalSearchScope.allScope(project)
+                    TypeQLFileType.Util.INSTANCE, GlobalSearchScope.allScope(project)
                 )
             )
         }
@@ -237,7 +237,7 @@ object TypeQLPsiUtils {
             listOf(identifier.containingFile.virtualFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Companion.INSTANCE,
+                TypeQLFileType.Util.INSTANCE,
                 GlobalSearchScope.allScope(identifier.project)
             )
         }
