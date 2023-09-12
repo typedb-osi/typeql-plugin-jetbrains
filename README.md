@@ -74,6 +74,11 @@ You can add these colours to your IDE colour scheme by going to `Preferences →
     <option name="FOREGROUND" value="ff7abd" />
   </value>
 </option>
+<option name="TYPEQL_ANNOTATION">
+  <value>
+    <option name="FOREGROUND" value="ffa187" />
+  </value>
+</option>
 <option name="TYPEQL_LINE_COMMENT">
   <value>
     <option name="FOREGROUND" value="4dc97c" />
@@ -131,6 +136,11 @@ You can add these colours to your IDE colour scheme by going to `Preferences →
 <option name="TYPEQL_KEYWORD">
   <value>
     <option name="FOREGROUND" value="fb3196" />
+  </value>
+</option>
+<option name="TYPEQL_ANNOTATION">
+  <value>
+    <option name="FOREGROUND" value="ff6b00" />
   </value>
 </option>
 <option name="TYPEQL_LINE_COMMENT">
