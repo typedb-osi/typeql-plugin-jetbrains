@@ -363,4 +363,4 @@ fragment ESCAPE_SEQ_      : '\\' . ;
 
 COMMENT                   : '#' .*? '\r'? ('\n' | EOF)    -> channel(HIDDEN) ;
 WS                        : [ \t\r\n]+                    -> channel(HIDDEN) ;
-UNRECOGNISED              : . ;
+UNRECOGNISED              : . ; 
