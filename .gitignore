@@ -2,5 +2,5 @@
 .idea
 .qodana
 build
-.vscode/
-bin/
+.vscode
+bin
