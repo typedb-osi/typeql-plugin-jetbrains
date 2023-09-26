@@ -74,6 +74,7 @@ sort asc;
             AttributesDescriptor("Boolean", TypeQLSyntaxHighlighter.Companion.BOOLEAN),
             AttributesDescriptor("Aggregate", TypeQLSyntaxHighlighter.Companion.AGGREGATE),
             AttributesDescriptor("Type", TypeQLSyntaxHighlighter.Companion.TYPE),
+            AttributesDescriptor("Annotation", TypeQLSyntaxHighlighter.Companion.ANNOTATION),
             //AttributesDescriptor("Bad Value", TypeQLSyntaxHighlighter.Companion.BAD_CHARACTER)
         )
 
@@ -88,6 +89,7 @@ sort asc;
             ColorDescriptor("Boolean", ColorKey.createColorKey("Orange", Color(255, 161, 135)), ColorDescriptor.Kind.FOREGROUND),
             ColorDescriptor("Aggregate", ColorKey.createColorKey("Pink", Color(255, 122, 189)), ColorDescriptor.Kind.FOREGROUND),
             ColorDescriptor("Type", ColorKey.createColorKey("Blue", Color(130, 182, 255)), ColorDescriptor.Kind.FOREGROUND),
+            ColorDescriptor("Annotation", ColorKey.createColorKey("Orange", Color(255, 161, 135)), ColorDescriptor.Kind.FOREGROUND),
             //ColorDescriptor("Bad Value", ColorKey.createColorKey("Line Comment", Color(10, 10, 10)), ColorDescriptor.Kind.FOREGROUND),
         )
     }

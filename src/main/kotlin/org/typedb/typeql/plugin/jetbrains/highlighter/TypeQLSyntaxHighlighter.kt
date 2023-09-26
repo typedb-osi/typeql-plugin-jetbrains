@@ -46,6 +46,8 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
                 TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ORDER_
             -> KEYWORD
 
+            TypeQLLexer.ANNOTATION_KEY, TypeQLLexer.ANNOTATION_UNIQUE -> ANNOTATION
+
             TypeQLLexer.COUNT, TypeQLLexer.MAX, TypeQLLexer.MIN, TypeQLLexer.MEAN, TypeQLLexer.MEDIAN, TypeQLLexer.STD,
                 TypeQLLexer.SUM, TypeQLLexer.GROUP
             -> AGGREGATE
@@ -75,6 +77,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
         val LINE_COMMENT =
             TextAttributesKey.createTextAttributesKey("TYPEQL_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT)
         val KEYWORD = TextAttributesKey.createTextAttributesKey("TYPEQL_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD)
+        val ANNOTATION = TextAttributesKey.createTextAttributesKey("TYPEQL_ANNOTATION")
         val STRING = TextAttributesKey.createTextAttributesKey("TYPEQL_STRING", DefaultLanguageHighlighterColors.STRING)
         val NUMBER = TextAttributesKey.createTextAttributesKey("TYPEQL_NUMBER", DefaultLanguageHighlighterColors.NUMBER)
         val ID = TextAttributesKey.createTextAttributesKey("TYPEQL_IDENTIFIER", DefaultLanguageHighlighterColors.CONSTANT)

@@ -252,19 +252,19 @@ object TypeQLPsiUtils {
     fun setName(element: PsiTypeQLElement, newName: String): PsiElement {
         if (element is PsiTypeConstraint) {
             val typeProperty = TypeQLPsiElementFactory.createTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), typeProperty!!.node)
+            element.getParent().node.replaceChild(element.getNode(), typeProperty.node)
         } else if (element is PsiSubTypeConstraint) {
             val subTypeProperty = TypeQLPsiElementFactory.createSubTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), subTypeProperty!!.node)
+            element.getParent().node.replaceChild(element.getNode(), subTypeProperty.node)
         } else if (element is PsiRelatesTypeConstraint) {
             val typeProperty = TypeQLPsiElementFactory.createRelatesTypeProperty(element.getProject(), newName)
             element.getNode().replaceChild(
                 element.getFirstChild().nextSibling.nextSibling.node,
-                typeProperty!!.firstChild.nextSibling.nextSibling.node
+                typeProperty.firstChild.nextSibling.nextSibling.node
             )
         } else if (element is PsiPlaysTypeConstraint) {
             val playsTypeProperty = TypeQLPsiElementFactory.createPlaysTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), playsTypeProperty!!.node)
+            element.getParent().node.replaceChild(element.getNode(), playsTypeProperty.node)
         } else {
             throw UnsupportedOperationException()
         }
