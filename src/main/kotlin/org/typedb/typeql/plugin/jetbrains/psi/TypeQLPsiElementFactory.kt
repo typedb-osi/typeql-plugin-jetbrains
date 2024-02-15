@@ -37,7 +37,7 @@ object TypeQLPsiElementFactory {
 
     fun createFile(project: Project?, text: String?): PsiTypeQLFileBase {
         return PsiFileFactory.getInstance(project).createFileFromText(
-            "dummy.tql", TypeQLFileType.Util.INSTANCE, text!!
+            "dummy.tql", TypeQLFileType.INSTANCE, text!!
         ) as PsiTypeQLFileBase
     }
 }

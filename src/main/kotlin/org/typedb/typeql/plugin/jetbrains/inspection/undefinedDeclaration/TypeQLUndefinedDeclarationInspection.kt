@@ -11,6 +11,7 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
 import org.apache.commons.lang.StringUtils
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -40,7 +41,7 @@ class TypeQLUndefinedDeclarationInspection : LocalInspectionTool() {
                                 } else {
                                     return  //user still typing
                                 }
-                            if (TypeQLLanguage.GRAQL_TYPES.contains(undefinedConcept.text)) {
+                            if (TypeQLLanguage.TYPEQL_TYPES.contains(undefinedConcept.text)) {
                                 return  //defined by language
                             }
                             if (undefinedConcept.firstChild !is PsiErrorElement) {
@@ -62,7 +63,7 @@ class TypeQLUndefinedDeclarationInspection : LocalInspectionTool() {
     }
 
     override fun getGroupDisplayName(): String {
-        return "TypeQL"
+        return TypeQLFileType.LANG_NAME
     }
 
     override fun getShortName(): String {

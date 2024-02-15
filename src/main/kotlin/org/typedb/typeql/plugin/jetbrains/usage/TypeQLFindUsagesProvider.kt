@@ -6,7 +6,7 @@ import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
-import org.typedb.typeql.plugin.jetbrains.TypeQLLexer
+import com.vaticle.typeql.grammar.TypeQLLexer
 import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils

@@ -66,7 +66,7 @@ object TypeQLPsiUtils {
             findUsages(
                 identifier.project, identifier, identifier.scopedName,
                 FileTypeIndex.getFiles(
-                    TypeQLFileType.Util.INSTANCE,
+                    TypeQLFileType.INSTANCE,
                     GlobalSearchScope.allScope(identifier.project)
                 )
             )
@@ -190,7 +190,7 @@ object TypeQLPsiUtils {
         } else {
             findDeclarations(
                 project, identifier.scopedName, FileTypeIndex.getFiles(
-                    TypeQLFileType.Util.INSTANCE, GlobalSearchScope.allScope(project)
+                    TypeQLFileType.INSTANCE, GlobalSearchScope.allScope(project)
                 )
             )
         }
@@ -229,7 +229,7 @@ object TypeQLPsiUtils {
         }
         if (identifier is PsiRelatesTypeConstraint) {
             return "role"
-        } else if (TypeQLLanguage.GRAQL_TYPES.contains(subType)) {
+        } else if (TypeQLLanguage.TYPEQL_TYPES.contains(subType)) {
             return subType
         }
         val searchScope: Collection<VirtualFile?>
@@ -237,7 +237,7 @@ object TypeQLPsiUtils {
             listOf(identifier.containingFile.virtualFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Util.INSTANCE,
+                TypeQLFileType.INSTANCE,
                 GlobalSearchScope.allScope(identifier.project)
             )
         }

@@ -2,7 +2,7 @@ package org.typedb.typeql.plugin.jetbrains.refactor
 
 import com.intellij.lang.refactoring.NamesValidator
 import com.intellij.openapi.project.Project
-import org.typedb.typeql.plugin.jetbrains.TypeQLParser
+import com.vaticle.typeql.grammar.TypeQLParser
 import java.util.*
 
 /**

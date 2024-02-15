@@ -14,6 +14,7 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiPlaysTypeConstraint
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiSubTypeConstraint
 import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
 import org.apache.commons.lang.StringUtils
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -72,7 +73,7 @@ class TypeQLInvalidTypeUsageInspection : LocalInspectionTool() {
     }
 
     override fun getGroupDisplayName(): String {
-        return "TypeQL"
+        return TypeQLFileType.LANG_NAME
     }
 
     override fun getShortName(): String {

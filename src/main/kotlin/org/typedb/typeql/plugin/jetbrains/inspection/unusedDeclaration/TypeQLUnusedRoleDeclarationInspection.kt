@@ -7,6 +7,7 @@ import com.intellij.psi.PsiElementVisitor
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
 import org.apache.commons.lang.StringUtils
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -42,7 +43,7 @@ class TypeQLUnusedRoleDeclarationInspection : LocalInspectionTool() {
     }
 
     override fun getGroupDisplayName(): String {
-        return "TypeQL"
+        return TypeQLFileType.LANG_NAME
     }
 
     override fun getShortName(): String {

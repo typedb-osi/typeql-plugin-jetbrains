@@ -6,9 +6,10 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighter
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
-import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.Pair
 import com.intellij.util.containers.ContainerUtil
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
+import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
 import java.awt.Color
 import javax.swing.Icon
 
@@ -20,7 +21,7 @@ class TypeQLColorSettingsPage : ColorSettingsPage {
     var testint = 1;
 
     override fun getIcon(): Icon? {
-        return IconLoader.findIcon("/icons/typedb.svg", TypeQLColorSettingsPage::class.java.classLoader)
+        return TypeQLIcons.ICON
     }
 
     override fun getHighlighter(): SyntaxHighlighter {
@@ -59,7 +60,7 @@ sort asc;
     }
 
     override fun getDisplayName(): String {
-        return "TypeQL"
+        return TypeQLFileType.LANG_NAME
     }
 
     companion object {

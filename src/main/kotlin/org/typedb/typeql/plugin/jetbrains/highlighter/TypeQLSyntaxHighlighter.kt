@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
-import org.typedb.typeql.plugin.jetbrains.TypeQLLexer
+import com.vaticle.typeql.grammar.TypeQLLexer
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.TokenIElementType
@@ -62,7 +62,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
             TypeQLLexer.BOOLEAN_ -> BOOLEAN
 
-            TypeQLLexer.STRING_ -> STRING
+//            TypeQLLexer.STRING_ -> STRING // TODO
 
             TypeQLLexer.VAR_CONCEPT_, TypeQLLexer.VAR_CONCEPT_ANONYMOUS_, TypeQLLexer.VAR_CONCEPT_NAMED_,
                 TypeQLLexer.VAR_VALUE_

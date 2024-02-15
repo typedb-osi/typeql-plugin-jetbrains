@@ -2,13 +2,13 @@ package org.typedb.typeql.plugin.jetbrains.psi
 
 import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.openapi.fileTypes.FileType
-import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import org.antlr.intellij.adaptor.psi.ScopeNode
+import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
 import javax.swing.Icon
 
 /**
@@ -17,7 +17,7 @@ import javax.swing.Icon
 class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, TypeQLLanguage.INSTANCE),
     ScopeNode {
     override fun getFileType(): FileType {
-        return TypeQLFileType.Util.INSTANCE
+        return TypeQLFileType.INSTANCE
     }
 
     override fun toString(): String {
@@ -25,7 +25,7 @@ class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvid
     }
 
     override fun getIcon(flags: Int): Icon {
-        return IconLoader.findIcon("/icons/typedb.svg", PsiTypeQLFileBase::class.java.classLoader)!!
+        return TypeQLIcons.ICON
     }
 
     /**

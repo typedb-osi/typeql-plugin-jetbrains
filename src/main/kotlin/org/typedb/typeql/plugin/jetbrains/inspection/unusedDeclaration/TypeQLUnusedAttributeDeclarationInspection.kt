@@ -4,6 +4,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
 
@@ -35,7 +36,7 @@ class TypeQLUnusedAttributeDeclarationInspection : LocalInspectionTool() {
     }
 
     override fun getGroupDisplayName(): String {
-        return "TypeQL"
+        return TypeQLFileType.LANG_NAME
     }
 
     override fun getShortName(): String {

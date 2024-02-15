@@ -15,7 +15,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
-import org.typedb.typeql.plugin.jetbrains.TypeQLParser
+import com.vaticle.typeql.grammar.TypeQLParser
 import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
@@ -49,24 +49,26 @@ class TypeQLCompletionContributor : CompletionContributor() {
                     if (ruleType != null) {
                         if (ruleType is PsiOwnsTypeConstraint) {
                             //owns, include all attributes
-                            val statementType = TypeQLPsiUtils.findParentByType(
-                                parameters.position,
-                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
-                            )
-                            includeAttributeTypes(
-                                resultSet, ruleType, parameters.originalFile.virtualFile,
-                                statementType!!.name!!
-                            )
+                            // TODO:
+//                            val statementType = TypeQLPsiUtils.findParentByType(
+//                                parameters.position,
+//                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
+//                            )
+//                            includeAttributeTypes(
+//                                resultSet, ruleType, parameters.originalFile.virtualFile,
+//                                statementType!!.name!!
+//                            )
                         } else if (ruleType is PsiSubTypeConstraint) {
                             //sub, include all declarations & base types
-                            val statementType = TypeQLPsiUtils.findParentByType(
-                                parameters.position,
-                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
-                            )
-                            includeAllTypes(
-                                resultSet, ruleType, parameters.originalFile.virtualFile,
-                                statementType!!.name!!
-                            )
+                            // TODO:
+//                            val statementType = TypeQLPsiUtils.findParentByType(
+//                                parameters.position,
+//                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
+//                            )
+//                            includeAllTypes(
+//                                resultSet, ruleType, parameters.originalFile.virtualFile,
+//                                statementType!!.name!!
+//                            )
                             includeBaseTypes(resultSet)
                         } else if (ruleType is PsiRelatesTypeConstraint) {
                             //relates, include all plays (roles)
@@ -81,7 +83,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                     LookupElementBuilder.create(
                                         keyword!!
                                     )
-                                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                                        .withIcon(TypeQLFileType.INSTANCE.icon)
                                         .withTypeText(keyword)
                                         .withBoldness(true)
                                 )
@@ -115,7 +117,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                         LookupElementBuilder.create(
                                             keyword!!
                                         )
-                                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                                            .withIcon(TypeQLFileType.INSTANCE.icon)
                                             .withTypeText(keyword)
                                             .withBoldness(true)
                                     )
@@ -140,7 +142,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Util.INSTANCE,
+                TypeQLFileType.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
@@ -150,7 +152,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                 val declarationType = TypeQLPsiUtils.determineDeclarationType(it)
                 resultSet.addElement(
                     LookupElementBuilder.create(it)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText(declarationType ?: "unknown")
                         .withStrikeoutness(declarationType == null)
                 )
@@ -167,7 +169,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Util.INSTANCE,
+                TypeQLFileType.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
@@ -178,7 +180,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                 if (declarationType != null) {
                     resultSet.addElement(
                         LookupElementBuilder.create(it)
-                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                            .withIcon(TypeQLFileType.INSTANCE.icon)
                             .withTypeText(declarationType)
                     )
                 }
@@ -186,12 +188,12 @@ class TypeQLCompletionContributor : CompletionContributor() {
     }
 
     private fun includeBaseTypes(resultSet: CompletionResultSet) {
-        TypeQLLanguage.GRAQL_TYPES.forEach(Consumer {
+        TypeQLLanguage.TYPEQL_TYPES.forEach(Consumer {
             resultSet.addElement(
                 LookupElementBuilder.create(
                     it!!
                 )
-                    .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                    .withIcon(TypeQLFileType.INSTANCE.icon)
                     .withTypeText(it)
                     .withBoldness(true)
             )
@@ -203,7 +205,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.playsType!!)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
@@ -214,7 +216,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.name!!)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
@@ -223,31 +225,31 @@ class TypeQLCompletionContributor : CompletionContributor() {
     private fun includeQueryTypes(resultSet: CompletionResultSet) {
         resultSet.addElement(
             LookupElementBuilder.create("define")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("define")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("compute")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("compute")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("insert")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("insert")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("match")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("match")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("undefine")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("undefine")
                 .withBoldness(true)
         )

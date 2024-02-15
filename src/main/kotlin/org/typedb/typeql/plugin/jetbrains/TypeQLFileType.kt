@@ -1,7 +1,7 @@
 package org.typedb.typeql.plugin.jetbrains
 
 import com.intellij.openapi.fileTypes.LanguageFileType
-import com.intellij.openapi.util.IconLoader
+import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
 import javax.swing.Icon
 
 /**
@@ -9,26 +9,24 @@ import javax.swing.Icon
  */
 class TypeQLFileType private constructor() : LanguageFileType(TypeQLLanguage.INSTANCE) {
     override fun getName(): String {
-        return "TypeQL"
+        return LANG_NAME
     }
 
     override fun getDescription(): String {
-        return "TypeQL file"
+        return "$LANG_NAME file"
     }
 
     override fun getDefaultExtension(): String {
-        return "tql"
+        return EXTENSION
     }
 
     override fun getIcon(): Icon {
-        return IconLoader.findIcon("/icons/typedb.svg", TypeQLFileType::class.java.classLoader)!!
-    }
-
-    object Util {
-        val INSTANCE = TypeQLFileType()
+        return TypeQLIcons.ICON
     }
 
     companion object {
-        val INSTANCE = Util.INSTANCE //todo: idk why this is needed
+        val INSTANCE: TypeQLFileType = TypeQLFileType()
+        const val LANG_NAME: String = "TypeQL"
+        const val EXTENSION: String = "tql"
     }
 }

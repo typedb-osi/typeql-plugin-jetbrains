@@ -13,11 +13,12 @@ import com.intellij.psi.impl.source.tree.CompositeElement
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
+import com.vaticle.typeql.grammar.TypeQLLexer
+import com.vaticle.typeql.grammar.TypeQLParser
 import org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionErrorListener
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLFileBase
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
-import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.RuleIElementType
@@ -40,7 +41,7 @@ class TypeQLParserDefinition : ParserDefinition {
 
     override fun getWhitespaceTokens(): TokenSet = WHITESPACE
     override fun getCommentTokens(): TokenSet = COMMENTS
-    override fun getStringLiteralElements(): TokenSet = STRING
+    override fun getStringLiteralElements(): TokenSet = COMMENTS // TODO STRING HERE
 
     override fun createParser(project: Project): PsiParser {
         val parser = TypeQLParser(null)
@@ -63,10 +64,11 @@ class TypeQLParserDefinition : ParserDefinition {
     override fun createElement(node: ASTNode): PsiElement {
         val ruleElType = node.elementType as RuleIElementType
         return when (ruleElType.ruleIndex) {
-            TypeQLParser.RULE_variable_type -> updateWrappedTypeIfNecessary(
-                node,
-                PsiStatementType(node)
-            )
+            // TODO:
+//            TypeQLParser.RULE_variable_type -> updateWrappedTypeIfNecessary(
+//                node,
+//                PsiStatementType(node)
+//            )
             TypeQLParser.RULE_type_constraint -> {
                 val ruleTypePropertyElement = getRuleTypePropertyElement(node)
                 if (ruleTypePropertyElement != null) {
@@ -101,7 +103,7 @@ class TypeQLParserDefinition : ParserDefinition {
         val IDS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLParser.LABEL_)!!
         val COMMENTS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.COMMENT)!!
         val WHITESPACE = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.WS)!!
-        val STRING = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.STRING_)!!
+//        val STRING = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.STRING_)!! // TODO
         val TOKEN_ELEMENT_TYPES = PSIElementTypeFactory.getTokenIElementTypes(TypeQLLanguage.INSTANCE)!!
         val RULE_ELEMENT_TYPES = PSIElementTypeFactory.getRuleIElementTypes(TypeQLLanguage.INSTANCE)!!
 
@@ -139,7 +141,7 @@ class TypeQLParserDefinition : ParserDefinition {
                 }
             } else if (node.firstChildNode != null && node.firstChildNode.text == "sub") {
                 val subsTo = node.lastChildNode.text
-                if (subsTo.isNotEmpty() && !TypeQLLanguage.GRAQL_TYPES.contains(subsTo)) {
+                if (subsTo.isNotEmpty() && !TypeQLLanguage.TYPEQL_TYPES.contains(subsTo)) {
                     return PsiSubTypeConstraint(node)
                 }
             }

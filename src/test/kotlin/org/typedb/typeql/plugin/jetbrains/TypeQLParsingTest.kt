@@ -2,7 +2,7 @@ package org.typedb.typeql.plugin.jetbrains
 
 import com.intellij.testFramework.ParsingTestCase
 
-class TypeQLParsingTest : ParsingTestCase("", "tql", TypeQLParserDefinition()) {
+class TypeQLParsingTest : ParsingTestCase("", TypeQLFileType.EXTENSION, TypeQLParserDefinition()) {
 
     fun testParsingTestData() {
         doTest(true)
