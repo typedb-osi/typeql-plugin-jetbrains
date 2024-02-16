@@ -1,5 +1,6 @@
 package org.typedb.typeql.plugin.jetbrains.highlighter
 
+import ai.grazie.utils.capitalize
 import com.intellij.openapi.editor.colors.ColorKey
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
@@ -8,17 +9,30 @@ import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
 import com.intellij.openapi.util.Pair
 import com.intellij.util.containers.ContainerUtil
+import com.jetbrains.rd.generator.nova.util.capitalizeInvariant
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
 import java.awt.Color
 import javax.swing.Icon
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.FUNCTION
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.ANNOTATION
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.BOOLEAN
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.DATE
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.IID
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.KEYWORD
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.LABEL
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.LINE_COMMENT
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.NUMBER
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.OPERATOR
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STRING
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.THING
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.TYPE
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.VAR
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class TypeQLColorSettingsPage : ColorSettingsPage {
-
-    var testint = 1;
 
     override fun getIcon(): Icon? {
         return TypeQLIcons.ICON
@@ -31,9 +45,12 @@ class TypeQLColorSettingsPage : ColorSettingsPage {
     override fun getDemoText(): String {
         return """define
 
-person sub entity, owns age, owns name;
-    name sub attribute, value string;
-    age sub attribute, value long;
+person sub entity, 
+    owns id @key,
+    owns age,
+    owns name;
+name sub attribute, value string;
+age sub attribute, value long;
     
 # Lorem ipsum dolor sit amet
 match
@@ -48,7 +65,7 @@ sort asc;
     }
 
     override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? {
-        return ContainerUtil.newHashMap(Pair("Line Comment TEST", TypeQLSyntaxHighlighter.Companion.LINE_COMMENT))
+        return ContainerUtil.newHashMap(Pair("Line Comment TEST", TypeQLSyntaxHighlighter.LINE_COMMENT))
     }
 
     override fun getAttributeDescriptors(): Array<AttributesDescriptor> {
@@ -64,34 +81,32 @@ sort asc;
     }
 
     companion object {
-        private var ATTR_DESC = arrayOf(
-            AttributesDescriptor("Line Comment", TypeQLSyntaxHighlighter.Companion.LINE_COMMENT),
-            AttributesDescriptor("Keyword", TypeQLSyntaxHighlighter.Companion.KEYWORD),
-            AttributesDescriptor("String", TypeQLSyntaxHighlighter.Companion.STRING),
-            AttributesDescriptor("Number", TypeQLSyntaxHighlighter.Companion.NUMBER),
-            AttributesDescriptor("Id", TypeQLSyntaxHighlighter.Companion.ID),
-            AttributesDescriptor("Thing", TypeQLSyntaxHighlighter.Companion.THING),
-            AttributesDescriptor("Var", TypeQLSyntaxHighlighter.Companion.VAR),
-            AttributesDescriptor("Boolean", TypeQLSyntaxHighlighter.Companion.BOOLEAN),
-            AttributesDescriptor("Aggregate", TypeQLSyntaxHighlighter.Companion.AGGREGATE),
-            AttributesDescriptor("Type", TypeQLSyntaxHighlighter.Companion.TYPE),
-            AttributesDescriptor("Annotation", TypeQLSyntaxHighlighter.Companion.ANNOTATION),
-            //AttributesDescriptor("Bad Value", TypeQLSyntaxHighlighter.Companion.BAD_CHARACTER)
-        )
 
-        private val COLOR_DESC = arrayOf(
-            ColorDescriptor("Line Comment", ColorKey.createColorKey("Green", Color(77, 201, 124)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Keyword", ColorKey.createColorKey("Pink", Color(255, 122, 189)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("String", ColorKey.createColorKey("Yellow", Color(255, 228, 167)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Number", ColorKey.createColorKey("Blue", Color(130, 182, 255)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Id", ColorKey.createColorKey("Light Purple", Color(213, 204, 255)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Thing", ColorKey.createColorKey("Cyan", Color(85, 234, 226)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Var", ColorKey.createColorKey("Cyan", Color(85, 234, 226)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Boolean", ColorKey.createColorKey("Orange", Color(255, 161, 135)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Aggregate", ColorKey.createColorKey("Pink", Color(255, 122, 189)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Type", ColorKey.createColorKey("Blue", Color(130, 182, 255)), ColorDescriptor.Kind.FOREGROUND),
-            ColorDescriptor("Annotation", ColorKey.createColorKey("Orange", Color(255, 161, 135)), ColorDescriptor.Kind.FOREGROUND),
-            //ColorDescriptor("Bad Value", ColorKey.createColorKey("Line Comment", Color(10, 10, 10)), ColorDescriptor.Kind.FOREGROUND),
+        private fun formatAttributeKeyName(name: String): String {
+            return name
+                .split("_")
+                .joinToString(" ") { val lower = it.lowercase(); lower.replaceFirstChar(Char::uppercaseChar) }
+        }
+
+        private fun getAttributesDescriptor(key: TextAttributesKey, keyName: String): AttributesDescriptor {
+            return AttributesDescriptor(formatAttributeKeyName(keyName), key)
+        }
+
+        private var ATTR_DESC = arrayOf(
+            getAttributesDescriptor(THING, ::THING.name),
+            getAttributesDescriptor(TYPE, ::TYPE.name),
+            getAttributesDescriptor(KEYWORD, ::KEYWORD.name),
+            getAttributesDescriptor(OPERATOR, ::OPERATOR.name),
+            getAttributesDescriptor(ANNOTATION, ::ANNOTATION.name),
+            getAttributesDescriptor(FUNCTION, ::FUNCTION.name),
+            getAttributesDescriptor(BOOLEAN, ::BOOLEAN.name),
+            getAttributesDescriptor(STRING, ::STRING.name),
+            getAttributesDescriptor(NUMBER, ::NUMBER.name),
+            getAttributesDescriptor(DATE, ::DATE.name),
+            getAttributesDescriptor(VAR, ::VAR.name),
+            getAttributesDescriptor(LABEL, ::LABEL.name),
+            getAttributesDescriptor(IID, ::IID.name),
+            getAttributesDescriptor(LINE_COMMENT, ::LINE_COMMENT.name),
         )
     }
 }

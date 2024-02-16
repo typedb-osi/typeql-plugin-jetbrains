@@ -1,0 +1,100 @@
+<?xml version='1.0'?>
+<!--
+  ~ Copyright (C) 2022 Vaticle
+  ~
+  ~ Licensed to the Apache Software Foundation (ASF) under one
+  ~ or more contributor license agreements.  See the NOTICE file
+  ~ distributed with this work for additional information
+  ~ regarding copyright ownership.  The ASF licenses this file
+  ~ to you under the Apache License, Version 2.0 (the
+  ~ "License"); you may not use this file except in compliance
+  ~ with the License.  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing,
+  ~ software distributed under the License is distributed on an
+  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~ KIND, either express or implied.  See the License for the
+  ~ specific language governing permissions and limitations
+  ~ under the License.
+  -->
+
+<list>
+    <option name="TYPEQL_THING">
+        <value>
+            <option name="FOREGROUND" value="55eae2" /> <!-- cyan -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="TYPEQL_TYPE">
+        <value>
+            <option name="FOREGROUND" value="3377d8" /> <!-- blue -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="TYPEQL_KEYWORD">
+        <value>
+            <option name="FOREGROUND" value="fb3196" /> <!-- pink -->
+        </value>
+    </option>
+    <option name="TYPEQL_OPERATOR">
+        <value>
+            <option name="FOREGROUND" value="fb3196" /> <!-- pink -->
+        </value>
+    </option>
+    <option name="TYPEQL_ANNOTATION">
+        <value>
+            <option name="FOREGROUND" value="ff6b00" /> <!-- orange -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="TYPEQL_FUNCTION">
+        <value>
+            <option name="FOREGROUND" value="fb3196" /> <!-- pink -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="TYPEQL_BOOLEAN">
+        <value>
+            <option name="FOREGROUND" value="ff6b00" /> <!-- orange -->
+        </value>
+    </option>
+    <option name="TYPEQL_STRING">
+        <value>
+            <option name="FOREGROUND" value="f1be05" /> <!-- yellow -->
+        </value>
+    </option>
+    <option name="TYPEQL_NUMBER">
+        <value>
+            <option name="FOREGROUND" value="3377d8" /> <!-- blue -->
+        </value>
+    </option>
+    <option name="TYPEQL_DATE">
+        <value>
+            <option name="FOREGROUND" value="3377d8" /> <!-- blue -->
+        </value>
+    </option>
+    <option name="TYPEQL_VAR">
+        <value>
+            <option name="FOREGROUND" value="55eae2" /> <!-- cyan -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="TYPEQL_LABEL">
+        <value>
+            <option name="FOREGROUND" value="392d67" /> <!-- dark-purple -->
+        </value>
+    </option>
+    <option name="TYPEQL_IID">
+        <value>
+            <option name="FOREGROUND" value="f91111" /> <!-- red -->
+        </value>
+    </option>
+    <option name="TYPEQL_LINE_COMMENT">
+        <value>
+            <option name="FOREGROUND" value="309c59" /> <!-- green -->
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+</list>
