@@ -25,9 +25,8 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
         if (tokenType !is TokenIElementType) return EMPTY_KEYS
         if (tokenType == TokenType.BAD_CHARACTER) return arrayOf(BAD_CHARACTER)
-        val type = tokenType.antlrTokenType
-        val attrKey: TextAttributesKey
-        attrKey = when (type) {
+
+        val attrKey: TextAttributesKey = when (tokenType.antlrTokenType) {
             TypeQLLexer.IID_, TypeQLLexer.LABEL_, TypeQLLexer.LABEL_SCOPED_ -> ID
 
             TypeQLLexer.THING, TypeQLLexer.ENTITY, TypeQLLexer.ATTRIBUTE, TypeQLLexer.RELATION, TypeQLLexer.ROLE
@@ -43,7 +42,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
                 TypeQLLexer.OR, TypeQLLexer.EQ, TypeQLLexer.NEQ, TypeQLLexer.GT, TypeQLLexer.GTE, TypeQLLexer.LT,
                 TypeQLLexer.LTE, TypeQLLexer.LIKE, TypeQLLexer.CONTAINS, TypeQLLexer.ASSIGN, TypeQLLexer.ADD,
                 TypeQLLexer.SUBTRACT, TypeQLLexer.DIVIDE, TypeQLLexer.MULTIPLY, TypeQLLexer.POWER, TypeQLLexer.MODULO,
-                TypeQLLexer.LABEL_SCOPED_, TypeQLLexer.ORDER_
+                TypeQLLexer.ORDER_
             -> KEYWORD
 
             TypeQLLexer.ANNOTATION_KEY, TypeQLLexer.ANNOTATION_UNIQUE -> ANNOTATION
@@ -62,7 +61,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
             TypeQLLexer.BOOLEAN_ -> BOOLEAN
 
-//            TypeQLLexer.STRING_ -> STRING // TODO
+            TypeQLLexer.QUOTED_STRING -> STRING
 
             TypeQLLexer.VAR_CONCEPT_, TypeQLLexer.VAR_CONCEPT_ANONYMOUS_, TypeQLLexer.VAR_CONCEPT_NAMED_,
                 TypeQLLexer.VAR_VALUE_

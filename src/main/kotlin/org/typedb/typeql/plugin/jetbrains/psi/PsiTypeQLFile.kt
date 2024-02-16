@@ -14,14 +14,13 @@ import javax.swing.Icon
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
-class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, TypeQLLanguage.INSTANCE),
-    ScopeNode {
+class PsiTypeQLFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, TypeQLLanguage.INSTANCE), ScopeNode {
     override fun getFileType(): FileType {
         return TypeQLFileType.INSTANCE
     }
 
     override fun toString(): String {
-        return "TypeQL Language file"
+        return "${TypeQLFileType.LANG_NAME} file"
     }
 
     override fun getIcon(flags: Int): Icon {
@@ -31,9 +30,6 @@ class PsiTypeQLFileBase(viewProvider: FileViewProvider) : PsiFileBase(viewProvid
     /**
      * Return null since a file scope has no enclosing scope. It is
      * not itself in a scope.
-     *
-     *
-     * todo: a file could be in the scope of all the other files in the project
      */
     override fun getContext(): ScopeNode? {
         return null
