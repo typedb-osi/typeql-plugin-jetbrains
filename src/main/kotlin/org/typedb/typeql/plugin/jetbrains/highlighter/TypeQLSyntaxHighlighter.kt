@@ -32,14 +32,14 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.ATTRIBUTE,
             TypeQLLexer.RELATION,
             TypeQLLexer.ROLE,
-                -> THING
+                -> STORAGE_TYPE
 
             TypeQLLexer.LONG,
             TypeQLLexer.DOUBLE,
             TypeQLLexer.STRING,
             TypeQLLexer.BOOLEAN,
             TypeQLLexer.DATETIME,
-                -> TYPE
+                -> STORAGE_MODIFIER
 
             TypeQLLexer.MATCH,
             TypeQLLexer.GET,
@@ -126,7 +126,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
             TypeQLLexer.LONG_,
             TypeQLLexer.DOUBLE_,
-                -> NUMBER
+                -> NUMERIC
 
             TypeQLLexer.DATE_,
             TypeQLLexer.DATETIME_,
@@ -136,13 +136,13 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.VAR_CONCEPT_ANONYMOUS_,
             TypeQLLexer.VAR_CONCEPT_NAMED_,
             TypeQLLexer.VAR_VALUE_,
-                -> VAR
+                -> VARIABLE
 
             TypeQLLexer.LABEL_,
             TypeQLLexer.LABEL_SCOPED_,
                 -> LABEL
 
-            TypeQLLexer.IID_, // Variable.language
+            TypeQLLexer.IID_,
                 -> IID
 
             TypeQLLexer.COMMENT,
@@ -158,15 +158,13 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
     companion object {
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
 
-        // DefaultLanguageHighlighterColors is only needed in case if colorSchemes from resources do not work.
+        val STORAGE_TYPE = TextAttributesKey.createTextAttributesKey(
+            "TYPEQL_STORAGE_TYPE",
+            DefaultLanguageHighlighterColors.INSTANCE_FIELD)
 
-        val THING = TextAttributesKey.createTextAttributesKey(
-            "TYPEQL_THING",
-            DefaultLanguageHighlighterColors.IDENTIFIER)
-
-        val TYPE = TextAttributesKey.createTextAttributesKey(
-            "TYPEQL_TYPE",
-            DefaultLanguageHighlighterColors.MARKUP_TAG)
+        val STORAGE_MODIFIER = TextAttributesKey.createTextAttributesKey(
+            "TYPEQL_STORAGE_MODIFIER",
+            DefaultLanguageHighlighterColors.INSTANCE_METHOD)
 
         val KEYWORD = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_KEYWORD",
@@ -174,47 +172,47 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
         val OPERATOR = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_OPERATOR",
-            DefaultLanguageHighlighterColors.KEYWORD)
+            DefaultLanguageHighlighterColors.OPERATION_SIGN)
 
         val ANNOTATION = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_ANNOTATION",
-            DefaultLanguageHighlighterColors.LABEL)
+            DefaultLanguageHighlighterColors.METADATA)
 
         val FUNCTION = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_FUNCTION",
-            DefaultLanguageHighlighterColors.LABEL)
+            DefaultLanguageHighlighterColors.KEYWORD)
 
         val BOOLEAN = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_BOOLEAN",
-            DefaultLanguageHighlighterColors.PARAMETER)
+            DefaultLanguageHighlighterColors.NUMBER)
 
         val STRING = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_STRING",
             DefaultLanguageHighlighterColors.STRING)
 
-        val NUMBER = TextAttributesKey.createTextAttributesKey(
-            "TYPEQL_NUMBER",
+        val NUMERIC = TextAttributesKey.createTextAttributesKey(
+            "TYPEQL_NUMERIC",
             DefaultLanguageHighlighterColors.NUMBER)
 
         val DATE = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_DATE",
             DefaultLanguageHighlighterColors.NUMBER)
 
-        val VAR = TextAttributesKey.createTextAttributesKey(
-            "TYPEQL_VAR",
-            DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
+        val VARIABLE = TextAttributesKey.createTextAttributesKey(
+            "TYPEQL_VARIABLE",
+            DefaultLanguageHighlighterColors.INSTANCE_FIELD)
 
         val LABEL = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_LABEL",
-            DefaultLanguageHighlighterColors.CONSTANT)
+            DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
 
         val IID = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_IID",
-            DefaultLanguageHighlighterColors.CONSTANT)
+            DefaultLanguageHighlighterColors.NUMBER)
 
         val LINE_COMMENT = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_LINE_COMMENT",
-            DefaultLanguageHighlighterColors.LINE_COMMENT)
+            DefaultLanguageHighlighterColors.DOC_COMMENT)
 
         val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_BAD_CHARACTER",

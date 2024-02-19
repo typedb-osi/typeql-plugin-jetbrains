@@ -22,12 +22,12 @@ import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Co
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.KEYWORD
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.LABEL
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.LINE_COMMENT
-import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.NUMBER
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.NUMERIC
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.OPERATOR
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STORAGE_MODIFIER
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STORAGE_TYPE
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STRING
-import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.THING
-import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.TYPE
-import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.VAR
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.VARIABLE
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -61,11 +61,14 @@ ${"$"}c isa car, has reg-date < 2020-02-29T18:01:28.577;
 ${"$"}p has age = 4 + 4;
 group ${"$"}p;
 sort asc;
+
+# The resulting response copied here to show an IID:
+iid 0x826e800f8000000000000000 isa person => 1
 """
     }
 
     override fun getAdditionalHighlightingTagToDescriptorMap(): Map<String, TextAttributesKey>? {
-        return ContainerUtil.newHashMap(Pair("Line Comment TEST", TypeQLSyntaxHighlighter.LINE_COMMENT))
+        return HashMap()
     }
 
     override fun getAttributeDescriptors(): Array<AttributesDescriptor> {
@@ -93,17 +96,17 @@ sort asc;
         }
 
         private var ATTR_DESC = arrayOf(
-            getAttributesDescriptor(THING, ::THING.name),
-            getAttributesDescriptor(TYPE, ::TYPE.name),
+            getAttributesDescriptor(STORAGE_TYPE, ::STORAGE_TYPE.name),
+            getAttributesDescriptor(STORAGE_MODIFIER, ::STORAGE_MODIFIER.name),
             getAttributesDescriptor(KEYWORD, ::KEYWORD.name),
             getAttributesDescriptor(OPERATOR, ::OPERATOR.name),
             getAttributesDescriptor(ANNOTATION, ::ANNOTATION.name),
             getAttributesDescriptor(FUNCTION, ::FUNCTION.name),
             getAttributesDescriptor(BOOLEAN, ::BOOLEAN.name),
             getAttributesDescriptor(STRING, ::STRING.name),
-            getAttributesDescriptor(NUMBER, ::NUMBER.name),
+            getAttributesDescriptor(NUMERIC, ::NUMERIC.name),
             getAttributesDescriptor(DATE, ::DATE.name),
-            getAttributesDescriptor(VAR, ::VAR.name),
+            getAttributesDescriptor(VARIABLE, ::VARIABLE.name),
             getAttributesDescriptor(LABEL, ::LABEL.name),
             getAttributesDescriptor(IID, ::IID.name),
             getAttributesDescriptor(LINE_COMMENT, ::LINE_COMMENT.name),
