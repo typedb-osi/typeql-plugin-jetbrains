@@ -6,7 +6,6 @@
 //import com.intellij.psi.PsiElementVisitor
 //import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 //import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
-//import org.apache.commons.lang.StringUtils
 //import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 //
 ///**
@@ -19,7 +18,7 @@
 //                if (element is PsiStatementType) {
 //                    TypeQLPsiUtils.ensureTypeQLElementsUpToDate(element.getContainingFile())
 //                    for (declaration in element.findRelatesTypeProperties()) {
-//                        if (StringUtils.isEmpty(declaration.name)) {
+//                        if (declaration.name.isEmpty()) {
 //                            return  //user still typing
 //                        }
 //                        val type = TypeQLPsiUtils.determineDeclarationType(declaration)

@@ -98,34 +98,38 @@
 //                            }
 //                        }
 //                    }
+//
 //                    if (includeKeywords) {
-//                        val tokenToErrorMap: Map<Int, SyntaxError> = TypeQLCompletionErrorListener.tokenToErrorMap
-//                        var syntaxError = tokenToErrorMap[parameters.offset]
-//                        if (syntaxError == null) {
-//                            val currentText = parameters.position.text
-//                            if (currentText.contains(DUMMY_IDENTIFIER)) {
-//                                //currently typing; suggest same as before typing started
-//                                syntaxError =
-//                                    tokenToErrorMap[parameters.offset - (currentText.length - DUMMY_IDENTIFIER.length)]
-//                            }
-//                        }
-//                        if (syntaxError != null && syntaxError.exception != null && syntaxError.exception.expectedTokens != null) {
-//                            getActualKeywords(syntaxError.exception.expectedTokens).forEach(
-//                                Consumer { keyword: String? ->
-//                                    resultSet.addElement(
-//                                        LookupElementBuilder.create(
-//                                            keyword!!
-//                                        )
-//                                            .withIcon(TypeQLFileType.INSTANCE.icon)
-//                                            .withTypeText(keyword)
-//                                            .withBoldness(true)
-//                                    )
-//                                })
-//                        } else {
-//                            //no errors or suggested keywords; fallback to query types
-//                            includeQueryTypes(resultSet)
-//                        }
+//                        includeQueryTypes(resultSet)
 //                    }
+////                    if (includeKeywords) {
+////                        val tokenToErrorMap: Map<Int, SyntaxError> = TypeQLCompletionErrorListener.tokenToErrorMap
+////                        var syntaxError = tokenToErrorMap[parameters.offset]
+////                        if (syntaxError == null) {
+////                            val currentText = parameters.position.text
+////                            if (currentText.contains(DUMMY_IDENTIFIER)) {
+////                                //currently typing; suggest same as before typing started
+////                                syntaxError =
+////                                    tokenToErrorMap[parameters.offset - (currentText.length - DUMMY_IDENTIFIER.length)]
+////                            }
+////                        }
+////                        if (syntaxError != null && syntaxError.exception != null && syntaxError.exception.expectedTokens != null) {
+////                            getActualKeywords(syntaxError.exception.expectedTokens).forEach(
+////                                Consumer { keyword: String? ->
+////                                    resultSet.addElement(
+////                                        LookupElementBuilder.create(
+////                                            keyword!!
+////                                        )
+////                                            .withIcon(TypeQLFileType.INSTANCE.icon)
+////                                            .withTypeText(keyword)
+////                                            .withBoldness(true)
+////                                    )
+////                                })
+////                        } else {
+////                            //no errors or suggested keywords; fallback to query types
+////                            includeQueryTypes(resultSet)
+////                        }
+////                    }
 //                }
 //            }
 //        )
@@ -136,8 +140,7 @@
 //        containingFile: VirtualFile, vararg excludedNames: String
 //    ) {
 //        val excludedNameSet: Set<String?> = Sets.newHashSet(*excludedNames)
-//        val searchScope: Collection<VirtualFile?>
-//        searchScope = if (ScratchUtil.isScratch(containingFile)) {
+//        val searchScope: Collection<VirtualFile?> = if (ScratchUtil.isScratch(containingFile)) {
 //            listOf(containingFile)
 //        } else {
 //            FileTypeIndex.getFiles(
@@ -145,6 +148,7 @@
 //                GlobalSearchScope.allScope(ruleType.project)
 //            )
 //        }
+//
 //        TypeQLPsiUtils.getDeclarationsByType(ruleType.project, searchScope, "attribute").stream()
 //            .filter { !excludedNameSet.contains(it.name) }
 //            .forEach {
@@ -163,8 +167,7 @@
 //        containingFile: VirtualFile, vararg excludedNames: String
 //    ) {
 //        val excludedNameSet: Set<String?> = Sets.newHashSet(*excludedNames)
-//        val searchScope: Collection<VirtualFile?>
-//        searchScope = if (ScratchUtil.isScratch(containingFile)) {
+//        val searchScope: Collection<VirtualFile?> = if (ScratchUtil.isScratch(containingFile)) {
 //            listOf(containingFile)
 //        } else {
 //            FileTypeIndex.getFiles(
@@ -172,6 +175,7 @@
 //                GlobalSearchScope.allScope(ruleType.project)
 //            )
 //        }
+//
 //        TypeQLPsiUtils.getAllDeclarations(ruleType.project, searchScope).stream()
 //            .filter { !excludedNameSet.contains(it.name) }
 //            .forEach {

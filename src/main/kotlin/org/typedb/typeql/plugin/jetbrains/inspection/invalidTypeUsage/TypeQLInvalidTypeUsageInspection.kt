@@ -13,7 +13,6 @@
 //import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiPlaysTypeConstraint
 //import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiSubTypeConstraint
 //import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
-//import org.apache.commons.lang.StringUtils
 //import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 //
 ///**
@@ -57,7 +56,7 @@
 //                            holder.registerProblem(
 //                                identifier.getFirstChild().nextSibling.nextSibling, String.format(
 //                                    "%s <code>#ref</code> cannot be used as '%s'",
-//                                    StringUtils.capitalize(declarationType), usageType
+//                                    declarationType.capitalize(), usageType
 //                                ),
 //                                ProblemHighlightType.GENERIC_ERROR
 //                            )

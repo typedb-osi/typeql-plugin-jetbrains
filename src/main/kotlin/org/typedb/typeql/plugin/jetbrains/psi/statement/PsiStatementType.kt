@@ -1,27 +1,27 @@
-//package org.typedb.typeql.plugin.jetbrains.psi.statement
-//
-//import com.intellij.lang.ASTNode
-//import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
-//import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
-//import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
-//
-///**
-// * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
-// */
-//class PsiStatementType(node: ASTNode) : PsiTypeQLElement(node) {
-//
-//    override fun getName(): String? = firstChild.text
-//
-//    //todo: seems wrong
-//    val subType: String?
-//        get() = if (node.firstChildNode == null ||
-//            node.firstChildNode.treeNext == null ||
-//            node.firstChildNode.treeNext.treeNext == null ||
-//            node.firstChildNode.treeNext.treeNext.lastChildNode == null
-//        ) {
-//            null
-//        } else node.firstChildNode.treeNext.treeNext.lastChildNode.text
-//
+package org.typedb.typeql.plugin.jetbrains.psi.statement
+
+import com.intellij.lang.ASTNode
+import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
+
+/**
+ * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
+ */
+class PsiStatementType(node: ASTNode) : PsiTypeQLElement(node) {
+
+    override fun getName(): String? = firstChild.text
+
+    //todo: seems wrong
+    val subType: String?
+        get() = if (node.firstChildNode == null ||
+            node.firstChildNode.treeNext == null ||
+            node.firstChildNode.treeNext.treeNext == null ||
+            node.firstChildNode.treeNext.treeNext.lastChildNode == null
+        ) {
+            null
+        } else node.firstChildNode.treeNext.treeNext.lastChildNode.text
+
 //    fun findRelatesTypeProperties(): List<PsiRelatesTypeConstraint> {
 //        val relatesTypes: MutableList<PsiRelatesTypeConstraint> = ArrayList()
 //        for (child in children) {
@@ -76,4 +76,4 @@
 //        }
 //        return relatesTypes
 //    }
-//}
+}

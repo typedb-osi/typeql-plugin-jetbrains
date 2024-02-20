@@ -10,7 +10,6 @@
 //import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 //import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
 //import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
-//import org.apache.commons.lang.StringUtils
 //import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 //
 ///**
@@ -27,7 +26,7 @@
 //                    identifiers.addAll(element.findPlaysTypeProperties())
 //                    identifiers.addAll(element.findSubTypeProperties())
 //                    for (identifier in identifiers) {
-//                        if (StringUtils.isEmpty(identifier!!.name)) {
+//                        if (identifier!!.name.isEmpty()) {
 //                            return  //user still typing
 //                        }
 //                        val declaration = TypeQLPsiUtils.findDeclaration(
