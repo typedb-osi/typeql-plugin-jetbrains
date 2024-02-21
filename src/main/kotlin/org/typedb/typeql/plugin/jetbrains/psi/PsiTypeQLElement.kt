@@ -18,11 +18,10 @@ open class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
     override fun getNode(): CompositeElement = super.getNode() as CompositeElement
 
     override fun getName(): String? {
-        println("Somebody asks my name... $this")
         return when (this) {
-            is PsiSubTypeConstraint -> this.subType
-            is PsiPlaysTypeConstraint -> this.playsType
-            is PsiOwnsTypeConstraint -> this.ownsType
+            is PsiSubTypeConstraint -> {println("${this.subType}"); this.subType}
+            is PsiPlaysTypeConstraint -> {println("${this.playsType}");this.playsType}
+            is PsiOwnsTypeConstraint -> {println("${this.ownsType}");this.ownsType}
             else -> super.getName()
         }
     }
@@ -30,7 +29,7 @@ open class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
     val scopedName: String?
         get() = if (this is PsiRelatesTypeConstraint) {
             val statementType = getParent() as PsiStatementType
-            String.format("%s:%s", statementType.name, name)
+            String.format("%s:%s", statementType.name, name) // TODO Refactor
         } else {
             name
         }
@@ -39,9 +38,4 @@ open class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
         "%s(%s) - Location: %s",
         javaClass.simpleName, node.elementType, textRange
     )
-
-    override fun subtreeChanged() {
-//        val updatedElement = TypeQLParserDefinition.INSTANCE.createElement(super.getNode()) as PsiTypeQLElement
-//        TypeQLParserDefinition.updateWrappedTypeIfNecessary(super.getNode(), updatedElement)
-    }
 }

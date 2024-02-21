@@ -163,9 +163,17 @@ class TypeQLParserDefinition : ParserDefinition {
         fun getRuleTypeElement(node: ASTNode): PsiElement? {
             if (checkNode(node.treePrev?.treePrev, TypeQLParser.AS)
             ) {
-                val res = PsiRelatesSuperRoleTypeConstraint(node)
-                println("PsiRelatesSuperRoleTypeConstraint: $res")
-                return res
+                if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.OWNS)) {
+                    return PsiOwnsAsSuperRoleTypeConstraint(node)
+                }
+
+                if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.PLAYS)) {
+                    return PsiPlaysAsSuperRoleTypeConstraint(node)
+                }
+
+                if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.RELATES)) {
+                    return PsiRelatesAsSuperRoleTypeConstraint(node)
+                }
             }
 
             if (checkRightNeighbour(node, TypeQLParser.SUB_)

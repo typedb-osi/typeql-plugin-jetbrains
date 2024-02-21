@@ -13,10 +13,12 @@ class PsiPlaysTypeConstraint(node: ASTNode) : PsiTypeQLElement(node) {
     val playsTypeTextRange: TextRange
         get() {
             val scopeIndex = text.indexOf(":") + 1
-            return TextRange(scopeIndex, "plays ".length + playsType!!.length)
+            val superRoleIndex = text.indexOf(" as ")
+            val endIndex = if (superRoleIndex == -1) "plays ".length + playsType!!.length else superRoleIndex
+            return TextRange(scopeIndex, endIndex)
         }
     val playsType: String?
-        get() = lastChild?.text
+        get() = firstChild?.nextSibling?.nextSibling?.text
 
     val isAbstractType: Boolean
         get() = playsType == "abstract"

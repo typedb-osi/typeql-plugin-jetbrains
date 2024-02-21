@@ -4,29 +4,13 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.*
 import com.intellij.util.ProcessingContext
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiPlaysTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiRelatesSuperRoleTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiSubTypeConstraint
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class TypeQLReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement(PsiOwnsTypeConstraint::class.java),
-            object : PsiReferenceProvider() {
-                override fun getReferencesByElement(
-                    element: PsiElement,
-                    context: ProcessingContext
-                ): Array<PsiReference> {
-                    val ownsElement = element as PsiOwnsTypeConstraint
-                    return arrayOf(
-                        TypeQLReference(ownsElement, ownsElement.ownsTypeTextRange)
-                    )
-                }
-            })
         registrar.registerReferenceProvider(
             PlatformPatterns.psiElement(PsiPlaysTypeConstraint::class.java),
             object : PsiReferenceProvider() {
@@ -41,17 +25,17 @@ class TypeQLReferenceContributor : PsiReferenceContributor() {
                 }
             })
         registrar.registerReferenceProvider(PlatformPatterns.psiElement(
-            PsiRelatesSuperRoleTypeConstraint::class.java
+            PsiRelatesAsSuperRoleTypeConstraint::class.java
         ), object : PsiReferenceProvider() {
             override fun getReferencesByElement(
                 element: PsiElement,
                 context: ProcessingContext
             ): Array<PsiReference> {
-                val relatesSuperRoleElement = element as PsiRelatesSuperRoleTypeConstraint
+                val relatesAsElement = element as PsiRelatesAsSuperRoleTypeConstraint
                 return arrayOf(
                     TypeQLReference(
-                        relatesSuperRoleElement,
-                        TextRange(0, relatesSuperRoleElement.text.length)
+                        relatesAsElement,
+                        TextRange(0, relatesAsElement.text.length)
                     )
                 )
             }
@@ -66,6 +50,58 @@ class TypeQLReferenceContributor : PsiReferenceContributor() {
                     val subTypeElement = element as PsiSubTypeConstraint
                     return arrayOf(
                         TypeQLReference(subTypeElement, subTypeElement.subTypeTextRange)
+                    )
+                }
+            })
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(PsiTypeConstraint::class.java),
+            object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement,
+                    context: ProcessingContext
+                ): Array<PsiReference> {
+                    val typeElement = element as PsiTypeConstraint
+                    return arrayOf(
+                        TypeQLReference(typeElement, typeElement.textRange)
+                    )
+                }
+            })
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(PsiOwnsAsSuperRoleTypeConstraint::class.java),
+            object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement,
+                    context: ProcessingContext
+                ): Array<PsiReference> {
+                    val typeElement = element as PsiOwnsAsSuperRoleTypeConstraint
+                    return arrayOf(
+                        TypeQLReference(typeElement, typeElement.superRoleTextRange)
+                    )
+                }
+            })
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(PsiPlaysAsSuperRoleTypeConstraint::class.java),
+            object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement,
+                    context: ProcessingContext
+                ): Array<PsiReference> {
+                    val typeElement = element as PsiPlaysAsSuperRoleTypeConstraint
+                    return arrayOf(
+                        TypeQLReference(typeElement, typeElement.superRoleTextRange)
+                    )
+                }
+            })
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(PsiRelatesAsSuperRoleTypeConstraint::class.java),
+            object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement,
+                    context: ProcessingContext
+                ): Array<PsiReference> {
+                    val typeElement = element as PsiRelatesAsSuperRoleTypeConstraint
+                    return arrayOf(
+                        TypeQLReference(typeElement, typeElement.superRoleTextRange)
                     )
                 }
             })

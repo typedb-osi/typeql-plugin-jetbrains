@@ -27,9 +27,9 @@
         <psi.referenceContributor
             language="TypeQL"
             implementation="org.typedb.typeql.plugin.jetbrains.reference.TypeQLReferenceContributor"/>
-        <lang.findUsagesProvider
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.usage.TypeQLFindUsagesProvider"/>
+<!--        <lang.findUsagesProvider-->
+<!--            language="TypeQL"-->
+<!--            implementationClass="org.typedb.typeql.plugin.jetbrains.usage.TypeQLFindUsagesProvider"/>-->
 
 <!--        <lang.refactoringSupport language="TypeQL"-->
 <!--                                 implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>-->

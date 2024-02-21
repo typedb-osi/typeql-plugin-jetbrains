@@ -28,6 +28,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange)
     }
 
     override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
+        println("MULTI $incompleteCode from $this")
         val results: MutableList<ResolveResult> = ArrayList()
         for (identifier in TypeQLPsiUtils.findUsages(myElement!!)) {
             results.add(PsiElementResolveResult(identifier))
@@ -38,6 +39,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange)
     override fun resolve(): PsiElement? {
 //        return TypeQLPsiUtils.findDeclaration(myElement!!.project, myElement!!)
         val resolveResults = multiResolve(false)
+        if (resolveResults.size > 1) {println("MORE THAN ONE!"); for(res in resolveResults) println("${res.element}")}
         return if (resolveResults.size == 1) resolveResults[0].element else null
     }
 

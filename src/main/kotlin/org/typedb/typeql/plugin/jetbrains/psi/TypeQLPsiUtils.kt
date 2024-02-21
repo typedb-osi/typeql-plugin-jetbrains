@@ -4,23 +4,18 @@ import com.intellij.ide.scratch.ScratchUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
-import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
-import java.util.function.Consumer
-import java.util.stream.Collectors
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 object TypeQLPsiUtils {
-//    fun ensureTypeQLElementsUpToDate(file: PsiFile?) {
+    //    fun ensureTypeQLElementsUpToDate(file: PsiFile?) {
 //        try {
 //            PsiTreeUtil.collectElementsOfType(file, PsiTypeQLElement::class.java)
 //                .forEach(Consumer { obj: PsiTypeQLElement -> obj.subtreeChanged() })
@@ -78,86 +73,192 @@ object TypeQLPsiUtils {
         project: Project, element: PsiTypeQLElement,
         name: String?, searchScope: Collection<VirtualFile?>
     ): List<PsiTypeQLElement> {
-        //todo: review logic in this method
         val result: MutableList<PsiTypeQLElement> = ArrayList()
+        println("FIND USAGES FOR ELEMENT ${element.text}  WITH NAME ${name}!")
         if (name == null) {
             return result
         }
+        println("FIND USAGES FOR ELEMENT ${element.text}!")
         for (virtualFile in searchScope) {
-            val typeqlFile = PsiManager.getInstance(project).findFile(virtualFile!!) as PsiTypeQLFile?
-            if (typeqlFile != null) {
-                if (element is PsiOwnsTypeConstraint) {
-                    val ownsIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiOwnsTypeConstraint::class.java
-                    )
-                    for (identifier in ownsIdentifiers) {
-                        if (name == identifier.ownsType) {
-                            result.add(identifier)
-                        }
-                    }
-                } else if (element is PsiSubTypeConstraint) {
-                    val subTypeIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiSubTypeConstraint::class.java
-                    )
-                    for (identifier in subTypeIdentifiers) {
-                        if (name == identifier.subType) {
-                            result.add(identifier)
-                        }
-                    }
-                } else if (element is PsiPlaysTypeConstraint
-                    || element is PsiRelatesSuperRoleTypeConstraint
-                ) {
-                    val playsIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiPlaysTypeConstraint::class.java
-                    )
-                    for (identifier in playsIdentifiers) {
-                        if (name == identifier.playsType) {
-                            result.add(identifier)
-                        }
-                    }
-                    val relatesSuperRoleIdentifiers =
-                        PsiTreeUtil.collectElementsOfType(typeqlFile, PsiRelatesSuperRoleTypeConstraint::class.java)
-                    for (identifier in relatesSuperRoleIdentifiers) {
-                        if (name == identifier.text) {
-                            result.add(identifier)
-                        }
-                    }
-                } else {
-                    val ownsIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiOwnsTypeConstraint::class.java
-                    )
-                    for (identifier in ownsIdentifiers) {
-                        if (name == identifier.ownsType) {
-                            result.add(identifier)
-                        }
-                    }
-                    val subTypeIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiSubTypeConstraint::class.java
-                    )
-                    for (identifier in subTypeIdentifiers) {
-                        if (name == identifier.subType) {
-                            result.add(identifier)
-                        }
-                    }
-                    val playsIdentifiers = PsiTreeUtil.collectElementsOfType(
-                        typeqlFile, PsiPlaysTypeConstraint::class.java
-                    )
-                    for (identifier in playsIdentifiers) {
-                        if (name == identifier.playsType) {
-                            result.add(identifier)
-                        }
-                    }
-                    val relatesSuperRoleIdentifiers =
-                        PsiTreeUtil.collectElementsOfType(typeqlFile, PsiRelatesSuperRoleTypeConstraint::class.java)
-                    for (identifier in relatesSuperRoleIdentifiers) {
-                        if (name == identifier.text) {
-                            result.add(identifier)
-                        }
-                    }
-                }
+            val typeqlFile = PsiManager.getInstance(project).findFile(virtualFile!!) as PsiTypeQLFile? ?: continue
+
+            if (element is PsiOwnsAsSuperRoleTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+                addTypeElements(result, typeqlFile, name)
+            } else if (element is PsiOwnsTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+            } else if (element is PsiPlaysAsSuperRoleTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+                addTypeElements(result, typeqlFile, name)
+            } else if (element is PsiPlaysTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+            } else if (element is PsiRelatesAsSuperRoleTypeConstraint) {
+                print("ADDING FOR SUPER ROLE RELATES: $result")
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+                print("ADDING FOR SUPER ROLE RELATES END: $result")
+            } else if (element is PsiRelatesTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+            } else if (element is PsiSubTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+            } else if (element is PsiTypeConstraint) {
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
+            } else {
+                throw UnsupportedOperationException("This branch is not expected...")
+                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name)
+                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name)
+                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addSubTypeElements(result, typeqlFile, name)
             }
         }
+
         return result
+    }
+
+    fun addOwnsTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val ownsIdentifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiOwnsTypeConstraint::class.java
+        )
+        for (identifier in ownsIdentifiers)
+        {
+            if ((targetName ?: identifier.ownsType) == identifier.ownsType) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addOwnsAsSuperRoleTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiOwnsAsSuperRoleTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.text) == identifier.text) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addSubTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiSubTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.subType) == identifier.subType) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addPlaysTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiPlaysTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.playsType) == identifier.playsType) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addPlaysAsSuperRoleTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiPlaysAsSuperRoleTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.text) == identifier.text) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addRelatesTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiRelatesTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.scopedName) == identifier.scopedName) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addRelatesAsSuperRoleTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiRelatesAsSuperRoleTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.text) == identifier.text) {
+                outResult.add(identifier)
+            }
+        }
+    }
+
+    fun addTypeElements(
+        outResult: MutableList<PsiTypeQLElement>, rootElement: PsiElement, targetName: String? = null
+    ) {
+        val identifiers = PsiTreeUtil.collectElementsOfType(
+            rootElement, PsiTypeConstraint::class.java
+        )
+        for (identifier in identifiers) {
+            if ((targetName ?: identifier.scopedName) == identifier.scopedName) {
+                outResult.add(identifier)
+            }
+        }
     }
 //
 //    fun findDeclaration(

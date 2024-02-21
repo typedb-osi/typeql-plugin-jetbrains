@@ -16,6 +16,7 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeConstraint
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLTokenSets
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
 
 /**
@@ -33,7 +34,7 @@ class TypeQLFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun canFindUsagesFor(element: PsiElement): Boolean {
-        return element is PsiTypeQLNamedElement
+        return element is PsiTypeQLElement
     }
 
     override fun getHelpId(psiElement: PsiElement): String? {
@@ -41,7 +42,7 @@ class TypeQLFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getType(element: PsiElement): String {
-        return if (element is PsiTypeQLNamedElement) {
+        return if (element is PsiTypeQLElement) {
 //            val declarationType = TypeQLPsiUtils.determineDeclarationType(element)
 //            if (declarationType != null) {
 //                "${TypeQLFileType.LANG_NAME} $declarationType"
@@ -58,7 +59,7 @@ class TypeQLFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        val namedElement = element as PsiTypeQLNamedElement
+        val namedElement = element as PsiTypeQLElement
         return namedElement.name!!
     }
 }
