@@ -21,7 +21,7 @@ class PsiOwnsTypeConstraint(node: ASTNode) : PsiTypeQLNamedElement(node) {
     val ownsTypeTextRange: TextRange
         get() = TextRange("owns".length, "owns".length + ownsType!!.length)
     val ownsType: String?
-        get() = firstChild?.nextSibling?.text
+        get() = firstChild?.nextSibling?.nextSibling?.text
     val isAbstractType: Boolean
         get() = ownsType == "abstract" // TODO CLeanup
     val isKey: Boolean

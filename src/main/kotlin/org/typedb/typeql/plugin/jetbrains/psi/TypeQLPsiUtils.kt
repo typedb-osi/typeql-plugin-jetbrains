@@ -84,64 +84,36 @@ object TypeQLPsiUtils {
 
             if (element is PsiOwnsAsSuperRoleTypeConstraint) {
                 addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
-                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
-                addPlaysTypeElements(result, typeqlFile, name)
-                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
-                addTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name) // declaration
             } else if (element is PsiOwnsTypeConstraint) {
                 addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
-                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
-                addPlaysTypeElements(result, typeqlFile, name)
-                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
+                addOwnsTypeElements(result, typeqlFile, name) // declaration // TODO: Add saving parent for OWNS parameters
             } else if (element is PsiPlaysAsSuperRoleTypeConstraint) {
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
                 addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
-                addPlaysTypeElements(result, typeqlFile, name)
+                addPlaysTypeElements(result, typeqlFile, name) // declaration
                 addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
-                addTypeElements(result, typeqlFile, name)
+                addRelatesTypeElements(result, typeqlFile, name)
             } else if (element is PsiPlaysTypeConstraint) {
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
                 addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
                 addPlaysTypeElements(result, typeqlFile, name)
                 addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
+                addRelatesTypeElements(result, typeqlFile, name) // declaration
             } else if (element is PsiRelatesAsSuperRoleTypeConstraint) {
-                print("ADDING FOR SUPER ROLE RELATES: $result")
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
                 addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
                 addPlaysTypeElements(result, typeqlFile, name)
                 addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
-                print("ADDING FOR SUPER ROLE RELATES END: $result")
+                addRelatesTypeElements(result, typeqlFile, name) // declaration
             } else if (element is PsiRelatesTypeConstraint) {
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
                 addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
                 addPlaysTypeElements(result, typeqlFile, name)
                 addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
-                addSubTypeElements(result, typeqlFile, name)
+                addRelatesTypeElements(result, typeqlFile, name) // declaration
             } else if (element is PsiSubTypeConstraint) {
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
-                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
-                addPlaysTypeElements(result, typeqlFile, name)
-                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
                 addSubTypeElements(result, typeqlFile, name)
+                addTypeElements(result, typeqlFile, name) // declaration
             } else if (element is PsiTypeConstraint) {
-                addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
-                addOwnsTypeElements(result, typeqlFile, name)
-                addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
-                addPlaysTypeElements(result, typeqlFile, name)
-                addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
                 addSubTypeElements(result, typeqlFile, name)
+                addTypeElements(result, typeqlFile, name) // declaration
             } else {
                 throw UnsupportedOperationException("This branch is not expected...")
                 addOwnsAsSuperRoleTypeElements(result, typeqlFile, name)
@@ -149,7 +121,9 @@ object TypeQLPsiUtils {
                 addPlaysAsSuperRoleTypeElements(result, typeqlFile, name)
                 addPlaysTypeElements(result, typeqlFile, name)
                 addRelatesAsSuperRoleTypeElements(result, typeqlFile, name)
+                addRelatesTypeElements(result, typeqlFile, name)
                 addSubTypeElements(result, typeqlFile, name)
+                addTypeElements(result, typeqlFile, name)
             }
         }
 

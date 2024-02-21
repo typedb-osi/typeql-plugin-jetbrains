@@ -15,7 +15,8 @@ class PsiPlaysTypeConstraint(node: ASTNode) : PsiTypeQLElement(node) {
             val scopeIndex = text.indexOf(":") + 1
             val superRoleIndex = text.indexOf(" as ")
             val endIndex = if (superRoleIndex == -1) "plays ".length + playsType!!.length else superRoleIndex
-            return TextRange(scopeIndex, endIndex)
+
+            return if (scopeIndex <= endIndex) TextRange(scopeIndex, endIndex) else TextRange(0, 0)
         }
     val playsType: String?
         get() = firstChild?.nextSibling?.nextSibling?.text
