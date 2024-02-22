@@ -37,7 +37,7 @@
 //                    && identifier !is PsiStatementType
 //                ) {
 //                    TypeQLPsiUtils.ensureTypeQLElementsUpToDate(identifier.getContainingFile())
-//                    val declaration = TypeQLPsiUtils.findDeclaration(
+//                    val declaration = TypeQLDeclarationFinder.findDeclaration(
 //                        identifier.getProject(), identifier
 //                    )
 //                    if (declaration != null) {

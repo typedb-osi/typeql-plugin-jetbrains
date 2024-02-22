@@ -20,7 +20,7 @@ package org.typedb.typeql.plugin.jetbrains.inspection.unusedDeclaration
 //                    for (declaration in element.findTypeProperties()) {
 //                        val type = TypeQLPsiUtils.determineDeclarationType(declaration!!)
 //                        if ("attribute" == type) {
-//                            val usages = TypeQLPsiUtils.findUsages(declaration)
+//                            val usages = TypeQLUsagesFinder.findUsages(declaration)
 //                            if (usages.isEmpty()) {
 //                                holder.registerProblem(declaration, "Attribute <code>#ref</code> is never used")
 //                            }

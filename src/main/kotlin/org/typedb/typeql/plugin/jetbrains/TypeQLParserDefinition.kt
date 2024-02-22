@@ -24,7 +24,7 @@ import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor
 import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
-import org.typedb.typeql.plugin.jetbrains.psi.statement.PsiStatementType
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -45,7 +45,7 @@ class TypeQLParserDefinition : ParserDefinition {
 
     override fun createParser(project: Project): PsiParser {
         val parser = TypeQLParser(null)
-//        val completionErrorListener = TypeQLCompletionErrorListener()
+//        val completionErrorListener = TypeQLCompletionErrorListener() // TODO: Decide if we use it.
         return object : ANTLRParserAdaptor(TypeQLLanguage.INSTANCE, parser) {
             override fun parse(parser: Parser, root: IElementType): ParseTree {
 //                parser.addErrorListener(completionErrorListener)
@@ -67,12 +67,13 @@ class TypeQLParserDefinition : ParserDefinition {
         if (elType is TokenIElementType) {
             return createBasePsiElement(node)
         }
+
         if (elType !is RuleIElementType) {
             return createBasePsiElement(node)
         }
 
         return when (elType.ruleIndex) {
-            TypeQLParser.RULE_statement_type -> PsiStatementType(node)
+            TypeQLParser.RULE_statement_type -> PsiTypeQLStatementType(node)
             TypeQLParser.RULE_type_constraint -> createTypeConstraintWrapper(node)
             TypeQLParser.RULE_type -> createTypeWrapper(node)
             else -> createBasePsiElement(node)
@@ -104,132 +105,114 @@ class TypeQLParserDefinition : ParserDefinition {
         private fun createTypeWrapper(node: ASTNode): PsiElement {
             return getRuleTypeElement(node) ?: createBasePsiElement(node)
         }
+
+        private fun refCheckInContainer(node: ASTNode, container: List<IElementType> , index: Int): Boolean {
+            return if (index < container.size) node.elementType === container[index] else false
+        }
         
-        private fun checkToken(node: ASTNode, tokenId: Int) : Boolean {
-            if (node.elementType !is TokenIElementType) {
-                return false
-            }
-
-            if (tokenId >= TOKEN_ELEMENT_TYPES.size) {
-                return false
-            }
-
-            return node.elementType === TOKEN_ELEMENT_TYPES[tokenId]
-        }
-
-       private fun checkRule(node: ASTNode?, ruleId: Int) : Boolean {
-            if (node == null) {
-               return false
-            }
-
-            if (node.elementType !is RuleIElementType) {
-                return false
-            }
-
-            if (ruleId >= RULE_ELEMENT_TYPES.size) {
-               return false
-            }
-
-            return node.elementType === RULE_ELEMENT_TYPES[ruleId]
-        }
-
         fun checkNode(node: ASTNode?, elementId: Int) : Boolean {
             if (node?.elementType is TokenIElementType) {
-                return checkToken(node, elementId)
+                return refCheckInContainer(node, TOKEN_ELEMENT_TYPES, elementId)
             }
             if (node?.elementType is RuleIElementType) {
-                return checkRule(node, elementId)
+                return refCheckInContainer(node, RULE_ELEMENT_TYPES, elementId)
             }
 
             return false
         }
 
-        private fun checkRightNeighbour(node: ASTNode, elementId: Int) : Boolean {
-            if (node.treeParent == null
-                || node.treeParent.treeNext == null // WS
-                || node.treeParent.treeNext.treeNext == null
-                || node.treeParent.treeNext.treeNext.firstChildNode == null
-            ) {
-                return false
-            }
-
-            return checkNode(node.treeParent.treeNext.treeNext.firstChildNode, elementId)
-        }
-
-        fun isWhiteSpace(node: ASTNode): Boolean {
+        fun isWhiteSpace(node: ASTNode?): Boolean {
             return checkNode(node, TypeQLParser.WS)
         }
 
         fun getRuleTypeElement(node: ASTNode): PsiElement? {
-            if (checkNode(node.treePrev?.treePrev, TypeQLParser.AS)
-            ) {
+            if (checkNode(node.treePrev?.treePrev, TypeQLParser.AS)) {
                 if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.OWNS)) {
-                    return PsiOwnsAsSuperRoleTypeConstraint(node)
+                    return PsiTypeQLOwnsAsOverrideType(node)
                 }
 
                 if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.PLAYS)) {
-                    return PsiPlaysAsSuperRoleTypeConstraint(node)
+                    return PsiTypeQLPlaysAsOverrideType(node)
                 }
 
                 if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.RELATES)) {
-                    return PsiRelatesAsSuperRoleTypeConstraint(node)
+                    return PsiTypeQLRelatesOverrideType(node)
                 }
             }
 
-            if (checkRightNeighbour(node, TypeQLParser.SUB_)
+            if (checkNode(node.treeParent?.treeNext?.treeNext?.firstChildNode, TypeQLParser.SUB_)
                 && node.firstChildNode != null
                 && checkNode(node.firstChildNode, TypeQLParser.RULE_label)
             ) {
-                val res = PsiTypeConstraint(node)
-                println("PsiTypeConstaint: $res")
-                return res
+                return PsiTypeQLType(node)
             }
 
             return null
         }
 
         private fun getRuleTypePropertyElement(node: ASTNode): PsiElement? {
-            if (node.firstChildNode == null) {
-                return null
+            var newNode: PsiElement? = null
+
+            if (node.firstChildNode != null) {
+                if (checkNode(node.firstChildNode, TypeQLParser.OWNS)) {
+                    newNode = createOwnsType(node)
+                } else if (checkNode(node.firstChildNode, TypeQLParser.PLAYS)) {
+                    newNode = createPlaysType(node)
+                } else if (checkNode(node.firstChildNode, TypeQLParser.RELATES)) {
+                    newNode = createRelatesType(node)
+                } else if (checkNode(node.firstChildNode, TypeQLParser.SUB_)) {
+                    newNode = createSubType(node)
+                }
             }
 
-            if (checkNode(node.firstChildNode, TypeQLParser.OWNS)) {
-                val annotation = node.lastChildNode
-                var ownsTo = annotation.treePrev
-                while(isWhiteSpace(ownsTo)) {
-                    ownsTo = ownsTo.treePrev
-                }
-                if (ownsTo.text.isNotEmpty()) {
-                    return PsiOwnsTypeConstraint(node)
-                }
-            } else if (checkNode(node.firstChildNode, TypeQLParser.PLAYS)) {
-                val playsTo = node.lastChildNode.text
-                if (playsTo.isNotEmpty()) {
-                    return PsiPlaysTypeConstraint(node)
-                }
-            } else if (checkNode(node.firstChildNode, TypeQLParser.RELATES)) {
-                val relatesTo = node.lastChildNode.text
-                if (relatesTo.isNotEmpty()) {
-                    return PsiRelatesTypeConstraint(node)
-                }
-            } else if (checkNode(node.firstChildNode, TypeQLParser.SUB_)) {
-                val subsTo = node.lastChildNode.text
-                if (subsTo.isNotEmpty() && !TypeQLLanguage.TYPEQL_TYPES.contains(subsTo)) {
-                    return PsiSubTypeConstraint(node)
-                }
+            return newNode
+        }
+
+
+        private fun createOwnsType(node: ASTNode): PsiTypeQLOwnsType? {
+            val annotationNode = node.lastChildNode
+            var ownsToNode = annotationNode?.treePrev
+
+            while(TypeQLParserDefinition.isWhiteSpace(ownsToNode)) {
+                ownsToNode = ownsToNode!!.treePrev
+            }
+
+            val ownsTo = ownsToNode?.text
+            if (!ownsTo.isNullOrEmpty()) {
+                return PsiTypeQLOwnsType(node)
             }
 
             return null
         }
-//
-//        fun updateWrappedTypeIfNecessary(node: ASTNode, element: PsiTypeQLElement): PsiTypeQLElement {
-//            val composite = node as CompositeElement
-//            val wrapperSet = composite.getUserData(WRAPPER_SET)
-//            if (wrapperSet == null || wrapperSet && element.javaClass != composite.psi.javaClass) {
-//                composite.psi = element
-//                composite.putUserData(WRAPPER_SET, true)
-//            }
-//            return element
-//        }
+
+        private fun createPlaysType(node: ASTNode): PsiTypeQLPlaysType? {
+            val playsTo = node.lastChildNode?.text
+
+            if (!playsTo.isNullOrEmpty()) {
+                return PsiTypeQLPlaysType(node)
+            }
+
+            return null
+        }
+
+        private fun createRelatesType(node: ASTNode): PsiTypeQLRelatesType? {
+            val relatesTo = node.lastChildNode?.text
+
+            if (!relatesTo.isNullOrEmpty()) {
+                return PsiTypeQLRelatesType(node)
+            }
+
+            return null
+        }
+
+        private fun createSubType(node: ASTNode): PsiTypeQLSubType? {
+            val subsTo = node.lastChildNode?.text
+
+            if (!subsTo.isNullOrEmpty() && !TypeQLLanguage.TYPEQL_TYPES.contains(subsTo)) {
+                return PsiTypeQLSubType(node)
+            }
+
+            return null
+        }
     }
 }

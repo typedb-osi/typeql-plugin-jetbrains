@@ -7,27 +7,19 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import com.vaticle.typeql.grammar.TypeQLLexer
-import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
-import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiRelatesTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiSubTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeConstraint
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLTokenSets
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class TypeQLFindUsagesProvider : FindUsagesProvider {
     override fun getWordsScanner(): WordsScanner? {
-        val lexer = TypeQLLexer(null)
         return DefaultWordsScanner(
-            ANTLRLexerAdaptor(TypeQLLanguage.INSTANCE, lexer),
-            TypeQLTokenSets.IDS,
+            ANTLRLexerAdaptor(TypeQLLanguage.INSTANCE, TypeQLLexer(null)),
+            TypeQLTokenSets.IDENTIFIERS,
             TypeQLTokenSets.COMMENTS,
             TokenSet.EMPTY
         )
@@ -47,19 +39,26 @@ class TypeQLFindUsagesProvider : FindUsagesProvider {
 //            if (declarationType != null) {
 //                "${TypeQLFileType.LANG_NAME} $declarationType"
 //            } else {
+                println("Somebody assk my TYPE! ${element.text}!")
                 "${TypeQLFileType.LANG_NAME} element"
 //            }
-        } else {
-            throw NotImplementedError("HELP! UNEXPECTED TODO")
-        }
+        } else ""
     }
 
     override fun getDescriptiveName(element: PsiElement): String {
-        return element.text
+        if (element !is PsiTypeQLElement) {
+            return ""
+        }
+
+        println("getDescriptiveName for ${element.text}: ${element.scopedName!!}!")
+        return element.scopedName!!
     }
 
     override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        val namedElement = element as PsiTypeQLElement
-        return namedElement.name!!
+        if (element !is PsiTypeQLElement) {
+            return ""
+        }
+        println("GetNodeText for ${element.text}: ${element.name!!}!")
+        return element.name!!
     }
 }

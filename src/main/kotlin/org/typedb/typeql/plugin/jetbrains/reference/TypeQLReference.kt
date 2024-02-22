@@ -4,18 +4,20 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.util.IncorrectOperationException
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
-import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLOwnsType
+import org.typedb.typeql.plugin.jetbrains.usage.TypeQLDeclarationFinder
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange)
     : PsiReferenceBase<PsiTypeQLElement?>(element, textRange)
-    , PsiPolyVariantReference {
+//    , PsiPolyVariantReference
+{
 
     override fun getRangeInElement(): TextRange {
-        return if (element is PsiOwnsTypeConstraint) {
+        return if (element is PsiTypeQLOwnsType) {
             TextRange(super.getRangeInElement().startOffset + 1, super.getRangeInElement().endOffset + 1)
         } else {
             super.getRangeInElement()
@@ -24,23 +26,20 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange)
 
     @Throws(IncorrectOperationException::class)
     override fun handleElementRename(newElementName: String): PsiElement {
-        return TypeQLPsiUtils.setName(myElement!!, newElementName)
+        return PsiTypeQLUtils.setName(myElement!!, newElementName)
     }
 
-    override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-        println("MULTI $incompleteCode from $this")
-        val results: MutableList<ResolveResult> = ArrayList()
-        for (identifier in TypeQLPsiUtils.findUsages(myElement!!)) {
-            results.add(PsiElementResolveResult(identifier))
-        }
-        return results.toTypedArray()
-    }
+//    override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
+//        println("MULTI $incompleteCode from $this")
+//        val results: MutableList<ResolveResult> = ArrayList()
+//        for (identifier in TypeQLUsagesFinder.TypeQLUsagesFinder(myElement!!)) {
+//            results.add(PsiElementResolveResult(identifier))
+//        }
+//        return results.toTypedArray()
+//    }
 
     override fun resolve(): PsiElement? {
-//        return TypeQLPsiUtils.findDeclaration(myElement!!.project, myElement!!)
-        val resolveResults = multiResolve(false)
-        if (resolveResults.size > 1) {println("MORE THAN ONE!"); for(res in resolveResults) println("${res.element}")}
-        return if (resolveResults.size == 1) resolveResults[0].element else null
+        return TypeQLDeclarationFinder.findDeclaration(myElement!!.project, myElement!!)
     }
 
     override fun getVariants(): Array<Any> {

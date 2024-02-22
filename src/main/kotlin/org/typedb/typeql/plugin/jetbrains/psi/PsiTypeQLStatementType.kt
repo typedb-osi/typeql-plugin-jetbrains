@@ -1,26 +1,39 @@
-package org.typedb.typeql.plugin.jetbrains.psi.statement
+/*
+ * Copyright (C) 2022 Vaticle
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.typedb.typeql.plugin.jetbrains.psi
 
 import com.intellij.lang.ASTNode
-import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
-class PsiStatementType(node: ASTNode) : PsiTypeQLElement(node) {
+class PsiTypeQLStatementType(node: ASTNode) : PsiTypeQLElement(node) {
 
     override fun getName(): String? = firstChild.text
 
-    //todo: seems wrong
+    // TODO: Decide if we want to keep it
     val subType: String?
-        get() = if (node.firstChildNode == null ||
-            node.firstChildNode.treeNext == null ||
-            node.firstChildNode.treeNext.treeNext == null ||
-            node.firstChildNode.treeNext.treeNext.lastChildNode == null
-        ) {
-            null
-        } else node.firstChildNode.treeNext.treeNext.lastChildNode.text
+        get() = node.firstChildNode?.treeNext?.treeNext?.lastChildNode?.text
 
 //    fun findRelatesTypeProperties(): List<PsiRelatesTypeConstraint> {
 //        val relatesTypes: MutableList<PsiRelatesTypeConstraint> = ArrayList()

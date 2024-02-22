@@ -23,7 +23,7 @@
 //                        }
 //                        val type = TypeQLPsiUtils.determineDeclarationType(declaration)
 //                        if ("role" == type) {
-//                            val usages = TypeQLPsiUtils.findUsages(declaration)
+//                            val usages = TypeQLUsagesFinder.findUsages(declaration)
 //                            if (usages.isEmpty()) {
 //                                holder.registerProblem(
 //                                    declaration.firstChild.nextSibling.nextSibling,

@@ -3,12 +3,11 @@ package org.typedb.typeql.plugin.jetbrains.psi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFileFactory
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeConstraint
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
-object TypeQLPsiElementFactory {
+object PsiTypeQLElementFactory {
     fun createTypeProperty(project: Project?, name: String?): PsiTypeQLNamedElement {
         val dummyText = String.format("define\n%s sub entity;", name)
         val file = createFile(project, dummyText)

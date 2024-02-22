@@ -22,9 +22,6 @@
 package org.typedb.typeql.plugin.jetbrains.psi.constraint
 
 import com.intellij.lang.ASTNode
-import com.intellij.psi.PsiReference
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 
-class PsiOwnsAsSuperRoleTypeConstraint(node: ASTNode) : PsiAsSuperRoleTypeConstraintBase(node) {
+class PsiTypeQLPlaysAsOverrideType(node: ASTNode) : PsiTypeQLAsOverrideTypeBase(node) {
 }

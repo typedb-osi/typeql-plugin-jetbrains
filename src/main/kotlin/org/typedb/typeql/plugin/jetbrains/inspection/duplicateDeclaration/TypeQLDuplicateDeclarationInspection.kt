@@ -21,7 +21,7 @@
 //            override fun visitElement(identifier: PsiElement) {
 //                if (identifier is PsiTypeQLNamedElement) {
 //                    TypeQLPsiUtils.ensureTypeQLElementsUpToDate(identifier.getContainingFile())
-//                    val declarationTypes = TypeQLPsiUtils.findDeclarations(
+//                    val declarationTypes = TypeQLDeclarationFinder.findDeclarations(
 //                        identifier.getProject(), identifier
 //                    ).stream()
 //                        .map {

@@ -23,9 +23,11 @@ package org.typedb.typeql.plugin.jetbrains.psi.constraint
 
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.PsiReference
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
 
-class PsiPlaysAsSuperRoleTypeConstraint(node: ASTNode) : PsiAsSuperRoleTypeConstraintBase(node) {
+abstract class PsiTypeQLAsOverrideTypeBase(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+
+    val superRoleTextRange: TextRange = TextRange(0, (name ?: "").length)
+
+    override fun getName(): String? = text
 }

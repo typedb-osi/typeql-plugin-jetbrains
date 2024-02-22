@@ -26,7 +26,7 @@ import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 
 class TypeQLTokenSets {
     companion object {
-        val IDS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.LABEL_)!!
+        val IDENTIFIERS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.LABEL_)!!
         val COMMENTS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.COMMENT)!!
         val WHITESPACES = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.WS)!!
         val STRINGS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.QUOTED_STRING)!!

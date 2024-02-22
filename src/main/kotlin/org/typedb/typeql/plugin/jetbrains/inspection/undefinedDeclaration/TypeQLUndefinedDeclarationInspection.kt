@@ -29,7 +29,7 @@
 //                        if (identifier!!.name.isEmpty()) {
 //                            return  //user still typing
 //                        }
-//                        val declaration = TypeQLPsiUtils.findDeclaration(
+//                        val declaration = TypeQLDeclarationFinder.findDeclaration(
 //                            identifier.project, identifier
 //                        )
 //                        if (declaration == null) {

@@ -24,14 +24,14 @@
 //                ) {
 //                    TypeQLPsiUtils.ensureTypeQLElementsUpToDate(identifier.getContainingFile())
 //                    val identifierElement = identifier
-//                    val declaration = TypeQLPsiUtils.findDeclaration(
+//                    val declaration = TypeQLDeclarationFinder.findDeclaration(
 //                        identifier.getProject(), identifierElement
 //                    )
 //                    if (declaration != null) {
 //                        val type = TypeQLPsiUtils.determineDeclarationType(declaration)
 //                        if ("role" == type) {
 //                            var isPlayed = false
-//                            val usages = TypeQLPsiUtils.findUsages(identifierElement)
+//                            val usages = TypeQLUsagesFinder.findUsages(identifierElement)
 //                            for (usage in usages) {
 //                                if (usage is PsiPlaysTypeConstraint) {
 //                                    isPlayed = true

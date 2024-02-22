@@ -3,14 +3,13 @@ package org.typedb.typeql.plugin.jetbrains.psi.constraint
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiReference
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 // sub *NAME*
-class PsiSubTypeConstraint(node: ASTNode) : PsiTypeQLElement(node) {
+class PsiTypeQLSubType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
     val subTypeTextRange: TextRange
         get() = TextRange("sub ".length, "sub ".length + subType!!.length)
     val subType: String?
@@ -21,7 +20,6 @@ class PsiSubTypeConstraint(node: ASTNode) : PsiTypeQLElement(node) {
             return null
         }
 
-        val refs = ReferenceProvidersRegistry.getReferencesFromProviders(this)
-        return if (refs.isNotEmpty()) refs[0] else null
+        return super.getReference()
     }
 }
