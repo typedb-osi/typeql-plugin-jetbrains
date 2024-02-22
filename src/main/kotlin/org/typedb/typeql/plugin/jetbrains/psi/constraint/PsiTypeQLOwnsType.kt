@@ -10,6 +10,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class PsiTypeQLOwnsType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+
+    override fun getName(): String? = this.ownsType
+
     val ownsTypeTextRange: TextRange
         get() = TextRange("owns".length, "owns".length + ownsType!!.length)
     val ownsType: String?

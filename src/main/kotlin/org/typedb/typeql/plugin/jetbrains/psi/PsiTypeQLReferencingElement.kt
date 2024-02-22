@@ -37,16 +37,8 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLSubType
  * @ref PsiTypeQLNamedElement
  */
 abstract class PsiTypeQLReferencingElement(node: ASTNode) : PsiTypeQLElement(node) {
-//    override fun getName(): String? = text
 
-    override fun getName(): String? { // TODO: Refactor
-        return when (this) {
-            is PsiTypeQLSubType -> {println("${this.subType}"); this.subType}
-            is PsiTypeQLPlaysType -> {println("${this.playsType}");this.playsType}
-            is PsiTypeQLOwnsType -> {println("${this.ownsType}");this.ownsType}
-            else -> super.getName()
-        }
-    }
+    override fun getName(): String? = text
 
     override fun getReference(): PsiReference? {
         val refs = ReferenceProvidersRegistry.getReferencesFromProviders(this)

@@ -10,6 +10,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  */
 // sub *NAME*
 class PsiTypeQLSubType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+
+    override fun getName(): String? = this.subType
+
     val subTypeTextRange: TextRange
         get() = TextRange("sub ".length, "sub ".length + subType!!.length)
     val subType: String?

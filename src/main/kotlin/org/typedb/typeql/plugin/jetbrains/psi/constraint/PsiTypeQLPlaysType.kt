@@ -10,6 +10,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+
+    override fun getName(): String? = this.playsType
+
     val playsTypeTextRange: TextRange
         get() {
             val scopeIndex = text.indexOf(":") + 1

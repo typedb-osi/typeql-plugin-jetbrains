@@ -12,15 +12,7 @@ import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 sealed class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
-
     override fun getNode(): CompositeElement = super.getNode() as CompositeElement
-
-    override fun getName(): String? { // TODO: Refactor
-        return when (this) {
-            is PsiTypeQLRelatesType -> this.scopedName
-            else -> super.getName()
-        }
-    }
 
     open val scopedName: String?
         get() = name
