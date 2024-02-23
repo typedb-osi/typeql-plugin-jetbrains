@@ -7,6 +7,7 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 object PsiTypeQLUtils {
+    // TODO: Reconsider this!
     fun setName(element: PsiTypeQLElement, newName: String): PsiElement {
         if (element is PsiTypeQLType) {
             val typeProperty = PsiTypeQLElementFactory.createTypeProperty(element.getProject(), newName)

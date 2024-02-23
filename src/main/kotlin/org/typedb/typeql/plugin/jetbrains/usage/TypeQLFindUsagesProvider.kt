@@ -34,31 +34,14 @@ class TypeQLFindUsagesProvider : FindUsagesProvider {
     }
 
     override fun getType(element: PsiElement): String {
-        return if (element is PsiTypeQLElement) {
-//            val declarationType = TypeQLPsiUtils.determineDeclarationType(element)
-//            if (declarationType != null) {
-//                "${TypeQLFileType.LANG_NAME} $declarationType"
-//            } else {
-                println("Somebody assk my TYPE! ${element.text}!")
-                "${TypeQLFileType.LANG_NAME} element"
-//            }
-        } else ""
+        return if (element is PsiTypeQLElement) "${TypeQLFileType.LANG_NAME} element" else ""
     }
 
     override fun getDescriptiveName(element: PsiElement): String {
-        if (element !is PsiTypeQLElement) {
-            return ""
-        }
-
-        println("getDescriptiveName for ${element.text}: ${element.scopedName!!}!")
-        return element.scopedName!!
+        return if (element is PsiTypeQLElement) element.scopedName!! else ""
     }
 
     override fun getNodeText(element: PsiElement, useFullName: Boolean): String {
-        if (element !is PsiTypeQLElement) {
-            return ""
-        }
-        println("GetNodeText for ${element.text}: ${element.name!!}!")
-        return element.name!!
+        return if (element is PsiTypeQLElement) element.name!! else ""
     }
 }

@@ -15,6 +15,11 @@ sealed class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
     open val scopedName: String?
         get() = name
 
+    open val tokenText = ""
+
+    protected val tokenTextOffset
+        get() = tokenText.length - 1 // Minus 2 quotes, plus 1 space
+
     override fun getNode(): CompositeElement = super.getNode() as CompositeElement
 
     override fun toString(): String = String.format(

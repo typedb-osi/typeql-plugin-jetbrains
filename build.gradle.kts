@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     implementation("org.antlr:antlr4-intellij-adaptor:0.1")
-    implementation("com.vaticle.typeql:typeql-grammar:2.26.6-rc0") // TODO: Update to a non-RC one once released.
+    implementation("com.vaticle.typeql:typeql-grammar:2.26.6")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin

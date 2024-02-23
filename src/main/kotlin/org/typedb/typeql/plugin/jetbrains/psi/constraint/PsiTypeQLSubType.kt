@@ -4,6 +4,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiReference
 import com.vaticle.typeql.grammar.TypeQLParser
+import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
 
 /**
@@ -11,10 +12,12 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  */
 class PsiTypeQLSubType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
     val subTypeTextRange: TextRange
-        get() = TextRange("sub ".length, "sub ".length + subType!!.length)
+        get() = TextRange(tokenTextOffset, tokenTextOffset + subType!!.length)
 
     val subType: String?
         get() = lastChild?.text
+
+    override val tokenText = TypeQLParserDefinition.getTokenText(TypeQLParser.SUB)
 
     override fun getName(): String? = this.subType
 

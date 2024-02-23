@@ -95,6 +95,10 @@ class TypeQLParserDefinition : ParserDefinition {
             PSIElementTypeFactory.getTokenIElementTypes(TypeQLLanguage.INSTANCE)!!
         private val RULE_ELEMENT_TYPES: List<RuleIElementType> =
             PSIElementTypeFactory.getRuleIElementTypes(TypeQLLanguage.INSTANCE)!!
+
+        fun getTokenText(tokenId: Int): String {
+            return if (tokenId < TOKEN_ELEMENT_TYPES.size) "${TOKEN_ELEMENT_TYPES[tokenId]}" else ""
+        }
         
         fun checkNode(node: ASTNode?, elementId: Int) : Boolean {
             if (node?.elementType is TokenIElementType) {
