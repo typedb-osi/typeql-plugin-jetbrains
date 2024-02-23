@@ -81,7 +81,6 @@ class TypeQLParserDefinition : ParserDefinition {
     }
 
     companion object {
-        private var WRAPPER_SET = Key<Boolean>("typeql.wrapper")
         lateinit var INSTANCE: TypeQLParserDefinition
 
         init {
@@ -91,24 +90,11 @@ class TypeQLParserDefinition : ParserDefinition {
         }
 
         val FILE = IFileElementType(TypeQLLanguage.INSTANCE)
-        val TOKEN_ELEMENT_TYPES = PSIElementTypeFactory.getTokenIElementTypes(TypeQLLanguage.INSTANCE)!!
-        val RULE_ELEMENT_TYPES = PSIElementTypeFactory.getRuleIElementTypes(TypeQLLanguage.INSTANCE)!!
 
-        private fun createBasePsiElement(node: ASTNode): PsiElement {
-            return ANTLRPsiNode(node)
-        }
-
-        private fun createTypeConstraintWrapper(node: ASTNode): PsiElement {
-            return getRuleTypePropertyElement(node) ?: createTypeWrapper(node)
-        }
-
-        private fun createTypeWrapper(node: ASTNode): PsiElement {
-            return getRuleTypeElement(node) ?: createBasePsiElement(node)
-        }
-
-        private fun refCheckInContainer(node: ASTNode, container: List<IElementType> , index: Int): Boolean {
-            return if (index < container.size) node.elementType === container[index] else false
-        }
+        private val TOKEN_ELEMENT_TYPES: List<TokenIElementType> =
+            PSIElementTypeFactory.getTokenIElementTypes(TypeQLLanguage.INSTANCE)!!
+        private val RULE_ELEMENT_TYPES: List<RuleIElementType> =
+            PSIElementTypeFactory.getRuleIElementTypes(TypeQLLanguage.INSTANCE)!!
         
         fun checkNode(node: ASTNode?, elementId: Int) : Boolean {
             if (node?.elementType is TokenIElementType) {
@@ -119,10 +105,6 @@ class TypeQLParserDefinition : ParserDefinition {
             }
 
             return false
-        }
-
-        fun isWhiteSpace(node: ASTNode?): Boolean {
-            return checkNode(node, TypeQLParser.WS)
         }
 
         fun getRuleTypeElement(node: ASTNode): PsiElement? {
@@ -168,12 +150,11 @@ class TypeQLParserDefinition : ParserDefinition {
             return newNode
         }
 
-
         private fun createOwnsType(node: ASTNode): PsiTypeQLOwnsType? {
             val annotationNode = node.lastChildNode
             var ownsToNode = annotationNode?.treePrev
 
-            while(TypeQLParserDefinition.isWhiteSpace(ownsToNode)) {
+            while(isWhiteSpace(ownsToNode)) {
                 ownsToNode = ownsToNode!!.treePrev
             }
 
@@ -213,6 +194,26 @@ class TypeQLParserDefinition : ParserDefinition {
             }
 
             return null
+        }
+
+        private fun createBasePsiElement(node: ASTNode): PsiElement {
+            return ANTLRPsiNode(node)
+        }
+
+        private fun createTypeConstraintWrapper(node: ASTNode): PsiElement {
+            return getRuleTypePropertyElement(node) ?: createTypeWrapper(node)
+        }
+
+        private fun createTypeWrapper(node: ASTNode): PsiElement {
+            return getRuleTypeElement(node) ?: createBasePsiElement(node)
+        }
+
+        private fun refCheckInContainer(node: ASTNode, container: List<IElementType> , index: Int): Boolean {
+            return if (index < container.size) node.elementType === container[index] else false
+        }
+
+        private fun isWhiteSpace(node: ASTNode?): Boolean {
+            return checkNode(node, TypeQLParser.WS)
         }
     }
 }

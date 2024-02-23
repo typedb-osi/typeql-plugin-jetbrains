@@ -7,6 +7,29 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 object PsiTypeQLUtils {
+    fun setName(element: PsiTypeQLElement, newName: String): PsiElement {
+        if (element is PsiTypeQLType) {
+            val typeProperty = PsiTypeQLElementFactory.createTypeProperty(element.getProject(), newName)
+            element.getParent().node.replaceChild(element.getNode(), typeProperty.node)
+        } else if (element is PsiTypeQLSubType) {
+            val subTypeProperty = PsiTypeQLElementFactory.createSubTypeProperty(element.getProject(), newName)
+            element.getParent().node.replaceChild(element.getNode(), subTypeProperty.node)
+        } else if (element is PsiTypeQLRelatesType) {
+            val typeProperty = PsiTypeQLElementFactory.createRelatesTypeProperty(element.getProject(), newName)
+            element.getNode().replaceChild(
+                element.getFirstChild().nextSibling.nextSibling.node,
+                typeProperty.firstChild.nextSibling.nextSibling.node
+            )
+        } else if (element is PsiTypeQLPlaysType) {
+            val playsTypeProperty = PsiTypeQLElementFactory.createPlaysTypeProperty(element.getProject(), newName)
+            element.getParent().node.replaceChild(element.getNode(), playsTypeProperty.node)
+        } else {
+            throw UnsupportedOperationException("Can not set name to this element")
+        }
+
+        return element
+    }
+
     //    fun ensureTypeQLElementsUpToDate(file: PsiFile?) {
 //        try {
 //            PsiTreeUtil.collectElementsOfType(file, PsiTypeQLElement::class.java)
@@ -90,29 +113,6 @@ object PsiTypeQLUtils {
 //            determineDeclarationType(declaration)
 //        }
 //    }
-
-    fun setName(element: PsiTypeQLElement, newName: String): PsiElement {
-        if (element is PsiTypeQLType) {
-            val typeProperty = PsiTypeQLElementFactory.createTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), typeProperty.node)
-        } else if (element is PsiTypeQLSubType) {
-            val subTypeProperty = PsiTypeQLElementFactory.createSubTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), subTypeProperty.node)
-        } else if (element is PsiTypeQLRelatesType) {
-            val typeProperty = PsiTypeQLElementFactory.createRelatesTypeProperty(element.getProject(), newName)
-            element.getNode().replaceChild(
-                element.getFirstChild().nextSibling.nextSibling.node,
-                typeProperty.firstChild.nextSibling.nextSibling.node
-            )
-        } else if (element is PsiTypeQLPlaysType) {
-            val playsTypeProperty = PsiTypeQLElementFactory.createPlaysTypeProperty(element.getProject(), newName)
-            element.getParent().node.replaceChild(element.getNode(), playsTypeProperty.node)
-        } else {
-            throw UnsupportedOperationException("Can not set name to this element")
-        }
-
-        return element
-    }
 //
 //    fun findParentByType(
 //        element: PsiElement,

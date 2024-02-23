@@ -12,10 +12,10 @@ import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 sealed class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
-    override fun getNode(): CompositeElement = super.getNode() as CompositeElement
-
     open val scopedName: String?
         get() = name
+
+    override fun getNode(): CompositeElement = super.getNode() as CompositeElement
 
     override fun toString(): String = String.format(
         "%s(%s) - Location: %s",

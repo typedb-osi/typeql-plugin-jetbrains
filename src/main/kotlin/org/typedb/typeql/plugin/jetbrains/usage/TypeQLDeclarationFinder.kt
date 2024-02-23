@@ -33,17 +33,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLFile
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
+import kotlin.reflect.KClass
 
 object TypeQLDeclarationFinder {
-    fun findDeclaration(
-        project: Project,
-        name: String?,
-        searchScope: Collection<VirtualFile?>
-    ): PsiTypeQLNamedElement? {
-        val declarations = findDeclarations(project, name, searchScope)
-        return if (declarations.isNotEmpty()) declarations[0] else null
-    }
-
     fun findDeclaration(project: Project, identifier: PsiTypeQLElement): PsiTypeQLNamedElement? {
         val declarations = findDeclarations(project, identifier)
         return if (declarations.isNotEmpty()) declarations[0] else null
@@ -56,10 +48,10 @@ object TypeQLDeclarationFinder {
         val identifierFile = identifier.node.psi.containingFile.virtualFile
 
         return if (ScratchUtil.isScratch(identifierFile)) {
-            findDeclarations(project, identifier.scopedName, listOf(identifierFile))
+            findDeclarations(project, identifier, identifier.scopedName, listOf(identifierFile))
         } else {
             findDeclarations(
-                project, identifier.scopedName, FileTypeIndex.getFiles(
+                project, identifier, identifier.scopedName, FileTypeIndex.getFiles(
                     TypeQLFileType.INSTANCE, GlobalSearchScope.allScope(project)
                 )
             )
@@ -68,10 +60,11 @@ object TypeQLDeclarationFinder {
 
     fun findDeclarations(
         project: Project,
-        name: String?,
+        targetIdentifier: PsiTypeQLElement,
+        targetName: String?,
         searchScope: Collection<VirtualFile?>
     ): List<PsiTypeQLNamedElement> {
-        if (name == null) {
+        if (targetName == null) {
             return emptyList()
         }
 
@@ -79,28 +72,21 @@ object TypeQLDeclarationFinder {
         val nameDeclarations: MutableList<PsiTypeQLNamedElement> = ArrayList()
 
         for (virtualFile in searchScope) {
-            val typeqlFile = PsiManager.getInstance(project).findFile(virtualFile!!) as PsiTypeQLFile?
+            val typeqlFile = PsiManager.getInstance(project).findFile(virtualFile!!) as PsiTypeQLFile? ?: continue
 
-            if (typeqlFile != null) {
-                val identifiers = PsiTreeUtil.collectElementsOfType(
-                    typeqlFile, PsiTypeQLNamedElement::class.java
-                )
+            val namedElements = PsiTreeUtil.collectElementsOfType(typeqlFile, PsiTypeQLNamedElement::class.java)
 
-                for (identifier in identifiers) {
-                    if (name == identifier.scopedName) {
-                        scopedNameDeclarations.add(identifier)
-                    }
+            for (namedElement in namedElements) {
+                if (targetName == namedElement.scopedName) {
+                    scopedNameDeclarations.add(namedElement)
+                }
 
-                    if (name == identifier.name) {
-                        nameDeclarations.add(identifier)
-                    }
+                if (targetName == namedElement.name) {
+                    nameDeclarations.add(namedElement)
                 }
             }
         }
 
         return scopedNameDeclarations + nameDeclarations
-
-        // TODO: Return this line when the logic is fully correct:
-//        return scopedNameDeclarations.ifEmpty { nameDeclarations }
     }
 }

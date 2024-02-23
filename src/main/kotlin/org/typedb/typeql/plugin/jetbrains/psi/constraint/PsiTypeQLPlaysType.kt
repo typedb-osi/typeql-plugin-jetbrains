@@ -11,8 +11,6 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  */
 class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
 
-    override fun getName(): String? = this.playsType
-
     val playsTypeTextRange: TextRange
         get() {
             val scopeIndex = text.indexOf(":") + 1
@@ -21,17 +19,11 @@ class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
 
             return if (scopeIndex <= endIndex) TextRange(scopeIndex, endIndex) else TextRange(0, 0)
         }
+
     val playsType: String?
         get() = firstChild?.nextSibling?.nextSibling?.text
 
-    val isAbstractType: Boolean
-        get() = playsType == "abstract"
+    override fun getName(): String? = this.playsType
 
-    override fun getReference(): PsiReference? {
-        if (playsType == null || isAbstractType) { // TODO: Needed?
-            return null
-        }
-
-        return super.getReference()
-    }
+    override fun getReference(): PsiReference? = if (playsType == null) null else super.getReference()
 }

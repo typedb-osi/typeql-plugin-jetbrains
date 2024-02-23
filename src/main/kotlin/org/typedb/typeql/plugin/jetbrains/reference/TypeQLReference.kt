@@ -13,30 +13,11 @@ import org.typedb.typeql.plugin.jetbrains.usage.TypeQLDeclarationFinder
  */
 class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange)
     : PsiReferenceBase<PsiTypeQLElement?>(element, textRange)
-//    , PsiPolyVariantReference
 {
-
-    override fun getRangeInElement(): TextRange {
-        return if (element is PsiTypeQLOwnsType) {
-            TextRange(super.getRangeInElement().startOffset + 1, super.getRangeInElement().endOffset + 1)
-        } else {
-            super.getRangeInElement()
-        }
-    }
-
     @Throws(IncorrectOperationException::class)
     override fun handleElementRename(newElementName: String): PsiElement {
         return PsiTypeQLUtils.setName(myElement!!, newElementName)
     }
-
-//    override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-//        println("MULTI $incompleteCode from $this")
-//        val results: MutableList<ResolveResult> = ArrayList()
-//        for (identifier in TypeQLUsagesFinder.TypeQLUsagesFinder(myElement!!)) {
-//            results.add(PsiElementResolveResult(identifier))
-//        }
-//        return results.toTypedArray()
-//    }
 
     override fun resolve(): PsiElement? {
         return TypeQLDeclarationFinder.findDeclaration(myElement!!.project, myElement!!)

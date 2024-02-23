@@ -31,7 +31,6 @@ class PsiTypeQLStatementType(node: ASTNode) : PsiTypeQLElement(node) {
 
     override fun getName(): String? = firstChild.text
 
-    // TODO: Decide if we want to keep it
     val subType: String?
         get() = node.firstChildNode?.treeNext?.treeNext?.lastChildNode?.text
 

@@ -81,21 +81,6 @@ class TypeQLReferenceContributor : PsiReferenceContributor() {
                 }
             })
 
-        // TODO: Should not be needed
-//        registrar.registerReferenceProvider(
-//            PlatformPatterns.psiElement(PsiRelatesTypeConstraint::class.java),
-//            object : PsiReferenceProvider() {
-//                override fun getReferencesByElement(
-//                    element: PsiElement,
-//                    context: ProcessingContext
-//                ): Array<PsiReference> {
-//                    val playsElement = element as PsiRelatesTypeConstraint
-//                    return arrayOf(
-//                        TypeQLReference(playsElement, playsElement.textRange)
-//                    )
-//                }
-//            })
-
         registrar.registerReferenceProvider(
             PlatformPatterns.psiElement(PsiTypeQLSubType::class.java),
             object : PsiReferenceProvider() {
@@ -109,20 +94,5 @@ class TypeQLReferenceContributor : PsiReferenceContributor() {
                     )
                 }
             })
-
-        // TODO: Shoud not be needed
-//        registrar.registerReferenceProvider(
-//            PlatformPatterns.psiElement(PsiTypeConstraint::class.java),
-//            object : PsiReferenceProvider() {
-//                override fun getReferencesByElement(
-//                    element: PsiElement,
-//                    context: ProcessingContext
-//                ): Array<PsiReference> {
-//                    val typeElement = element as PsiTypeConstraint
-//                    return arrayOf(
-//                        TypeQLReference(typeElement, typeElement.textRange)
-//                    )
-//                }
-//            })
     }
 }

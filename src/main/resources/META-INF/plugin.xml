@@ -17,7 +17,6 @@
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition"/>
 
-<!--        TODO: Return highlighting after implementing everything-->
         <lang.syntaxHighlighterFactory
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
