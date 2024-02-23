@@ -32,10 +32,8 @@ abstract class PsiTypeQLNamedElement(node: ASTNode) : PsiTypeQLElement(node), Ps
 
     override fun getTextOffset(): Int = nameIdentifier?.textOffset ?: super.getTextOffset()
 
-    override fun toString(): String {
-        return String.format(
-            "%s(%s) - Name: %s - Location: %s",
-            javaClass.simpleName, node.elementType, name, textRange
-        )
-    }
+    override fun toString(): String = String.format(
+        "%s(%s) - Name: %s - Location: %s",
+        javaClass.simpleName, node.elementType, name, textRange
+    )
 }

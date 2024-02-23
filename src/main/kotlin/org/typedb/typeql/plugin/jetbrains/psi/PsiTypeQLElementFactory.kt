@@ -12,6 +12,7 @@ object PsiTypeQLElementFactory {
         val dummyText = String.format("define\n%s sub entity;", name)
         val file = createFile(project, dummyText)
 
+        // TODO: Add validation because "%s" can be not valid!
         // definables -> first definable -> statement -> type node wrapper -> type node
         return PsiTypeQLUtils.getDefinables(file)!!.firstChild.firstChild.firstChild.firstChild
             as PsiTypeQLNamedElement

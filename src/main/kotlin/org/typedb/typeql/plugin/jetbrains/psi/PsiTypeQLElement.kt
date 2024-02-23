@@ -3,11 +3,12 @@ package org.typedb.typeql.plugin.jetbrains.psi
 import com.intellij.lang.ASTNode
 import com.intellij.psi.impl.source.tree.CompositeElement
 import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
+import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
-sealed class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
+open class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
     open val labelNode: ASTNode?
         get() = node
 
@@ -25,4 +26,9 @@ sealed class PsiTypeQLElement(node: ASTNode) : ANTLRPsiNode(node) {
         "%s(%s) - Location: %s",
         javaClass.simpleName, node.elementType, textRange
     )
+
+    override fun subtreeChanged() {
+        val updatedElement = TypeQLParserDefinition.INSTANCE.createElement(super.getNode())
+        TypeQLParserDefinition.updateWrappedTypeIfNecessary(super.getNode(), updatedElement)
+    }
 }

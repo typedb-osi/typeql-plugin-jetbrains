@@ -5,9 +5,11 @@ import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Key
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.impl.source.tree.CompositeElement
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
@@ -24,7 +26,9 @@ import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
 import org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionErrorListener
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -73,17 +77,20 @@ class TypeQLParserDefinition : ParserDefinition {
             return createBasePsiElement(node)
         }
 
-        return when (elType.ruleIndex) {
-            TypeQLParser.RULE_statement_type -> PsiTypeQLStatementType(node)
-            TypeQLParser.RULE_type_constraint -> createTypeConstraintWrapper(node)
-            TypeQLParser.RULE_type -> createTypeWrapper(node)
-            else -> createBasePsiElement(node)
-        }
+        return updateWrappedTypeIfNecessary(
+            node,
+            when (elType.ruleIndex) {
+                TypeQLParser.RULE_statement_type -> PsiTypeQLStatementType(node)
+                TypeQLParser.RULE_type_constraint -> createTypeConstraintWrapper(node)
+                TypeQLParser.RULE_type -> createTypeWrapper(node)
+                else -> createBasePsiElement(node)
+            }
+        )
     }
 
     companion object {
         lateinit var INSTANCE: TypeQLParserDefinition
-
+        private var WRAPPER_SET = Key<Boolean>("typeql.wrapper")
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(
                 TypeQLLanguage.INSTANCE, TypeQLParser.tokenNames, TypeQLParser.ruleNames
@@ -220,7 +227,8 @@ class TypeQLParserDefinition : ParserDefinition {
         }
 
         private fun createBasePsiElement(node: ASTNode): PsiElement {
-            return ANTLRPsiNode(node)
+//            return ANTLRPsiNode(node)
+            return PsiTypeQLElement(node)
         }
 
         private fun createTypeConstraintWrapper(node: ASTNode): PsiElement {
@@ -237,6 +245,18 @@ class TypeQLParserDefinition : ParserDefinition {
 
         private fun isWhiteSpace(node: ASTNode?): Boolean {
             return checkNode(node, TypeQLParser.WS)
+        }
+
+        fun updateWrappedTypeIfNecessary(node: ASTNode, element: PsiElement): PsiElement {
+            val composite = node as CompositeElement
+            val wrapperSet = composite.getUserData(WRAPPER_SET)
+
+            if (wrapperSet == null || wrapperSet && element.javaClass != composite.psi.javaClass) {
+                composite.psi = element
+                composite.putUserData(WRAPPER_SET, true)
+            }
+
+            return element
         }
     }
 }

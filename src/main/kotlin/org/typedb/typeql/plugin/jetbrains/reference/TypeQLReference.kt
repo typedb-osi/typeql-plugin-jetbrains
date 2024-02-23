@@ -47,10 +47,6 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
             else -> throw UnsupportedOperationException("Can not set name to this element $element")
         }
 
-        if (renamingElement is PsiTypeQLOwnsType) {
-            println(renamingElement.labelNode!!.text)
-            println(tempProperty.labelNode!!.text)
-        }
         if (renamingElement.labelNode == null || tempProperty.labelNode == null) {
             throw NullPointerException("Can not access label node for $this")
         }
@@ -58,6 +54,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
         renamingElement.labelNode!!.treeParent.replaceChild(
             renamingElement.labelNode!!, tempProperty.labelNode!!
         )
+
         return renamingElement
     }
 
@@ -68,4 +65,9 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
     override fun getVariants(): Array<Any> {
         return emptyArray()
     }
+
+    override fun toString(): String = String.format(
+        "%s(%s)",
+        javaClass.simpleName, myElement?.node
+    )
 }
