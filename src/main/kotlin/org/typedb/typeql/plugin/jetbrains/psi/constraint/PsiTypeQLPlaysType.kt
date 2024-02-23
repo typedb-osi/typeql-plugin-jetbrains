@@ -12,6 +12,8 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+    override val labelNode: ASTNode?
+        get() = node.firstChildNode?.treeNext?.treeNext
 
     val playsTypeTextRange: TextRange
         get() {
@@ -27,7 +29,21 @@ class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
     private val rolePrefix = ":"
 
     val playsType: String?
-        get() = firstChild?.nextSibling?.nextSibling?.text
+        get() = labelNode?.text
+
+    val playsScope: String?
+        get() {
+            if (playsType == null) {
+                return null
+            }
+
+            val scopeIndex = playsType!!.indexOf(rolePrefix)
+            return playsType!!.substring(0, scopeIndex)
+        }
+
+    fun buildScopedName(newName: String): String {
+       return playsScope + rolePrefix + newName
+    }
 
     override fun getName(): String? = this.playsType
 

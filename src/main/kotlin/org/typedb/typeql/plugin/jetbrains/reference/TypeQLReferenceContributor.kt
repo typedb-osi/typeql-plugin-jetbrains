@@ -40,13 +40,13 @@ class TypeQLReferenceContributor : PsiReferenceContributor() {
             })
 
         registrar.registerReferenceProvider(
-            PlatformPatterns.psiElement(PsiTypeQLRelatesOverrideType::class.java),
+            PlatformPatterns.psiElement(PsiTypeQLRelatesAsOverrideType::class.java),
             object : PsiReferenceProvider() {
                 override fun getReferencesByElement(
                     element: PsiElement,
                     context: ProcessingContext
                 ): Array<PsiReference> {
-                    val typeElement = element as PsiTypeQLRelatesOverrideType
+                    val typeElement = element as PsiTypeQLRelatesAsOverrideType
                     return arrayOf(
                         TypeQLReference(typeElement, typeElement.superRoleTextRange)
                     )

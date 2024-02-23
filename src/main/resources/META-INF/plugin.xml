@@ -17,11 +17,11 @@
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition"/>
 
-        <lang.syntaxHighlighterFactory
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
-        <colorSettingsPage
-            implementation="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLColorSettingsPage"/>
+<!--        <lang.syntaxHighlighterFactory-->
+<!--            language="TypeQL"-->
+<!--            implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>-->
+<!--        <colorSettingsPage-->
+<!--            implementation="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLColorSettingsPage"/>-->
 
         <psi.referenceContributor
             language="TypeQL"
@@ -33,13 +33,16 @@
         <lang.refactoringSupport
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
-<!--        <lang.namesValidator language="TypeQL"-->
-<!--                             implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>-->
-<!--        <completion.contributor language="TypeQL"-->
-<!--                                implementationClass="org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionContributor"/>-->
-        <lang.commenter
+        <lang.namesValidator
             language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLCommenter"/>
+            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>
+        <lang.commenter
+                language="TypeQL"
+                implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLCommenter"/>
+
+        <completion.contributor
+            language="TypeQL"
+            implementationClass="org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionContributor"/>
 
         <!-- inspections -->
 <!--        <inspectionToolProvider-->

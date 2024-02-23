@@ -5,7 +5,6 @@ import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.Key
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -24,6 +23,7 @@ import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor
 import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
+import org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionErrorListener
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
 
 /**
@@ -45,10 +45,11 @@ class TypeQLParserDefinition : ParserDefinition {
 
     override fun createParser(project: Project): PsiParser {
         val parser = TypeQLParser(null)
-//        val completionErrorListener = TypeQLCompletionErrorListener() // TODO: Decide if we use it.
+        val completionErrorListener = TypeQLCompletionErrorListener()
         return object : ANTLRParserAdaptor(TypeQLLanguage.INSTANCE, parser) {
             override fun parse(parser: Parser, root: IElementType): ParseTree {
-//                parser.addErrorListener(completionErrorListener)
+                parser.addErrorListener(completionErrorListener)
+
                 if (root is IFileElementType) {
                     return (parser as TypeQLParser).eof_queries()
                 }
@@ -96,10 +97,28 @@ class TypeQLParserDefinition : ParserDefinition {
         private val RULE_ELEMENT_TYPES: List<RuleIElementType> =
             PSIElementTypeFactory.getRuleIElementTypes(TypeQLLanguage.INSTANCE)!!
 
-        fun getTokenText(tokenId: Int): String {
-            return if (tokenId < TOKEN_ELEMENT_TYPES.size) "${TOKEN_ELEMENT_TYPES[tokenId]}" else ""
+        fun getRule(ruleId: Int): RuleIElementType? {
+            return if (ruleId < RULE_ELEMENT_TYPES.size) {
+                RULE_ELEMENT_TYPES[ruleId]
+            }
+            else {
+                null
+            }
         }
-        
+
+        fun getToken(tokenId: Int): TokenIElementType? {
+            return if (tokenId < TOKEN_ELEMENT_TYPES.size) {
+                TOKEN_ELEMENT_TYPES[tokenId]
+            }
+            else {
+                null
+            }
+        }
+
+        fun getTokenText(tokenId: Int): String {
+            return (getToken(tokenId) ?: "").toString()
+        }
+
         fun checkNode(node: ASTNode?, elementId: Int) : Boolean {
             if (node?.elementType is TokenIElementType) {
                 return refCheckInContainer(node, TOKEN_ELEMENT_TYPES, elementId)
@@ -122,7 +141,7 @@ class TypeQLParserDefinition : ParserDefinition {
                 }
 
                 if (checkNode(node.treeParent?.firstChildNode, TypeQLParser.RELATES)) {
-                    return PsiTypeQLRelatesOverrideType(node)
+                    return PsiTypeQLRelatesAsOverrideType(node)
                 }
             }
 

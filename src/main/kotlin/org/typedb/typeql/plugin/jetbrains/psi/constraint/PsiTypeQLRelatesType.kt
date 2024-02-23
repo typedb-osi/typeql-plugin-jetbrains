@@ -6,6 +6,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.IncorrectOperationException
 import com.vaticle.typeql.grammar.TypeQLParser
 import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElementFactory
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
@@ -14,6 +15,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
 class PsiTypeQLRelatesType(node: ASTNode) : PsiTypeQLNamedElement(node) {
+    override val labelNode: ASTNode?
+        get() = node.firstChildNode?.treeNext?.treeNext
+
     override val scopedName: String?
         get() {
             val statement = parent as PsiTypeQLStatementType
@@ -28,11 +32,17 @@ class PsiTypeQLRelatesType(node: ASTNode) : PsiTypeQLNamedElement(node) {
     }
 
     override fun getNameIdentifier(): PsiElement? {
-        return node.firstChildNode?.treeNext?.treeNext?.psi
+        return labelNode?.psi
     }
 
     @Throws(IncorrectOperationException::class)
     override fun setName(name: String): PsiElement {
-        return PsiTypeQLUtils.setName(this, name)
+        val typeProperty = PsiTypeQLElementFactory.createRelatesTypeProperty(project, name)
+        if (labelNode == null || typeProperty.labelNode == null) {
+            throw NullPointerException("Can not access label node for $this")
+        }
+
+        node.replaceChild(labelNode!!, typeProperty.labelNode!!)
+        return this
     }
 }

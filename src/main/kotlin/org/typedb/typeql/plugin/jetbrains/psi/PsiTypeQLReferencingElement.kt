@@ -24,10 +24,6 @@ package org.typedb.typeql.plugin.jetbrains.psi
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLOwnsType
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLPlaysType
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLRelatesType
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLSubType
 
 /**
  * Classification between Named and Referencing elements is needed for referencing purposes
@@ -37,8 +33,7 @@ import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLSubType
  * @ref PsiTypeQLNamedElement
  */
 abstract class PsiTypeQLReferencingElement(node: ASTNode) : PsiTypeQLElement(node) {
-
-    override fun getName(): String? = text
+    override fun getName(): String? = labelNode?.text
 
     override fun getReference(): PsiReference? {
         val refs = ReferenceProvidersRegistry.getReferencesFromProviders(this)

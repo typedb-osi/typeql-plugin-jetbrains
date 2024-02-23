@@ -26,8 +26,8 @@ import com.intellij.openapi.util.TextRange
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
 
 abstract class PsiTypeQLAsOverrideTypeBase(node: ASTNode) : PsiTypeQLReferencingElement(node) {
+    override val labelNode: ASTNode?
+        get() = node
 
     val superRoleTextRange: TextRange = TextRange(0, (name ?: "").length)
-
-    override fun getName(): String? = text
 }

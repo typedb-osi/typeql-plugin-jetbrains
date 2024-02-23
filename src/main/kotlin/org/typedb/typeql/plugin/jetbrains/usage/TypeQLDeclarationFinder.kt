@@ -41,6 +41,15 @@ object TypeQLDeclarationFinder {
         return if (declarations.isNotEmpty()) declarations[0] else null
     }
 
+    fun findDeclaration(
+        project: Project,
+        targetName: String?,
+        searchScope: Collection<VirtualFile?>
+    ): PsiTypeQLNamedElement? {
+        val declarations = findDeclarations(project, targetName, searchScope)
+        return if (declarations.isNotEmpty()) declarations[0] else null
+    }
+
     fun findDeclarations(
         project: Project,
         identifier: PsiTypeQLElement
@@ -48,10 +57,10 @@ object TypeQLDeclarationFinder {
         val identifierFile = identifier.node.psi.containingFile.virtualFile
 
         return if (ScratchUtil.isScratch(identifierFile)) {
-            findDeclarations(project, identifier, identifier.scopedName, listOf(identifierFile))
+            findDeclarations(project, identifier.scopedName, listOf(identifierFile))
         } else {
             findDeclarations(
-                project, identifier, identifier.scopedName, FileTypeIndex.getFiles(
+                project, identifier.scopedName, FileTypeIndex.getFiles(
                     TypeQLFileType.INSTANCE, GlobalSearchScope.allScope(project)
                 )
             )
@@ -60,7 +69,6 @@ object TypeQLDeclarationFinder {
 
     fun findDeclarations(
         project: Project,
-        targetIdentifier: PsiTypeQLElement,
         targetName: String?,
         searchScope: Collection<VirtualFile?>
     ): List<PsiTypeQLNamedElement> {

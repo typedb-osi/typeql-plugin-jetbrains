@@ -5,5 +5,5 @@ import com.intellij.lang.ASTNode
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
  */
-class PsiTypeQLRelatesOverrideType(node: ASTNode) : PsiTypeQLAsOverrideTypeBase(node) {
+class PsiTypeQLRelatesAsOverrideType(node: ASTNode) : PsiTypeQLAsOverrideTypeBase(node) {
 }
