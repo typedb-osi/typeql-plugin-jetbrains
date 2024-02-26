@@ -2,7 +2,7 @@
 
 <!-- Plugin description -->
 
-Basic support for the [TypeQL language](https://github.com/vaticle/typeql) on JetBrains-based IDEs
+Basic support for the [TypeQL language](https://github.com/vaticle/typeql) on JetBrains-based IDEs.
 
 <!-- Plugin description end -->
 
@@ -46,7 +46,7 @@ $ ./gradlew test
 
 ## Syntax highlighting and colouring
 
-The classic TypeQL colouring is used by default for all the standard IDE themes and can be configured via `Preferences → Editor → Color Scheme`.
+JetBrains Color Scheme-based syntax highlighting automatically works out of the box. However, it is possible to import TypeDB-specific color schemes used in [TypeDB Studio](https://typedb.com/docs/typedb/connecting/studio) by downloading the needed color scheme files from the corresponding [resource directory](https://github.com/typedb-osi/typeql-plugin-jetbrains/tree/master/src/main/resources) and importing it in the IDE via `Preferences → Editor → Color Scheme → Import Scheme`.
 
 ## Information
 

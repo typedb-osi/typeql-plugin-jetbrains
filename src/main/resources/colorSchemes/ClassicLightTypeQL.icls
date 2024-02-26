@@ -1,10 +1,10 @@
-<scheme name="Light TypeQL" version="142" parent_scheme="Light">
+<scheme name="Classic Light TypeQL" version="142" parent_scheme="Default">
   <metaInfo>
     <property name="created">2024-02-19T11:56:25</property>
     <property name="ide">Idea</property>
     <property name="ideVersion">2023.2.1.0.0</property>
     <property name="modified">2024-02-19T11:56:37</property>
-    <property name="originalScheme">Light TypeQL</property>
+    <property name="originalScheme">Classic Light TypeQL</property>
   </metaInfo>
   <attributes>
     <option name="TYPEQL_ANNOTATION">

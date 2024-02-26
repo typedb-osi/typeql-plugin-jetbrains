@@ -1,10 +1,10 @@
-<scheme name="DarkTypeQL" version="142" parent_scheme="Dark">
+<scheme name="Dark TypeQL" version="142" parent_scheme="Dark">
   <metaInfo>
     <property name="created">2024-02-19T11:51:58</property>
     <property name="ide">Idea</property>
     <property name="ideVersion">2023.2.1.0.0</property>
     <property name="modified">2024-02-19T11:52:01</property>
-    <property name="originalScheme">DarkTypeQL</property>
+    <property name="originalScheme">Dark TypeQL</property>
   </metaInfo>
   <attributes>
     <option name="TYPEQL_ANNOTATION">
