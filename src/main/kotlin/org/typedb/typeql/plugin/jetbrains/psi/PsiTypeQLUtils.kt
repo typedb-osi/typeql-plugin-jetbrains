@@ -25,9 +25,9 @@ object PsiTypeQLUtils {
         return file.firstChild?.firstChild?.firstChild?.firstChild?.lastChild
     }
 
-    fun ensureTypeQLElementsUpToDate(file: PsiFile?) {
+    fun ensureTypeQLElementsUpToDate(root: PsiElement?) {
         try {
-            PsiTreeUtil.collectElementsOfType(file, PsiTypeQLElement::class.java)
+            PsiTreeUtil.collectElementsOfType(root, PsiTypeQLElement::class.java)
                 .forEach(Consumer { obj: PsiTypeQLElement -> obj.subtreeChanged() })
         }
         catch (ignored: Throwable) {

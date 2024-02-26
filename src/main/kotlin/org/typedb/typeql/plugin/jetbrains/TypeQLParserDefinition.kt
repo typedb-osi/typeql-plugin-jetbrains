@@ -220,6 +220,8 @@ class TypeQLParserDefinition : ParserDefinition {
             val subsTo = node.lastChildNode?.text
 
             if (!subsTo.isNullOrEmpty() && !TypeQLLanguage.TYPEQL_TYPES.contains(subsTo)) {
+                // PsiTypeQLType is not reparsed without extra changes, so we update it manually after finding a "sub":
+                PsiTypeQLUtils.ensureTypeQLElementsUpToDate(node.treePrev?.treePrev?.firstChildNode?.psi)
                 return PsiTypeQLSubType(node)
             }
 
@@ -227,7 +229,6 @@ class TypeQLParserDefinition : ParserDefinition {
         }
 
         private fun createBasePsiElement(node: ASTNode): PsiElement {
-//            return ANTLRPsiNode(node)
             return PsiTypeQLElement(node)
         }
 

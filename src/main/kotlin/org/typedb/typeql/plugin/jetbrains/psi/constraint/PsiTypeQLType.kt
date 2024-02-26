@@ -23,7 +23,7 @@ class PsiTypeQLType(node: ASTNode) : PsiTypeQLNamedElement(node) {
     override fun setName(name: String): PsiElement {
         val typeProperty = PsiTypeQLElementFactory.createTypeProperty(project, name)
         if (labelNode == null || typeProperty.labelNode == null) {
-            throw NullPointerException("Can not access label node for $this")
+            throw NullPointerException("Cannot access label node for $this")
         }
 
         node.replaceChild(labelNode!!, typeProperty.labelNode!!)

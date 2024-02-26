@@ -29,5 +29,6 @@ abstract class PsiTypeQLAsOverrideTypeBase(node: ASTNode) : PsiTypeQLReferencing
     override val labelNode: ASTNode?
         get() = node
 
-    val superRoleTextRange: TextRange = TextRange(0, (name ?: "").length)
+    val superRoleTextRange: TextRange
+        get() = TextRange(0, (name ?: "").length)
 }

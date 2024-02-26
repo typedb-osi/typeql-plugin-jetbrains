@@ -17,7 +17,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
     @Throws(IncorrectOperationException::class)
     override fun handleElementRename(newName: String): PsiElement {
         if (myElement == null) {
-            throw UnsupportedOperationException("Can not handle element renaming for not existing element $element")
+            throw UnsupportedOperationException("Cannot handle element renaming for not existing element $element")
         }
 
         val tempProperty: PsiTypeQLElement
@@ -44,11 +44,11 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
             is PsiTypeQLOwnsAsOverrideType -> tempProperty =
                 PsiTypeQLElementFactory.createOwnsAsOverrideTypeProperty(renamingElement.project, newName)
 
-            else -> throw UnsupportedOperationException("Can not set name to this element $element")
+            else -> throw UnsupportedOperationException("Cannot set name to this element $element")
         }
 
         if (renamingElement.labelNode == null || tempProperty.labelNode == null) {
-            throw NullPointerException("Can not access label node for $this")
+            throw NullPointerException("Cannot access label node for $this")
         }
 
         renamingElement.labelNode!!.treeParent.replaceChild(
