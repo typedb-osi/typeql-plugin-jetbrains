@@ -15,20 +15,19 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import com.vaticle.typeql.grammar.TypeQLLexer
 import com.vaticle.typeql.grammar.TypeQLParser
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLFile
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import org.antlr.intellij.adaptor.lexer.TokenIElementType
 import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor
-import org.antlr.intellij.adaptor.psi.ANTLRPsiNode
 import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
 import org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionErrorListener
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLFile
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -91,6 +90,7 @@ class TypeQLParserDefinition : ParserDefinition {
     companion object {
         lateinit var INSTANCE: TypeQLParserDefinition
         private var WRAPPER_SET = Key<Boolean>("typeql.wrapper")
+
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(
                 TypeQLLanguage.INSTANCE, TypeQLParser.tokenNames, TypeQLParser.ruleNames
@@ -107,8 +107,7 @@ class TypeQLParserDefinition : ParserDefinition {
         fun getRule(ruleId: Int): RuleIElementType? {
             return if (ruleId < RULE_ELEMENT_TYPES.size) {
                 RULE_ELEMENT_TYPES[ruleId]
-            }
-            else {
+            } else {
                 null
             }
         }
@@ -116,8 +115,7 @@ class TypeQLParserDefinition : ParserDefinition {
         fun getToken(tokenId: Int): TokenIElementType? {
             return if (tokenId < TOKEN_ELEMENT_TYPES.size) {
                 TOKEN_ELEMENT_TYPES[tokenId]
-            }
-            else {
+            } else {
                 null
             }
         }
@@ -126,7 +124,7 @@ class TypeQLParserDefinition : ParserDefinition {
             return (getToken(tokenId) ?: "").toString()
         }
 
-        fun checkNode(node: ASTNode?, elementId: Int) : Boolean {
+        fun checkNode(node: ASTNode?, elementId: Int): Boolean {
             if (node?.elementType is TokenIElementType) {
                 return refCheckInContainer(node, TOKEN_ELEMENT_TYPES, elementId)
             }
@@ -153,7 +151,6 @@ class TypeQLParserDefinition : ParserDefinition {
             }
 
             if (checkNode(node.treeParent?.treeNext?.treeNext?.firstChildNode, TypeQLParser.SUB_)
-                && node.firstChildNode != null
                 && checkNode(node.firstChildNode, TypeQLParser.RULE_label)
             ) {
                 return PsiTypeQLType(node)
@@ -184,7 +181,7 @@ class TypeQLParserDefinition : ParserDefinition {
             val annotationNode = node.lastChildNode
             var ownsToNode = annotationNode?.treePrev
 
-            while(isWhiteSpace(ownsToNode)) {
+            while (isWhiteSpace(ownsToNode)) {
                 ownsToNode = ownsToNode!!.treePrev
             }
 
@@ -240,7 +237,7 @@ class TypeQLParserDefinition : ParserDefinition {
             return getRuleTypeElement(node) ?: createBasePsiElement(node)
         }
 
-        private fun refCheckInContainer(node: ASTNode, container: List<IElementType> , index: Int): Boolean {
+        private fun refCheckInContainer(node: ASTNode, container: List<IElementType>, index: Int): Boolean {
             return if (index < container.size) node.elementType === container[index] else false
         }
 

@@ -1,7 +1,6 @@
 package org.typedb.typeql.plugin.jetbrains
 
 import com.intellij.openapi.fileTypes.LanguageFileType
-import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
 import javax.swing.Icon
 
 /**

@@ -1,23 +1,16 @@
 package org.typedb.typeql.plugin.jetbrains.highlighter
 
-import ai.grazie.utils.capitalize
-import com.intellij.openapi.editor.colors.ColorKey
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
 import com.intellij.openapi.options.colors.AttributesDescriptor
 import com.intellij.openapi.options.colors.ColorDescriptor
 import com.intellij.openapi.options.colors.ColorSettingsPage
-import com.intellij.openapi.util.Pair
-import com.intellij.util.containers.ContainerUtil
-import com.jetbrains.rd.generator.nova.util.capitalizeInvariant
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
-import java.awt.Color
-import javax.swing.Icon
-import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.FUNCTION
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.ANNOTATION
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.BOOLEAN
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.DATE
+import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.FUNCTION
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.IID
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.KEYWORD
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.LABEL
@@ -28,6 +21,7 @@ import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Co
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STORAGE_TYPE
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.STRING
 import org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighter.Companion.VARIABLE
+import javax.swing.Icon
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)

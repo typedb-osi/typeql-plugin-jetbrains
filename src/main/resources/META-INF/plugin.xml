@@ -33,18 +33,20 @@
         <lang.refactoringSupport
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
-        <lang.namesValidator
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>
         <lang.commenter
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLCommenter"/>
+
+<!--        TODO: Currently removed as the generic validation works better.-->
+<!--        <lang.namesValidator-->
+<!--            language="TypeQL"-->
+<!--            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>-->
 
         <completion.contributor
             language="TypeQL"
             implementationClass="org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionContributor"/>
 
-        <!-- inspections -->
+        <!-- inspections TODO: Temporarily turned off -->
 <!--        <inspectionToolProvider-->
 <!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.unusedDeclaration.TypeQLUnusedDeclarationProvider"/>-->
 <!--        <inspectionToolProvider-->

@@ -1,8 +1,8 @@
 TypeQL file(0,58)
-  ANTLRPsiNode(eof_queries)(0,58)
-    ANTLRPsiNode(query)(0,0)
+  PsiTypeQLElement(eof_queries) - Location: (0,58)(0,58)
+    PsiTypeQLElement(query) - Location: (0,0)(0,0)
       <empty list>
-    ANTLRPsiNode(query)(0,58)
+    PsiTypeQLElement(query) - Location: (0,58)(0,58)
       PsiErrorElement:no viable alternative at input 'matchpisa'
 (0,5)
         PsiElement('match')('match')(0,5)

@@ -5,7 +5,6 @@ import com.intellij.psi.*
 import com.intellij.util.IncorrectOperationException
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElementFactory
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
 import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 import org.typedb.typeql.plugin.jetbrains.usage.TypeQLDeclarationFinder
 
@@ -20,7 +19,7 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
             throw UnsupportedOperationException("Cannot handle element renaming for not existing element $element")
         }
 
-        val tempProperty: PsiTypeQLElement
+        val tempProperty: PsiTypeQLElement?
         val renamingElement = myElement!!
 
         when (renamingElement) {
@@ -47,13 +46,15 @@ class TypeQLReference(element: PsiTypeQLElement, textRange: TextRange) :
             else -> throw UnsupportedOperationException("Cannot set name to this element $element")
         }
 
-        if (renamingElement.labelNode == null || tempProperty.labelNode == null) {
-            throw NullPointerException("Cannot access label node for $this")
-        }
+        if (tempProperty != null) {
+            if (renamingElement.labelNode == null || tempProperty.labelNode == null) {
+                throw NullPointerException("Cannot access label node for $this")
+            }
 
-        renamingElement.labelNode!!.treeParent.replaceChild(
-            renamingElement.labelNode!!, tempProperty.labelNode!!
-        )
+            renamingElement.labelNode!!.treeParent.replaceChild(
+                renamingElement.labelNode!!, tempProperty.labelNode!!
+            )
+        }
 
         return renamingElement
     }

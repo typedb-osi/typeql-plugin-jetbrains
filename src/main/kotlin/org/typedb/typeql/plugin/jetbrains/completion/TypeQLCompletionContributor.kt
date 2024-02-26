@@ -13,15 +13,18 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
-import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import com.vaticle.typeql.grammar.TypeQLParser
-import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
 import org.antlr.intellij.adaptor.parser.SyntaxError
 import org.antlr.v4.runtime.misc.IntervalSet
 import org.jetbrains.annotations.NonNls
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
+import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
+import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLOwnsType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLPlaysType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLRelatesType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLSubType
 import java.util.function.Consumer
 import java.util.stream.Collectors
 

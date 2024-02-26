@@ -12,7 +12,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLRelatesType
 import org.typedb.typeql.plugin.jetbrains.usage.TypeQLDeclarationFinder
 import java.util.function.Consumer
 import java.util.stream.Collectors
@@ -29,8 +29,7 @@ object PsiTypeQLUtils {
         try {
             PsiTreeUtil.collectElementsOfType(root, PsiTypeQLElement::class.java)
                 .forEach(Consumer { obj: PsiTypeQLElement -> obj.subtreeChanged() })
-        }
-        catch (ignored: Throwable) {
+        } catch (ignored: Throwable) {
         }
     }
 

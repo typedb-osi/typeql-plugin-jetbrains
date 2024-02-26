@@ -5,10 +5,10 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
-import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import org.antlr.intellij.adaptor.psi.ScopeNode
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.TypeQLIcons
+import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import javax.swing.Icon
 
 /**

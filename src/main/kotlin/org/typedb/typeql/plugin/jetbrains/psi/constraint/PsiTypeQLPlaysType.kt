@@ -3,7 +3,6 @@ package org.typedb.typeql.plugin.jetbrains.psi.constraint
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiReference
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import com.vaticle.typeql.grammar.TypeQLParser
 import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLReferencingElement
@@ -42,7 +41,7 @@ class PsiTypeQLPlaysType(node: ASTNode) : PsiTypeQLReferencingElement(node) {
         }
 
     fun buildScopedName(newName: String): String {
-       return playsScope + rolePrefix + newName
+        return playsScope + rolePrefix + newName
     }
 
     override fun getName(): String? = this.playsType

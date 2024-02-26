@@ -9,12 +9,15 @@ import com.intellij.lang.Language
 class TypeQLLanguage : Language(TypeQLFileType.LANG_NAME) {
     companion object {
         val INSTANCE: TypeQLLanguage = TypeQLLanguage()
+
+        // TODO: Move to ParserDefinition and connect with the Parser's tokens
         val TYPEQL_TYPES: Set<String?> = ImmutableSet.of(
             "attribute",
             "entity",
             "relation",
             "rule",
             "role",
-            "thing")
+            "thing"
+        )
     }
 }

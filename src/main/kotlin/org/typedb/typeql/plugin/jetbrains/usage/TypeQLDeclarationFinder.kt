@@ -32,8 +32,6 @@ import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLFile
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.*
-import kotlin.reflect.KClass
 
 object TypeQLDeclarationFinder {
     fun findDeclaration(project: Project, identifier: PsiTypeQLElement): PsiTypeQLNamedElement? {

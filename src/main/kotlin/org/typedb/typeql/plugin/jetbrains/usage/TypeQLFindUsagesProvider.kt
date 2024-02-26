@@ -5,10 +5,10 @@ import com.intellij.lang.cacheBuilder.WordsScanner
 import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import com.vaticle.typeql.grammar.TypeQLLexer
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
+import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import org.typedb.typeql.plugin.jetbrains.TypeQLTokenSets
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 

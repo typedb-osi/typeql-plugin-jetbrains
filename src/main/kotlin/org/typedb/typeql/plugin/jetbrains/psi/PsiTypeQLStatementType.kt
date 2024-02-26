@@ -22,7 +22,6 @@
 package org.typedb.typeql.plugin.jetbrains.psi
 
 import com.intellij.lang.ASTNode
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElement
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)

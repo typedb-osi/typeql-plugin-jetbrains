@@ -1,6 +1,6 @@
 TypeQL file(0,464)
   PsiComment(COMMENT)('# no defines or matches, straight declarations\n')(0,47)
-  ANTLRPsiNode(eof_queries)(47,464)
+  PsiTypeQLElement(eof_queries) - Location: (47,464)(47,464)
     PsiErrorElement:mismatched input 'stix-entity' expecting {'match', 'define', 'undefine', 'insert'}
 (47,58)
       PsiElement(LABEL_)('stix-entity')(47,58)

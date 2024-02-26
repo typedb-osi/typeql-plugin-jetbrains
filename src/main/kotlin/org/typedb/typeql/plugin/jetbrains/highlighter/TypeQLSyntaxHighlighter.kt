@@ -7,11 +7,11 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 import com.vaticle.typeql.grammar.TypeQLLexer
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.TokenIElementType
+import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
 
 /**
  * @author [Brandon Fergerson](mailto:bfergerson@apache.org)
@@ -32,14 +32,14 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.ATTRIBUTE,
             TypeQLLexer.RELATION,
             TypeQLLexer.ROLE,
-                -> STORAGE_TYPE
+            -> STORAGE_TYPE
 
             TypeQLLexer.LONG,
             TypeQLLexer.DOUBLE,
             TypeQLLexer.STRING,
             TypeQLLexer.BOOLEAN,
             TypeQLLexer.DATETIME,
-                -> STORAGE_MODIFIER
+            -> STORAGE_MODIFIER
 
             TypeQLLexer.MATCH,
             TypeQLLexer.GET,
@@ -78,7 +78,7 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.DESC,
 
             TypeQLLexer.UNRECOGNISED,
-                -> KEYWORD
+            -> KEYWORD
 
             TypeQLLexer.PAREN_OPEN,
             TypeQLLexer.PAREN_CLOSE,
@@ -100,11 +100,11 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.LTE,
             TypeQLLexer.LIKE,
             TypeQLLexer.CONTAINS,
-                -> OPERATOR
+            -> OPERATOR
 
             TypeQLLexer.ANNOTATION_KEY,
-            TypeQLLexer.ANNOTATION_UNIQUE ,
-                -> ANNOTATION
+            TypeQLLexer.ANNOTATION_UNIQUE,
+            -> ANNOTATION
 
             TypeQLLexer.GROUP,
             TypeQLLexer.COUNT,
@@ -114,42 +114,42 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
             TypeQLLexer.MEDIAN,
             TypeQLLexer.STD,
             TypeQLLexer.SUM,
-                -> FUNCTION
+            -> FUNCTION
 
             TypeQLLexer.BOOLEAN_,
             TypeQLLexer.TRUE,
             TypeQLLexer.FALSE,
-                -> BOOLEAN
+            -> BOOLEAN
 
             TypeQLLexer.QUOTED_STRING,
-                -> STRING
+            -> STRING
 
             TypeQLLexer.LONG_,
             TypeQLLexer.DOUBLE_,
-                -> NUMERIC
+            -> NUMERIC
 
             TypeQLLexer.DATE_,
             TypeQLLexer.DATETIME_,
-                -> DATE
+            -> DATE
 
             TypeQLLexer.VAR_CONCEPT_,
             TypeQLLexer.VAR_CONCEPT_ANONYMOUS_,
             TypeQLLexer.VAR_CONCEPT_NAMED_,
             TypeQLLexer.VAR_VALUE_,
-                -> VARIABLE
+            -> VARIABLE
 
             TypeQLLexer.LABEL_,
             TypeQLLexer.LABEL_SCOPED_,
-                -> LABEL
+            -> LABEL
 
             TypeQLLexer.IID_,
-                -> IID
+            -> IID
 
             TypeQLLexer.COMMENT,
-                -> LINE_COMMENT
+            -> LINE_COMMENT
 
             else
-                -> return EMPTY_KEYS
+            -> return EMPTY_KEYS
         }
 
         return arrayOf(attrKey)
@@ -160,63 +160,78 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
         val STORAGE_TYPE = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_STORAGE_TYPE",
-            DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+            DefaultLanguageHighlighterColors.INSTANCE_FIELD
+        )
 
         val STORAGE_MODIFIER = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_STORAGE_MODIFIER",
-            DefaultLanguageHighlighterColors.INSTANCE_METHOD)
+            DefaultLanguageHighlighterColors.INSTANCE_METHOD
+        )
 
         val KEYWORD = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_KEYWORD",
-            DefaultLanguageHighlighterColors.KEYWORD)
+            DefaultLanguageHighlighterColors.KEYWORD
+        )
 
         val OPERATOR = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_OPERATOR",
-            DefaultLanguageHighlighterColors.OPERATION_SIGN)
+            DefaultLanguageHighlighterColors.OPERATION_SIGN
+        )
 
         val ANNOTATION = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_ANNOTATION",
-            DefaultLanguageHighlighterColors.METADATA)
+            DefaultLanguageHighlighterColors.METADATA
+        )
 
         val FUNCTION = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_FUNCTION",
-            DefaultLanguageHighlighterColors.KEYWORD)
+            DefaultLanguageHighlighterColors.KEYWORD
+        )
 
         val BOOLEAN = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_BOOLEAN",
-            DefaultLanguageHighlighterColors.NUMBER)
+            DefaultLanguageHighlighterColors.NUMBER
+        )
 
         val STRING = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_STRING",
-            DefaultLanguageHighlighterColors.STRING)
+            DefaultLanguageHighlighterColors.STRING
+        )
 
         val NUMERIC = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_NUMERIC",
-            DefaultLanguageHighlighterColors.NUMBER)
+            DefaultLanguageHighlighterColors.NUMBER
+        )
 
         val DATE = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_DATE",
-            DefaultLanguageHighlighterColors.NUMBER)
+            DefaultLanguageHighlighterColors.NUMBER
+        )
 
         val VARIABLE = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_VARIABLE",
-            DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+            DefaultLanguageHighlighterColors.INSTANCE_FIELD
+        )
 
         val LABEL = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_LABEL",
-            DefaultLanguageHighlighterColors.GLOBAL_VARIABLE)
+            DefaultLanguageHighlighterColors.GLOBAL_VARIABLE
+        )
 
         val IID = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_IID",
-            DefaultLanguageHighlighterColors.NUMBER)
+            DefaultLanguageHighlighterColors.NUMBER
+        )
 
         val LINE_COMMENT = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_LINE_COMMENT",
-            DefaultLanguageHighlighterColors.DOC_COMMENT)
+            DefaultLanguageHighlighterColors.DOC_COMMENT
+        )
 
         val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey(
             "TYPEQL_BAD_CHARACTER",
-            HighlighterColors.BAD_CHARACTER)
+            HighlighterColors.BAD_CHARACTER
+        )
 
         init {
             PSIElementTypeFactory.defineLanguageIElementTypes(

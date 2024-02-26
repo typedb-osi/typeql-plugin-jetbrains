@@ -928,7 +928,7 @@ windows-process-ext sub process,
     owns integrity-level,
 
     # Rel
-    plays startup-info:info-owner;
+    plays startup-info:info-owner as owner;
 
 windows-service-ext sub process,
     owns service-name,
@@ -1560,58 +1560,3 @@ custom-attribute sub attribute, value string,
     owns attribute-type;
 
 attribute-type sub attribute, value string;
-
-rule linked-list-item:
-when {
-    { (list: $x, first: $z) isa first-element;}
-    or {
-        (list: $x, element: $y) isa list-element;
-        $y (next: $z) isa node;
-    };
-    $x isa linked-list;
-    $z isa node;
-    $y isa node;
-} then {
-    (list: $x, element: $z) isa list-element;
-};
-
-rule last-element-linked-list:
-when {
-    (list: $x, element: $y) isa list-element;
-    not {
-        $z isa node;
-        $y (next: $z);
-    };
-    $x isa linked-list;
-    $y isa node;
-    $z isa node;
-} then {
-    (list: $x, last: $y) isa last-element;
-};
-
-rule transitive-use:
-when {
-    $x isa stix-domain-object;
-    $y isa stix-domain-object;
-    $z isa stix-domain-object;
-    $use1 (using: $x, used: $y) isa uses;
-    $use2 (using: $y, used: $z) isa uses;
-} then {
-    (using: $x, used: $z) isa uses;
-};
-
-rule attributed-to-when-using:
-when {
-    (attributing: $z, attributed: $x) isa attributed-to;
-    (using: $x, used: $y) isa uses;
-} then {
-    (using: $z, used: $y) isa uses;
-};
-
-rule attributed-to-when-targeting:
-when {
-    (attributing: $z, attributed: $x) isa attributed-to;
-    (targeting: $x, targeted: $y) isa targets;
-} then {
-    (targeting: $z, targeted: $y) isa targets;
-};

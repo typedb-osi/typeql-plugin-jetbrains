@@ -8,7 +8,6 @@ import com.vaticle.typeql.grammar.TypeQLParser
 import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLElementFactory
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLNamedElement
-import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
 import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLStatementType
 
 /**
@@ -37,7 +36,8 @@ class PsiTypeQLRelatesType(node: ASTNode) : PsiTypeQLNamedElement(node) {
 
     @Throws(IncorrectOperationException::class)
     override fun setName(name: String): PsiElement {
-        val typeProperty = PsiTypeQLElementFactory.createRelatesTypeProperty(project, name)
+        val typeProperty = PsiTypeQLElementFactory.createRelatesTypeProperty(project, name) ?: return this
+
         if (labelNode == null || typeProperty.labelNode == null) {
             throw NullPointerException("Cannot access label node for $this")
         }

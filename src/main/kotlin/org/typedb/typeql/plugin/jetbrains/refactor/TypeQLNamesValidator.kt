@@ -18,7 +18,7 @@ class TypeQLNamesValidator : NamesValidator {
     }
 
     companion object {
-        //todo: filter for real keywords ("VAR_" isn't keyword)
+        // TODO: filter for real keywords ("VAR_" isn't keyword)
         val TYPEQL_KEYWORDS: Set<String> = HashSet(Arrays.asList(*TypeQLParser.tokenNames))
     }
 }
