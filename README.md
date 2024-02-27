@@ -2,7 +2,7 @@
 
 <!-- Plugin description -->
 
-Basic support for the [TypeQL language](https://github.com/vaticle/typeql) on JetBrains-based IDEs
+Basic support for the [TypeQL language](https://github.com/vaticle/typeql) on JetBrains-based IDEs.
 
 <!-- Plugin description end -->
 
@@ -44,139 +44,20 @@ Run the tests:
 $ ./gradlew test
 ```
 
-## Suggested Colouring
+## Supported features
 
-The following colours are suggested for the best experience, but are not required. 
+ - Syntax highlighting and colouring (JetBrains and TypeDB color schemes) based on the official TypeQL grammar.
+ - Find Usages, Go To Declaration.
+ - Rename (currently excluding [references to relations in "plays" constraints](https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/15)).
+ - Code completion.
 
-You can add these colours to your IDE colour scheme by going to `Preferences → Editor → Color Scheme`, downloading your current scheme. Then, add the following to the `attributes` section of the downloaded scheme:
+### Temporarily disabled features
 
-- Dark Theme
+ - Unused, Invalid and Duplicated items inspections.
 
-```
-<option name="TYPEQL_AGGREGATE">
-  <value>
-    <option name="FOREGROUND" value="ff7abd" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_BOOLEAN">
-  <value>
-    <option name="FOREGROUND" value="ffa187" />
-  </value>
-</option>
-<option name="TYPEQL_IDENTIFIER">
-  <value>
-    <option name="FOREGROUND" value="d5ccff" />
-  </value>
-</option>
-<option name="TYPEQL_KEYWORD">
-  <value>
-    <option name="FOREGROUND" value="ff7abd" />
-  </value>
-</option>
-<option name="TYPEQL_ANNOTATION">
-  <value>
-    <option name="FOREGROUND" value="ffa187" />
-  </value>
-</option>
-<option name="TYPEQL_LINE_COMMENT">
-  <value>
-    <option name="FOREGROUND" value="4dc97c" />
-  </value>
-</option>
-<option name="TYPEQL_NUMBER">
-  <value>
-    <option name="FOREGROUND" value="82b6ff" />
-  </value>
-</option>
-<option name="TYPEQL_STRING">
-  <value>
-    <option name="FOREGROUND" value="ffe4a7" />
-  </value>
-</option>
-<option name="TYPEQL_THING">
-  <value>
-    <option name="FOREGROUND" value="55eae2" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_TYPE">
-  <value>
-    <option name="FOREGROUND" value="82b6ff" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_VAR">
-  <value>
-    <option name="FOREGROUND" value="55eae2" />
-  </value>
-</option>
-</attributes>
-```
+## Syntax highlighting and colouring
 
-- Light Theme
-
-```
-<option name="TYPEQL_AGGREGATE">
-  <value>
-    <option name="FOREGROUND" value="fb3196" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_BOOLEAN">
-  <value>
-    <option name="FOREGROUND" value="ff6b00" />
-  </value>
-</option>
-<option name="TYPEQL_IDENTIFIER">
-  <value>
-    <option name="FOREGROUND" value="392d67" />
-  </value>
-</option>
-<option name="TYPEQL_KEYWORD">
-  <value>
-    <option name="FOREGROUND" value="fb3196" />
-  </value>
-</option>
-<option name="TYPEQL_ANNOTATION">
-  <value>
-    <option name="FOREGROUND" value="ff6b00" />
-  </value>
-</option>
-<option name="TYPEQL_LINE_COMMENT">
-  <value>
-    <option name="FOREGROUND" value="309c59" />
-  </value>
-</option>
-<option name="TYPEQL_NUMBER">
-  <value>
-    <option name="FOREGROUND" value="82b6ff" />
-  </value>
-</option>
-<option name="TYPEQL_STRING">
-  <value>
-    <option name="FOREGROUND" value="f1be05" />
-  </value>
-</option>
-<option name="TYPEQL_THING">
-  <value>
-    <option name="FOREGROUND" value="28c9c0" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_TYPE">
-  <value>
-    <option name="FOREGROUND" value="82b6ff" />
-    <option name="FONT_TYPE" value="2" />
-  </value>
-</option>
-<option name="TYPEQL_VAR">
-  <value>
-    <option name="FOREGROUND" value="28c9c0" />
-  </value>
-</option>
-</attributes>
-```
+JetBrains Color Scheme-based syntax highlighting automatically works out of the box. However, it is possible to import TypeDB-specific color schemes used in [TypeDB Studio](https://typedb.com/docs/typedb/connecting/studio) by downloading the needed color scheme files from the corresponding [resource directory](https://github.com/typedb-osi/typeql-plugin-jetbrains/tree/master/src/main/resources) and importing it in the IDE via `Preferences → Editor → Color Scheme → Import Scheme`.
 
 ## Information
 

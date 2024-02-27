@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
-    id("antlr")
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.9.10"
     // Gradle IntelliJ Plugin
@@ -21,11 +20,12 @@ version = properties("pluginVersion")
 // Configure project's dependencies
 repositories {
     mavenCentral()
+    maven(url = "https://repo.typedb.com/public/public-release/maven/")
 }
 
 dependencies {
-    antlr("org.antlr:antlr4:4.7.1")
     implementation("org.antlr:antlr4-intellij-adaptor:0.1")
+    implementation("com.vaticle.typeql:typeql-grammar:2.26.6")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -122,11 +122,4 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
-
-    generateGrammarSource {
-        outputDirectory = file("build/generated-src/antlr/main/org/typedb/typeql/plugin/jetbrains")
-        arguments = mutableListOf("-package", "org.typedb.typeql.plugin.jetbrains", "-visitor")
-    }
-    getByName("compileKotlin").dependsOn("generateGrammarSource")
-    getByName("compileTestKotlin").dependsOn("generateTestGrammarSource")
 }

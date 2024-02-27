@@ -1,0 +1,87 @@
+<scheme name="Light TypeQL" version="142" parent_scheme="Light">
+  <metaInfo>
+    <property name="created">2024-02-19T11:56:25</property>
+    <property name="ide">Idea</property>
+    <property name="ideVersion">2023.2.1.0.0</property>
+    <property name="modified">2024-02-19T11:56:37</property>
+    <property name="originalScheme">Light TypeQL</property>
+  </metaInfo>
+  <attributes>
+    <option name="TYPEQL_ANNOTATION">
+      <value>
+        <option name="FOREGROUND" value="ff6b00" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_BOOLEAN">
+      <value>
+        <option name="FOREGROUND" value="ff6b00" />
+      </value>
+    </option>
+    <option name="TYPEQL_DATE">
+      <value>
+        <option name="FOREGROUND" value="3377d8" />
+      </value>
+    </option>
+    <option name="TYPEQL_FUNCTION">
+      <value>
+        <option name="FOREGROUND" value="fb3196" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_IID">
+      <value>
+        <option name="FOREGROUND" value="f91111" />
+      </value>
+    </option>
+    <option name="TYPEQL_KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="fb3196" />
+      </value>
+    </option>
+    <option name="TYPEQL_LABEL">
+      <value>
+        <option name="FOREGROUND" value="392d67" />
+      </value>
+    </option>
+    <option name="TYPEQL_LINE_COMMENT">
+      <value>
+        <option name="FOREGROUND" value="309c59" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_NUMERIC">
+      <value>
+        <option name="FOREGROUND" value="3377d8" />
+      </value>
+    </option>
+    <option name="TYPEQL_OPERATOR">
+      <value>
+        <option name="FOREGROUND" value="fb3196" />
+      </value>
+    </option>
+    <option name="TYPEQL_STORAGE_MODIFIER">
+      <value>
+        <option name="FOREGROUND" value="3377d8" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_STORAGE_TYPE">
+      <value>
+        <option name="FOREGROUND" value="55eae2" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="TYPEQL_STRING">
+      <value>
+        <option name="FOREGROUND" value="f1be05" />
+      </value>
+    </option>
+    <option name="TYPEQL_VARIABLE">
+      <value>
+        <option name="FOREGROUND" value="55eae2" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+  </attributes>
+</scheme>

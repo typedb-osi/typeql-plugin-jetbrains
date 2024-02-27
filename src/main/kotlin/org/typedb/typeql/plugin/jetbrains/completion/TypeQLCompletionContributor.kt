@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2022 Vaticle
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
 package org.typedb.typeql.plugin.jetbrains.completion
 
 import com.google.common.collect.ImmutableSet
@@ -13,18 +34,18 @@ import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
-import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
-import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
-import org.typedb.typeql.plugin.jetbrains.TypeQLParser
-import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
-import org.typedb.typeql.plugin.jetbrains.psi.TypeQLPsiUtils
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiOwnsTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiPlaysTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiRelatesTypeConstraint
-import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiSubTypeConstraint
+import com.vaticle.typeql.grammar.TypeQLParser
 import org.antlr.intellij.adaptor.parser.SyntaxError
 import org.antlr.v4.runtime.misc.IntervalSet
 import org.jetbrains.annotations.NonNls
+import org.typedb.typeql.plugin.jetbrains.TypeQLFileType
+import org.typedb.typeql.plugin.jetbrains.TypeQLLanguage
+import org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition
+import org.typedb.typeql.plugin.jetbrains.psi.PsiTypeQLUtils
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLOwnsType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLPlaysType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLRelatesType
+import org.typedb.typeql.plugin.jetbrains.psi.constraint.PsiTypeQLSubType
 import java.util.function.Consumer
 import java.util.stream.Collectors
 
@@ -42,36 +63,36 @@ class TypeQLCompletionContributor : CompletionContributor() {
                     resultSet: CompletionResultSet
                 ) {
                     var includeKeywords = true
-                    val ruleType = TypeQLPsiUtils.findParentByType(
+                    val ruleType = PsiTypeQLUtils.findParentByType(
                         parameters.position,
-                        TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_type_constraint]
+                        TypeQLParserDefinition.getRule(TypeQLParser.RULE_type_constraint)!!
                     )
                     if (ruleType != null) {
-                        if (ruleType is PsiOwnsTypeConstraint) {
+                        if (ruleType is PsiTypeQLOwnsType) {
                             //owns, include all attributes
-                            val statementType = TypeQLPsiUtils.findParentByType(
+                            val statementType = PsiTypeQLUtils.findParentByType(
                                 parameters.position,
-                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
+                                TypeQLParserDefinition.getRule(TypeQLParser.RULE_statement_type)!!
                             )
                             includeAttributeTypes(
                                 resultSet, ruleType, parameters.originalFile.virtualFile,
                                 statementType!!.name!!
                             )
-                        } else if (ruleType is PsiSubTypeConstraint) {
+                        } else if (ruleType is PsiTypeQLSubType) {
                             //sub, include all declarations & base types
-                            val statementType = TypeQLPsiUtils.findParentByType(
+                            val statementType = PsiTypeQLUtils.findParentByType(
                                 parameters.position,
-                                TypeQLParserDefinition.RULE_ELEMENT_TYPES[TypeQLParser.RULE_variable_type]
+                                TypeQLParserDefinition.getRule(TypeQLParser.RULE_statement_type)!!
                             )
                             includeAllTypes(
                                 resultSet, ruleType, parameters.originalFile.virtualFile,
                                 statementType!!.name!!
                             )
                             includeBaseTypes(resultSet)
-                        } else if (ruleType is PsiRelatesTypeConstraint) {
+                        } else if (ruleType is PsiTypeQLRelatesType) {
                             //relates, include all plays (roles)
                             includePlayRoles(parameters, resultSet)
-                        } else if (ruleType is PsiPlaysTypeConstraint) {
+                        } else if (ruleType is PsiTypeQLPlaysType) {
                             //plays, include all relates (roles)
                             includeRelateRoles(parameters, resultSet)
                         } else {
@@ -81,7 +102,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                     LookupElementBuilder.create(
                                         keyword!!
                                     )
-                                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                                        .withIcon(TypeQLFileType.INSTANCE.icon)
                                         .withTypeText(keyword)
                                         .withBoldness(true)
                                 )
@@ -91,11 +112,15 @@ class TypeQLCompletionContributor : CompletionContributor() {
                         //if looking for TYPE_NAME_ don't include keywords
                         if (parameters.position is LeafPsiElement) {
                             if ((parameters.position as LeafPsiElement).elementType ===
-                                TypeQLParserDefinition.TOKEN_ELEMENT_TYPES[TypeQLParser.LABEL_]
+                                TypeQLParserDefinition.getToken(TypeQLParser.LABEL_)
                             ) {
                                 includeKeywords = false
                             }
                         }
+                    }
+
+                    if (includeKeywords) {
+                        includeQueryTypes(resultSet)
                     }
                     if (includeKeywords) {
                         val tokenToErrorMap: Map<Int, SyntaxError> = TypeQLCompletionErrorListener.tokenToErrorMap
@@ -115,7 +140,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
                                         LookupElementBuilder.create(
                                             keyword!!
                                         )
-                                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                                            .withIcon(TypeQLFileType.INSTANCE.icon)
                                             .withTypeText(keyword)
                                             .withBoldness(true)
                                     )
@@ -135,22 +160,22 @@ class TypeQLCompletionContributor : CompletionContributor() {
         containingFile: VirtualFile, vararg excludedNames: String
     ) {
         val excludedNameSet: Set<String?> = Sets.newHashSet(*excludedNames)
-        val searchScope: Collection<VirtualFile?>
-        searchScope = if (ScratchUtil.isScratch(containingFile)) {
+        val searchScope: Collection<VirtualFile?> = if (ScratchUtil.isScratch(containingFile)) {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Util.INSTANCE,
+                TypeQLFileType.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
-        TypeQLPsiUtils.getDeclarationsByType(ruleType.project, searchScope, "attribute").stream()
+
+        PsiTypeQLUtils.getDeclarationsByType(ruleType.project, searchScope, "attribute").stream()
             .filter { !excludedNameSet.contains(it.name) }
             .forEach {
-                val declarationType = TypeQLPsiUtils.determineDeclarationType(it)
+                val declarationType = PsiTypeQLUtils.determineDeclarationType(it)
                 resultSet.addElement(
                     LookupElementBuilder.create(it)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText(declarationType ?: "unknown")
                         .withStrikeoutness(declarationType == null)
                 )
@@ -162,23 +187,23 @@ class TypeQLCompletionContributor : CompletionContributor() {
         containingFile: VirtualFile, vararg excludedNames: String
     ) {
         val excludedNameSet: Set<String?> = Sets.newHashSet(*excludedNames)
-        val searchScope: Collection<VirtualFile?>
-        searchScope = if (ScratchUtil.isScratch(containingFile)) {
+        val searchScope: Collection<VirtualFile?> = if (ScratchUtil.isScratch(containingFile)) {
             listOf(containingFile)
         } else {
             FileTypeIndex.getFiles(
-                TypeQLFileType.Util.INSTANCE,
+                TypeQLFileType.INSTANCE,
                 GlobalSearchScope.allScope(ruleType.project)
             )
         }
-        TypeQLPsiUtils.getAllDeclarations(ruleType.project, searchScope).stream()
+
+        PsiTypeQLUtils.getAllDeclarations(ruleType.project, searchScope).stream()
             .filter { !excludedNameSet.contains(it.name) }
             .forEach {
-                val declarationType = TypeQLPsiUtils.determineDeclarationType(it)
+                val declarationType = PsiTypeQLUtils.determineDeclarationType(it)
                 if (declarationType != null) {
                     resultSet.addElement(
                         LookupElementBuilder.create(it)
-                            .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                            .withIcon(TypeQLFileType.INSTANCE.icon)
                             .withTypeText(declarationType)
                     )
                 }
@@ -186,12 +211,12 @@ class TypeQLCompletionContributor : CompletionContributor() {
     }
 
     private fun includeBaseTypes(resultSet: CompletionResultSet) {
-        TypeQLLanguage.GRAQL_TYPES.forEach(Consumer {
+        TypeQLLanguage.TYPEQL_TYPES.forEach(Consumer {
             resultSet.addElement(
                 LookupElementBuilder.create(
                     it!!
                 )
-                    .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                    .withIcon(TypeQLFileType.INSTANCE.icon)
                     .withTypeText(it)
                     .withBoldness(true)
             )
@@ -199,22 +224,22 @@ class TypeQLCompletionContributor : CompletionContributor() {
     }
 
     private fun includePlayRoles(parameters: CompletionParameters, resultSet: CompletionResultSet) {
-        PsiTreeUtil.collectElementsOfType(parameters.originalFile, PsiPlaysTypeConstraint::class.java)
+        PsiTreeUtil.collectElementsOfType(parameters.originalFile, PsiTypeQLPlaysType::class.java)
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.playsType!!)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
     }
 
     private fun includeRelateRoles(parameters: CompletionParameters, resultSet: CompletionResultSet) {
-        PsiTreeUtil.collectElementsOfType(parameters.originalFile, PsiRelatesTypeConstraint::class.java)
+        PsiTreeUtil.collectElementsOfType(parameters.originalFile, PsiTypeQLRelatesType::class.java)
             .forEach(Consumer {
                 resultSet.addElement(
                     LookupElementBuilder.create(it.name!!)
-                        .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                        .withIcon(TypeQLFileType.INSTANCE.icon)
                         .withTypeText("role")
                 )
             })
@@ -223,31 +248,31 @@ class TypeQLCompletionContributor : CompletionContributor() {
     private fun includeQueryTypes(resultSet: CompletionResultSet) {
         resultSet.addElement(
             LookupElementBuilder.create("define")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("define")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("compute")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("compute")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("insert")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("insert")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("match")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("match")
                 .withBoldness(true)
         )
         resultSet.addElement(
             LookupElementBuilder.create("undefine")
-                .withIcon(TypeQLFileType.Util.INSTANCE.icon)
+                .withIcon(TypeQLFileType.INSTANCE.icon)
                 .withTypeText("undefine")
                 .withBoldness(true)
         )
@@ -262,7 +287,7 @@ class TypeQLCompletionContributor : CompletionContributor() {
         private fun getActualKeywords(keywordSet: IntervalSet): List<String> {
             return keywordSet.toList().stream()
                 .map {
-                    TypeQLParserDefinition.TOKEN_ELEMENT_TYPES[it!!].toString().replace("'", "")
+                    TypeQLParserDefinition.getTokenText(it!!).replace("'", "")
                 }
                 .map { s: String ->
                     when (s) {
