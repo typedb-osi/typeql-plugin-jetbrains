@@ -33,6 +33,7 @@ class PsiTypeQLStatementType(node: ASTNode) : PsiTypeQLElement(node) {
     val subType: String?
         get() = node.firstChildNode?.treeNext?.treeNext?.lastChildNode?.text
 
+    // TODO: Uncomment and revalidate while returning the inspection package.
 //    fun findRelatesTypeProperties(): List<PsiRelatesTypeConstraint> {
 //        val relatesTypes: MutableList<PsiRelatesTypeConstraint> = ArrayList()
 //        for (child in children) {

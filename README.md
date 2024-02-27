@@ -44,6 +44,17 @@ Run the tests:
 $ ./gradlew test
 ```
 
+## Supported features
+
+ - Syntax highlighting and colouring (JetBrains and TypeDB color schemes) based on the official TypeQL grammar.
+ - Find Usages, Go To Declaration.
+ - Rename (currently excluding [references to relations in "plays" constraints](https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/15)).
+ - Code completion.
+
+### Temporarily disabled features
+
+ - Unused, Invalid and Duplicated items inspections.
+
 ## Syntax highlighting and colouring
 
 JetBrains Color Scheme-based syntax highlighting automatically works out of the box. However, it is possible to import TypeDB-specific color schemes used in [TypeDB Studio](https://typedb.com/docs/typedb/connecting/studio) by downloading the needed color scheme files from the corresponding [resource directory](https://github.com/typedb-osi/typeql-plugin-jetbrains/tree/master/src/main/resources) and importing it in the IDE via `Preferences → Editor → Color Scheme → Import Scheme`.
