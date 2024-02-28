@@ -51,11 +51,10 @@ jobs:
 #      - run: ./gradlew buildPlugin
 
       # Publish the plugin to the Marketplace
-      # TODO: Temporarily disabled to manually upload it with correct changelogs: https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/20
-#      - name: Publish Plugin
-#        run: ./gradlew publishPlugin
-#        env:
-#          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      - name: Publish Plugin
+        run: ./gradlew publishPlugin
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 
       # Upload artifact as a release asset
       - name: Upload Release Asset
