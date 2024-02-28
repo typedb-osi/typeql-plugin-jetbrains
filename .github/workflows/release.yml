@@ -40,14 +40,15 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       # Update Unreleased section with the current release note
-      - name: Patch Changelog
-        if: ${{ steps.properties.outputs.changelog != '' }}
-        env:
-          CHANGELOG: ${{ steps.properties.outputs.changelog }}
-        run: |
-          ./gradlew patchChangelog --release-note="$CHANGELOG"
-
-      - run: ./gradlew buildPlugin
+      # TODO: Temporarily disabled to manually upload it with correct changelogs: https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/20
+#      - name: Patch Changelog
+#        if: ${{ steps.properties.outputs.changelog != '' }}
+#        env:
+#          CHANGELOG: ${{ steps.properties.outputs.changelog }}
+#        run: |
+#          ./gradlew patchChangelog --release-note="$CHANGELOG"
+#
+#      - run: ./gradlew buildPlugin
 
       # Publish the plugin to the Marketplace
       # TODO: Temporarily disabled to manually upload it with correct changelogs: https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/20
@@ -63,22 +64,23 @@ jobs:
         run: gh release upload ${{ github.event.release.tag_name }} ./build/distributions/*
 
       # Create pull request
-      - name: Create Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          BRANCH="changelog-update-$VERSION"
-
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-
-          git checkout -b $BRANCH
-          git commit -am "Changelog update - $VERSION"
-          git push --set-upstream origin $BRANCH
-
-          gh pr create \
-            --title "Changelog update - \`$VERSION\`" \
-            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
-            --base master \
-            --head $BRANCH
+      # TODO: Temporarily disabled to manually upload it with correct changelogs: https://github.com/typedb-osi/typeql-plugin-jetbrains/issues/20
+#      - name: Create Pull Request
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          VERSION="${{ github.event.release.tag_name }}"
+#          BRANCH="changelog-update-$VERSION"
+#
+#          git config user.email "action@github.com"
+#          git config user.name "GitHub Action"
+#
+#          git checkout -b $BRANCH
+#          git commit -am "Changelog update - $VERSION"
+#          git push --set-upstream origin $BRANCH
+#
+#          gh pr create \
+#            --title "Changelog update - \`$VERSION\`" \
+#            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
+#            --base master \
+#            --head $BRANCH
