@@ -2,17 +2,19 @@
 
 # typeql-plugin-jetbrains Changelog
 
-## Unreleased
+## [Unreleased]
+### Added
+- `.typeql` to supported extensions.
+- TypeDB Studio's color schemes available for import (check out the [official GitHub repo](https://github.com/typedb-osi/typeql-plugin-jetbrains)).
 
-## 0.2.0 - 2024-02-28
-- Add .typeql to supported extensions.
-- Update TypeQL grammar based on the recent official releases.
-- Improve syntax highlighting, coloring, and referencing.
-- Add TypeDB Studio's color schemes available for import (check out the [official GitHub repo](https://github.com/typedb-osi/typeql-plugin-jetbrains)).
-- Fix incorrect syntax error highlighting.
-- Enhance referencing, including override constraints like owns as, plays as, relates as.
-- Improve Go To Declaration and Find Usages features work.
-- Fix Rename feature and a set of errors connected to it.
+### Fixed
+- Updated TypeQL grammar based on the recent official releases.
+- Improved syntax highlighting, coloring, and referencing.
+- Fixed incorrect syntax error highlighting.
+- Enhanced referencing, including override constraints like owns as, plays as, relates as.
+- Improved Go To Declaration and Find Usages features work.
+- Stabilized Rename feature and a set of errors connected to it.
 
 ## 0.1.1
-- Add basic TypeQL support for `.tql` files.
+### Added
+- Basic TypeQL support
