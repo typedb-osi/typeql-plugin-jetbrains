@@ -1,34 +1,79 @@
-/*
- * Copyright (C) 2022 Vaticle
- *
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
 package org.typedb.typeql.plugin.jetbrains
 
-import com.vaticle.typeql.grammar.TypeQLLexer
-import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
+import com.intellij.psi.tree.TokenSet
 
-class TypeQLTokenSets {
-    companion object {
-        val IDENTIFIERS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.LABEL_)!!
-        val COMMENTS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.COMMENT)!!
-        val WHITESPACES = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.WS)!!
-        val STRINGS = PSIElementTypeFactory.createTokenSet(TypeQLLanguage.INSTANCE, TypeQLLexer.QUOTED_STRING)!!
-    }
+object TypeQLTokenSets {
+    @JvmField
+    val COMMENTS = TokenSet.create(TypeQLTokenTypes.LINE_COMMENT)
+
+    @JvmField
+    val STRINGS = TokenSet.create(TypeQLTokenTypes.STRING_LITERAL)
+
+    @JvmField
+    val WHITE_SPACES = TokenSet.create(TypeQLTokenTypes.WHITE_SPACE)
+
+    @JvmField
+    val KEYWORDS = TokenSet.create(
+        TypeQLTokenTypes.DEFINE, TypeQLTokenTypes.UNDEFINE, TypeQLTokenTypes.REDEFINE,
+        TypeQLTokenTypes.MATCH, TypeQLTokenTypes.INSERT, TypeQLTokenTypes.DELETE,
+        TypeQLTokenTypes.UPDATE, TypeQLTokenTypes.PUT, TypeQLTokenTypes.FETCH,
+        TypeQLTokenTypes.SELECT, TypeQLTokenTypes.SORT, TypeQLTokenTypes.DISTINCT,
+        TypeQLTokenTypes.OFFSET, TypeQLTokenTypes.LIMIT, TypeQLTokenTypes.REQUIRE,
+        TypeQLTokenTypes.REDUCE, TypeQLTokenTypes.FUN, TypeQLTokenTypes.RETURN,
+        TypeQLTokenTypes.WITH, TypeQLTokenTypes.ISA, TypeQLTokenTypes.HAS,
+        TypeQLTokenTypes.LINKS, TypeQLTokenTypes.OWNS, TypeQLTokenTypes.PLAYS,
+        TypeQLTokenTypes.RELATES, TypeQLTokenTypes.SUB, TypeQLTokenTypes.OR,
+        TypeQLTokenTypes.NOT, TypeQLTokenTypes.TRY, TypeQLTokenTypes.AS,
+        TypeQLTokenTypes.OF, TypeQLTokenTypes.FROM, TypeQLTokenTypes.IN,
+        TypeQLTokenTypes.IS, TypeQLTokenTypes.LET, TypeQLTokenTypes.END,
+        TypeQLTokenTypes.ASC, TypeQLTokenTypes.DESC
+    )
+
+    @JvmField
+    val SCHEMA_TYPES = TokenSet.create(
+        TypeQLTokenTypes.ENTITY, TypeQLTokenTypes.RELATION,
+        TypeQLTokenTypes.ATTRIBUTE, TypeQLTokenTypes.STRUCT
+    )
+
+    @JvmField
+    val VALUE_TYPES = TokenSet.create(
+        TypeQLTokenTypes.BOOLEAN_TYPE, TypeQLTokenTypes.INTEGER_TYPE,
+        TypeQLTokenTypes.DOUBLE_TYPE, TypeQLTokenTypes.DECIMAL_TYPE,
+        TypeQLTokenTypes.STRING_TYPE, TypeQLTokenTypes.DATE_TYPE,
+        TypeQLTokenTypes.DATETIME_TYPE, TypeQLTokenTypes.DATETIME_TZ_TYPE,
+        TypeQLTokenTypes.DURATION_TYPE
+    )
+
+    @JvmField
+    val FUNCTIONS = TokenSet.create(
+        TypeQLTokenTypes.COUNT, TypeQLTokenTypes.MAX, TypeQLTokenTypes.MIN,
+        TypeQLTokenTypes.SUM, TypeQLTokenTypes.MEAN, TypeQLTokenTypes.MEDIAN,
+        TypeQLTokenTypes.STD, TypeQLTokenTypes.LIST, TypeQLTokenTypes.LABEL_KW,
+        TypeQLTokenTypes.ABSTRACT
+    )
+
+    @JvmField
+    val BOOLEANS = TokenSet.create(TypeQLTokenTypes.TRUE, TypeQLTokenTypes.FALSE)
+
+    @JvmField
+    val OPERATORS = TokenSet.create(
+        TypeQLTokenTypes.PLUS, TypeQLTokenTypes.MINUS, TypeQLTokenTypes.STAR,
+        TypeQLTokenTypes.SLASH, TypeQLTokenTypes.PERCENT, TypeQLTokenTypes.CARET,
+        TypeQLTokenTypes.EQ_EQ, TypeQLTokenTypes.NOT_EQ,
+        TypeQLTokenTypes.LT, TypeQLTokenTypes.GT,
+        TypeQLTokenTypes.LT_EQ, TypeQLTokenTypes.GT_EQ,
+        TypeQLTokenTypes.EQ, TypeQLTokenTypes.QUESTION, TypeQLTokenTypes.EXCLAMATION,
+        TypeQLTokenTypes.DOT_DOT, TypeQLTokenTypes.ARROW
+    )
+
+    @JvmField
+    val NUMERICS = TokenSet.create(
+        TypeQLTokenTypes.INTEGER_LITERAL, TypeQLTokenTypes.DOUBLE_LITERAL
+    )
+
+    @JvmField
+    val DATES = TokenSet.create(
+        TypeQLTokenTypes.DATE_LITERAL, TypeQLTokenTypes.DATETIME_LITERAL,
+        TypeQLTokenTypes.DURATION_LITERAL
+    )
 }
