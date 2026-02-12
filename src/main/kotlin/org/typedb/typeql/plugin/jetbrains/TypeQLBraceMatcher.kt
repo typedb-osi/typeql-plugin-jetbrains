@@ -4,14 +4,15 @@ import com.intellij.lang.BracePair
 import com.intellij.lang.PairedBraceMatcher
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
+import org.typedb.typeql.plugin.jetbrains.psi.TypeQLTypes
 
 class TypeQLBraceMatcher : PairedBraceMatcher {
 
     companion object {
         private val PAIRS = arrayOf(
-            BracePair(TypeQLTokenTypes.LPAREN, TypeQLTokenTypes.RPAREN, false),
-            BracePair(TypeQLTokenTypes.LBRACE, TypeQLTokenTypes.RBRACE, true),
-            BracePair(TypeQLTokenTypes.LBRACKET, TypeQLTokenTypes.RBRACKET, false),
+            BracePair(TypeQLTypes.LPAREN, TypeQLTypes.RPAREN, false),
+            BracePair(TypeQLTypes.LBRACE, TypeQLTypes.RBRACE, true),
+            BracePair(TypeQLTypes.LBRACKET, TypeQLTypes.RBRACKET, false),
         )
     }
 

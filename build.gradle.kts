@@ -1,4 +1,5 @@
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -35,10 +36,19 @@ intellijPlatform {
     }
 }
 
+val generateTypeQLParser = tasks.register<GenerateParserTask>("generateTypeQLParser") {
+    sourceFile.set(file("src/main/grammars/TypeQL.bnf"))
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToParser.set("org/typedb/typeql/plugin/jetbrains/TypeQLParser.java")
+    pathToPsiRoot.set("org/typedb/typeql/plugin/jetbrains/psi")
+    purgeOldFiles.set(true)
+}
+
 val generateTypeQLLexer = tasks.register<GenerateLexerTask>("generateTypeQLLexer") {
+    dependsOn(generateTypeQLParser)
     sourceFile.set(file("src/main/grammars/TypeQL.flex"))
     targetOutputDir.set(file("src/main/gen/org/typedb/typeql/plugin/jetbrains"))
-    purgeOldFiles.set(true)
+    purgeOldFiles.set(false)
 }
 
 sourceSets {

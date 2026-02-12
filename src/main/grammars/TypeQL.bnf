@@ -1,0 +1,525 @@
+{
+  parserClass       = "org.typedb.typeql.plugin.jetbrains.TypeQLParser"
+
+  extends           = "org.typedb.typeql.plugin.jetbrains.psi.TypeQLCompositeElementImpl"
+  implements        = "org.typedb.typeql.plugin.jetbrains.psi.TypeQLCompositeElement"
+
+  elementTypeHolderClass = "org.typedb.typeql.plugin.jetbrains.psi.TypeQLTypes"
+  elementTypeClass  = "org.typedb.typeql.plugin.jetbrains.TypeQLElementType"
+  tokenTypeClass    = "org.typedb.typeql.plugin.jetbrains.TypeQLTokenType"
+
+  psiClassPrefix    = "TypeQL"
+  psiPackage        = "org.typedb.typeql.plugin.jetbrains.psi"
+  psiImplPackage    = "org.typedb.typeql.plugin.jetbrains.psi.impl"
+
+  tokens = [
+    // Keywords
+    DEFINE          = "define"
+    UNDEFINE        = "undefine"
+    REDEFINE        = "redefine"
+    MATCH           = "match"
+    INSERT          = "insert"
+    DELETE          = "delete"
+    UPDATE          = "update"
+    PUT             = "put"
+    FETCH           = "fetch"
+    SELECT          = "select"
+    SORT            = "sort"
+    DISTINCT        = "distinct"
+    OFFSET          = "offset"
+    LIMIT           = "limit"
+    REQUIRE         = "require"
+    REDUCE          = "reduce"
+    FUN             = "fun"
+    RETURN          = "return"
+    WITH            = "with"
+    ISA             = "isa"
+    ISA_EXACT       = "isa!"
+    HAS             = "has"
+    LINKS           = "links"
+    OWNS            = "owns"
+    PLAYS           = "plays"
+    RELATES         = "relates"
+    SUB             = "sub"
+    SUB_EXACT       = "sub!"
+    OR              = "or"
+    NOT             = "not"
+    TRY             = "try"
+    AS              = "as"
+    OF              = "of"
+    FROM            = "from"
+    IN              = "in"
+    IS              = "is"
+    LET             = "let"
+    END             = "end"
+    ASC             = "asc"
+    DESC            = "desc"
+    ROLE            = "role"
+    VALUE           = "value"
+    ALIAS           = "alias"
+    FIRST           = "first"
+    LAST            = "last"
+    CHECK           = "check"
+    GROUPBY         = "groupby"
+    IID_KW          = "iid"
+    LIKE            = "like"
+    CONTAINS        = "contains"
+
+    // Schema types
+    ENTITY          = "entity"
+    RELATION        = "relation"
+    ATTRIBUTE       = "attribute"
+    STRUCT          = "struct"
+
+    // Value types
+    BOOLEAN_TYPE    = "boolean"
+    INTEGER_TYPE    = "integer"
+    DOUBLE_TYPE     = "double"
+    DECIMAL_TYPE    = "decimal"
+    STRING_TYPE     = "string"
+    DATE_TYPE       = "date"
+    DATETIME_TYPE   = "datetime"
+    DATETIME_TZ_TYPE = "datetime-tz"
+    DURATION_TYPE   = "duration"
+
+    // Aggregates / unreserved keywords
+    COUNT           = "count"
+    MAX             = "max"
+    MIN             = "min"
+    SUM             = "sum"
+    MEAN            = "mean"
+    MEDIAN          = "median"
+    STD             = "std"
+    LIST            = "list"
+    LABEL_KW        = "label"
+    ABSTRACT        = "abstract"
+
+    // Built-in function keywords
+    ABS_KW          = "abs"
+    CEIL_KW         = "ceil"
+    FLOOR_KW        = "floor"
+    ROUND_KW        = "round"
+    LEN_KW          = "len"
+
+    // Booleans
+    TRUE            = "true"
+    FALSE           = "false"
+
+    // Literals
+    STRING_LITERAL  = "regexp:\"([^\"\\\\]|\\\\.)*\""
+    SINGLE_STRING_LITERAL = "regexp:'([^'\\\\]|\\\\.)*'"
+    INTEGER_LITERAL = "regexp:[0-9]+"
+    DOUBLE_LITERAL  = "regexp:[0-9]+\\.[0-9]+(e[+-]?[0-9]+)?"
+    DECIMAL_LITERAL = "regexp:[0-9]+(\\.[0-9]+)?dec"
+    DATE_LITERAL    = "regexp:[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    DATETIME_LITERAL = "regexp:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\\.[0-9]+)?)?"
+    DATETIME_TZ_LITERAL = "regexp:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\\.[0-9]+)?)?(Z|[+-][0-9]{2}:[0-9]{2}| [A-Z][A-Za-z0-9_+-]+(/[A-Z][A-Za-z0-9_+-]+)*)"
+    DURATION_LITERAL = "regexp:P[0-9]+[YMWD][0-9YMWDTHS.]*|PT[0-9]+(\\.[0-9]+)?[HMS][0-9HMS.]*"
+    IID_LITERAL     = "regexp:0x[0-9a-fA-F]+"
+
+    // Variable & annotation
+    VARIABLE        = "regexp:\\$[a-zA-Z0-9_][a-zA-Z0-9_-]*"
+    VARIABLE_ANON   = "$_"
+    ANNOTATION      = "regexp:@[a-zA-Z_][a-zA-Z0-9_-]*"
+
+    // Comment
+    LINE_COMMENT    = "regexp:#[^\n\r]*"
+
+    // Operators
+    PLUS            = "+"
+    MINUS           = "-"
+    STAR            = "*"
+    SLASH           = "/"
+    PERCENT         = "%"
+    CARET           = "^"
+    EQ_EQ           = "=="
+    NOT_EQ          = "!="
+    LT              = "<"
+    GT              = ">"
+    LT_EQ           = "<="
+    GT_EQ           = ">="
+    EQ              = "="
+    QUESTION        = "?"
+    EXCLAMATION     = "!"
+    DOT_DOT         = ".."
+    ARROW           = "->"
+
+    // Punctuation
+    LPAREN          = "("
+    RPAREN          = ")"
+    LBRACE          = "{"
+    RBRACE          = "}"
+    LBRACKET        = "["
+    RBRACKET        = "]"
+    SEMICOLON       = ";"
+    COMMA           = ","
+    COLON           = ":"
+    DOT             = "."
+    AT              = "@"
+    PIPE            = "|"
+
+    // Identifier
+    LABEL           = "regexp:[a-zA-Z_][a-zA-Z0-9_-]*"
+  ]
+}
+
+// ==================== ROOT ====================
+
+typeql_file ::= query_or_definition_list
+
+private query_or_definition_list ::= query_or_definition *
+private query_or_definition ::= schema_query | pipeline_query | definition_function | definition_struct
+  { recoverWhile = query_or_definition_recover }
+private query_or_definition_recover ::= !(DEFINE | UNDEFINE | REDEFINE | MATCH | INSERT | PUT | UPDATE | DELETE | FUN | STRUCT | WITH | FETCH | END)
+
+// ==================== SCHEMA QUERIES ====================
+
+schema_query ::= define_query | undefine_query | redefine_query
+
+define_query ::= DEFINE definable * {pin=1}
+
+undefine_query ::= UNDEFINE undefinable_item * {pin=1}
+
+redefine_query ::= REDEFINE redefinable_item * {pin=1}
+
+definable ::= type_definition SEMICOLON
+            | definition_function
+            | definition_struct
+  { recoverWhile = definable_recover }
+private definable_recover ::= !(ENTITY | RELATION | ATTRIBUTE | ROLE | LABEL | FUN | STRUCT | DEFINE | UNDEFINE | REDEFINE | MATCH | INSERT | PUT | UPDATE | DELETE | WITH | FETCH | END)
+
+undefinable_item ::= undefine_annotation_from | undefine_capability | undefine_specialise | undefine_function | undefine_struct | type_label SEMICOLON
+  { recoverWhile = definable_recover }
+
+undefine_annotation_from ::= annotation_category FROM type_label type_capability_base SEMICOLON
+                            | annotation_category FROM type_label SEMICOLON
+undefine_capability ::= type_capability_base FROM type_label SEMICOLON
+undefine_specialise ::= AS type_label FROM type_label relates_declaration SEMICOLON
+undefine_function ::= FUN label_or_identifier SEMICOLON
+undefine_struct ::= STRUCT label_or_identifier SEMICOLON
+
+redefinable_item ::= redefinable_type | definition_function
+  { recoverWhile = definable_recover }
+redefinable_type ::= kind? type_label (annotations | type_capability) SEMICOLON
+
+annotation_category ::= ANNOTATION
+
+// ==================== TYPE DEFINITION ====================
+
+type_definition ::= kind? type_label type_capability_list?
+private type_capability_list ::= (annotations | COMMA? type_capability) (COMMA type_capability)* COMMA?
+
+type_capability ::= type_capability_base annotations?
+type_capability_base ::= sub_declaration | value_type_declaration | alias_declaration
+                       | owns_declaration | plays_declaration | relates_declaration
+                       | label_declaration
+
+sub_declaration ::= sub_keyword type_label { pin=1 }
+private sub_keyword ::= SUB | SUB_EXACT
+
+value_type_declaration ::= VALUE value_type { pin=1 }
+
+alias_declaration ::= ALIAS type_label { pin=1 }
+
+label_declaration ::= LABEL_KW (label_scoped | type_label)
+
+owns_declaration ::= OWNS label_list
+                   | OWNS type_label
+  { pin=1 }
+
+plays_declaration ::= PLAYS label_scoped { pin=1 }
+
+relates_declaration ::= RELATES label_list (AS label_list)?
+                      | RELATES type_label (AS type_label)?
+  { pin=1 }
+
+// ==================== PIPELINE QUERIES ====================
+
+pipeline_query ::= preamble * pipeline_stage + query_stage_terminal? query_end?
+
+preamble ::= WITH definition_function { pin=1 }
+
+private pipeline_stage ::= match_clause | insert_clause | put_clause | update_clause | delete_clause | stream_operator
+
+query_stage_terminal ::= fetch_clause SEMICOLON
+
+query_end ::= END SEMICOLON { pin=1 }
+
+// ==================== CLAUSES ====================
+
+match_clause ::= MATCH patterns { pin=1 }
+
+insert_clause ::= INSERT patterns { pin=1 }
+
+put_clause ::= PUT patterns { pin=1 }
+
+update_clause ::= UPDATE patterns { pin=1 }
+
+delete_clause ::= DELETE delete_patterns { pin=1 }
+private delete_patterns ::= (statement_deletable SEMICOLON | pattern_try_deletable SEMICOLON)+
+
+statement_deletable ::= HAS? var OF var
+                      | LINKS? relation_players OF var
+                      | var
+
+pattern_try_deletable ::= TRY LBRACE (statement_deletable SEMICOLON)+ RBRACE
+
+// ==================== STREAM OPERATORS ====================
+
+private stream_operator ::= select_operator | sort_operator | distinct_operator
+                           | offset_operator | limit_operator | require_operator | reduce_operator
+
+select_operator ::= SELECT vars SEMICOLON { pin=1 }
+sort_operator ::= SORT var_order (COMMA var_order)* COMMA? SEMICOLON { pin=1 }
+distinct_operator ::= DISTINCT SEMICOLON { pin=1 }
+offset_operator ::= OFFSET INTEGER_LITERAL SEMICOLON { pin=1 }
+limit_operator ::= LIMIT INTEGER_LITERAL SEMICOLON { pin=1 }
+require_operator ::= REQUIRE vars SEMICOLON { pin=1 }
+reduce_operator ::= REDUCE reduce_assign (COMMA reduce_assign)* COMMA? (GROUPBY vars)? SEMICOLON { pin=1 }
+
+var_order ::= var order?
+private order ::= ASC | DESC
+
+reduce_assign ::= reduce_assignment_var EQ reducer
+reduce_assignment_var ::= var QUESTION?
+reducer ::= COUNT (LPAREN var RPAREN)?
+           | aggregate_func LPAREN var RPAREN
+
+private aggregate_func ::= MAX | MIN | MEAN | MEDIAN | STD | SUM | LIST
+
+// ==================== FETCH ====================
+
+fetch_clause ::= FETCH fetch_object { pin=1 }
+
+fetch_object ::= LBRACE fetch_body RBRACE { pin=1 }
+private fetch_body ::= fetch_attributes_all | fetch_object_entries
+
+fetch_object_entries ::= fetch_object_entry (COMMA fetch_object_entry)* COMMA?
+fetch_object_entry ::= fetch_key COLON fetch_some
+fetch_key ::= STRING_LITERAL | SINGLE_STRING_LITERAL
+
+private fetch_some ::= fetch_list | fetch_single | fetch_object
+
+fetch_list ::= LBRACKET fetch_stream RBRACKET
+private fetch_stream ::= expression_function | function_block | pipeline_query | fetch_attribute
+
+fetch_single ::= LPAREN? (fetch_attribute | expression | function_block) RPAREN?
+
+fetch_attribute ::= var DOT (label_list | type_label)
+fetch_attributes_all ::= var DOT STAR
+
+// ==================== PATTERNS ====================
+
+patterns ::= (pattern SEMICOLON)+
+
+pattern ::= pattern_disjunction | pattern_conjunction | pattern_negation | pattern_try | statement
+  { recoverWhile = pattern_recover }
+private pattern_recover ::= !(SEMICOLON | RBRACE | DEFINE | UNDEFINE | REDEFINE | MATCH | INSERT | PUT | UPDATE | DELETE | FETCH | SELECT | SORT | DISTINCT | OFFSET | LIMIT | REQUIRE | REDUCE | FUN | STRUCT | WITH | END | RETURN)
+
+pattern_conjunction ::= LBRACE patterns RBRACE { pin=1 }
+pattern_negation ::= NOT LBRACE patterns RBRACE { pin=1 }
+pattern_try ::= TRY LBRACE patterns RBRACE { pin=1 }
+
+// Disjunction: first branch then OR + more branches
+pattern_disjunction ::= LBRACE patterns RBRACE (OR LBRACE patterns RBRACE)+
+
+// ==================== STATEMENTS ====================
+
+private statement ::= statement_type | statement_thing | statement_single
+
+// ==================== TYPE STATEMENTS ====================
+
+statement_type ::= kind type_ref type_constraint_list?
+                 | type_ref COMMA? type_constraint (COMMA type_constraint)* COMMA?
+
+private type_constraint_list ::= COMMA? type_constraint (COMMA type_constraint)* COMMA?
+
+type_constraint ::= type_constraint_base annotations?
+type_constraint_base ::= sub_constraint | value_type_constraint | label_constraint
+                       | owns_constraint | relates_constraint | plays_constraint
+
+sub_constraint ::= sub_kw type_ref { pin=1 }
+private sub_kw ::= SUB | SUB_EXACT
+
+value_type_constraint ::= VALUE value_type { pin=1 }
+label_constraint ::= LABEL_KW (label_scoped | type_label)
+owns_constraint ::= OWNS type_ref_list | OWNS type_ref { pin=1 }
+relates_constraint ::= RELATES type_ref_list (AS type_ref_list)?
+                     | RELATES type_ref (AS type_ref)?
+  { pin=1 }
+plays_constraint ::= PLAYS type_ref { pin=1 }
+
+// ==================== THING STATEMENTS ====================
+
+statement_thing ::= var COMMA? thing_constraint (COMMA thing_constraint)* COMMA?
+                  | thing_relation_anonymous (COMMA? thing_constraint (COMMA thing_constraint)* COMMA?)?
+
+thing_relation_anonymous ::= type_ref? relation_players
+
+thing_constraint ::= isa_constraint | iid_constraint | has_constraint | links_constraint
+
+isa_constraint ::= isa_kw type_ref (relation_players | expression | value_literal | expression_struct | comparison)?
+private isa_kw ::= ISA | ISA_EXACT
+
+iid_constraint ::= IID_KW IID_LITERAL { pin=1 }
+
+has_constraint ::= HAS type_ref_list (comparison | expression_list | var)
+                 | HAS type_ref (comparison | expression_value | var)
+                 | HAS var
+  { pin=1 }
+
+links_constraint ::= LINKS relation_players { pin=1 }
+
+relation_players ::= LPAREN role_player (COMMA role_player)* COMMA? RPAREN { pin=1 }
+role_player ::= type_ref_list COLON var
+              | type_ref COLON var
+              | var
+
+// ==================== SINGLE STATEMENTS ====================
+
+private statement_single ::= statement_let | statement_is | statement_comparison
+
+statement_is ::= var IS var
+statement_comparison ::= expression_value comparison
+
+// LET dispatches to either assignment or in-expression after consuming LET
+private statement_let ::= LET statement_let_body { pin=1 }
+private statement_let_body ::= statement_in | statement_assignment
+statement_in ::= vars_assignment IN (expression_function | expression_list)
+statement_assignment ::= assignment_left EQ expression
+assignment_left ::= vars_assignment | struct_destructor
+
+vars_assignment ::= var_assignment (COMMA var_assignment)* COMMA?
+var_assignment ::= var QUESTION?
+
+comparison ::= comparator expression_value
+private comparator ::= EQ_EQ | NOT_EQ | GT_EQ | GT | LT_EQ | LT | CONTAINS | LIKE
+
+// ==================== EXPRESSIONS ====================
+
+expression ::= expression_list | expression_value
+
+expression_value ::= expression_base (expression_operator expression_base)*
+private expression_operator ::= CARET | STAR | SLASH | PERCENT | PLUS | MINUS
+
+expression_base ::= expression_list_index | expression_parenthesis | expression_function | value_literal | var
+
+expression_parenthesis ::= LPAREN expression_value RPAREN { pin=1 }
+
+expression_list_index ::= var list_index
+list_index ::= LBRACKET expression_value RBRACKET
+
+expression_function ::= expression_function_name LPAREN expression_arguments? RPAREN
+expression_function_name ::= builtin_func_name | label_or_identifier
+private expression_arguments ::= expression (COMMA expression)* COMMA?
+
+expression_list ::= expression_list_subrange | expression_list_new
+expression_list_new ::= LBRACKET expression_value (COMMA expression_value)* COMMA? RBRACKET { pin=1 }
+expression_list_subrange ::= var list_range
+list_range ::= LBRACKET expression_value DOT_DOT expression_value RBRACKET
+
+expression_struct ::= LBRACE struct_key COLON struct_value RBRACE
+struct_value ::= expression_value | expression_struct
+struct_key ::= label_or_identifier
+
+// ==================== FUNCTION DEFINITION ====================
+
+definition_function ::= FUN function_signature COLON function_block { pin=1 }
+
+function_signature ::= label_or_identifier LPAREN function_arguments RPAREN ARROW function_output
+function_arguments ::= (function_argument (COMMA function_argument)* COMMA?)?
+function_argument ::= var COLON named_type_any
+
+function_block ::= pipeline_stage+ return_statement
+return_statement ::= RETURN return_body SEMICOLON
+  { pin=1; recoverWhile = return_recover }
+private return_recover ::= !(SEMICOLON | RBRACE | DEFINE | UNDEFINE | REDEFINE | MATCH | INSERT | PUT | UPDATE | DELETE | FUN | STRUCT | END)
+
+private return_body ::= return_stream_body | return_single_body | return_reduce_body
+return_stream_body ::= LBRACE vars RBRACE
+return_single_body ::= return_single_selector vars
+private return_single_selector ::= FIRST | LAST
+return_reduce_body ::= CHECK | reducer (COMMA reducer)* COMMA?
+
+function_output ::= function_output_stream | function_output_single
+function_output_stream ::= LBRACE named_type_any (COMMA named_type_any)* COMMA? RBRACE
+function_output_single ::= named_type_any (COMMA named_type_any)* COMMA?
+
+// ==================== STRUCT DEFINITION ====================
+
+definition_struct ::= STRUCT label_or_identifier COLON struct_fields SEMICOLON { pin=1 }
+private struct_fields ::= struct_field (COMMA struct_field)* COMMA?
+struct_field ::= label_or_identifier VALUE struct_field_value_type
+struct_field_value_type ::= value_type QUESTION?
+
+struct_destructor ::= LBRACE struct_destructor_entry (COMMA struct_destructor_entry)* COMMA? RBRACE
+private struct_destructor_entry ::= struct_key COLON struct_destructor_value
+struct_destructor_value ::= var | struct_destructor
+
+// ==================== TYPE REFERENCES ====================
+
+type_ref ::= label_scoped | type_label | var
+type_ref_list ::= type_ref LBRACKET RBRACKET
+
+// ==================== VALUE TYPES ====================
+
+value_type ::= value_type_primitive | type_label
+private value_type_primitive ::= BOOLEAN_TYPE | INTEGER_TYPE | DOUBLE_TYPE | DECIMAL_TYPE
+                               | STRING_TYPE | DATETIME_TZ_TYPE | DATETIME_TYPE | DATE_TYPE | DURATION_TYPE
+
+named_type ::= value_type_primitive | type_label
+named_type_any ::= named_type QUESTION
+                 | named_type LBRACKET RBRACKET
+                 | named_type
+
+// ==================== ANNOTATIONS ====================
+
+annotations ::= annotation_decl+
+annotation_decl ::= annotation_with_args | ANNOTATION
+
+annotation_with_args ::= ANNOTATION LPAREN annotation_arg_list RPAREN
+private annotation_arg_list ::= annotation_arg (COMMA annotation_arg)* COMMA?
+annotation_arg ::= value_literal (DOT_DOT value_literal?)?
+                 | DOT_DOT value_literal
+
+// ==================== VALUE LITERALS ====================
+
+value_literal ::= SINGLE_STRING_LITERAL | STRING_LITERAL
+               | DATETIME_TZ_LITERAL | DATETIME_LITERAL | DATE_LITERAL | DURATION_LITERAL
+               | boolean_literal | signed_decimal | signed_double
+               | signed_integer | IID_LITERAL
+
+boolean_literal ::= TRUE | FALSE
+signed_integer ::= sign? INTEGER_LITERAL
+signed_double ::= sign? DOUBLE_LITERAL
+signed_decimal ::= sign? DECIMAL_LITERAL
+private sign ::= PLUS | MINUS
+
+// ==================== VARIABLES ====================
+
+vars ::= var (COMMA var)* COMMA?
+var ::= VARIABLE_ANON | VARIABLE
+
+// ==================== LABELS AND IDENTIFIERS ====================
+
+type_label ::= LABEL | unreserved_keyword
+label_list ::= type_label LBRACKET RBRACKET
+label_scoped ::= type_label COLON type_label
+
+private label_or_identifier ::= LABEL | unreserved_keyword
+
+private builtin_func_name ::= ABS_KW | CEIL_KW | FLOOR_KW | ROUND_KW | LEN_KW | MAX | MIN | LABEL_KW | IID_KW
+
+// All unreserved keywords that can also be used as identifiers/labels
+private unreserved_keyword ::= COUNT | MAX | MIN | SUM | MEAN | MEDIAN | STD | LIST | LABEL_KW | ABSTRACT
+                             | ABS_KW | CEIL_KW | FLOOR_KW | ROUND_KW | LEN_KW
+                             | VALUE | SELECT | SORT | LIMIT | OFFSET | REDUCE | REQUIRE | DISTINCT
+                             | LIKE | CONTAINS | CHECK | GROUPBY | IID_KW
+                             | ROLE | ALIAS | FIRST | LAST
+                             | BOOLEAN_TYPE | INTEGER_TYPE | DOUBLE_TYPE | DECIMAL_TYPE
+                             | STRING_TYPE | DATETIME_TZ_TYPE | DATETIME_TYPE | DATE_TYPE | DURATION_TYPE
+                             | ENTITY | RELATION | ATTRIBUTE | STRUCT
+
+// ==================== KIND ====================
+
+kind ::= ENTITY | ATTRIBUTE | RELATION | ROLE

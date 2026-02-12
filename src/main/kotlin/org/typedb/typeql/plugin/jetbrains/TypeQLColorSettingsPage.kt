@@ -46,10 +46,9 @@ relation friendship sub relation,
 attribute name sub attribute, value string;
 attribute age sub attribute, value integer;
 
-struct coordinates {
-    latitude: double,
-    longitude: double
-};
+struct coordinates:
+    latitude value double,
+    longitude value double;
 
 # Query example
 match
@@ -63,7 +62,7 @@ limit 10;
 fun shortest_path(${'$'}from: person, ${'$'}to: person) -> duration:
     match
     ${'$'}from has created-date ${'$'}d;
-    return ${'$'}d;
+    return first ${'$'}d;
 
 # Insert with values
 insert

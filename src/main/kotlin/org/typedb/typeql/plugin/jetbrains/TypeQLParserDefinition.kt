@@ -10,6 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
+import org.typedb.typeql.plugin.jetbrains.psi.TypeQLTypes
 
 class TypeQLParserDefinition : ParserDefinition {
 
@@ -19,14 +20,7 @@ class TypeQLParserDefinition : ParserDefinition {
 
     override fun createLexer(project: Project?): Lexer = TypeQLLexerAdapter()
 
-    override fun createParser(project: Project?): PsiParser = PsiParser { root, builder ->
-        val marker = builder.mark()
-        while (!builder.eof()) {
-            builder.advanceLexer()
-        }
-        marker.done(root)
-        builder.treeBuilt
-    }
+    override fun createParser(project: Project?): PsiParser = TypeQLParser()
 
     override fun getFileNodeType(): IFileElementType = FILE
 
@@ -37,7 +31,7 @@ class TypeQLParserDefinition : ParserDefinition {
     override fun getWhitespaceTokens(): TokenSet = TypeQLTokenSets.WHITE_SPACES
 
     override fun createElement(node: ASTNode): PsiElement =
-        throw UnsupportedOperationException("Not yet implemented")
+        TypeQLTypes.Factory.createElement(node)
 
     override fun createFile(viewProvider: FileViewProvider): PsiFile = TypeQLFile(viewProvider)
 }

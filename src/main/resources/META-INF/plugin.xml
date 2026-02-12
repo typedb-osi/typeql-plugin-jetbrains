@@ -21,6 +21,8 @@
                   implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLCommenter"/>
         <lang.foldingBuilder language="TypeQL"
                   implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLStructureViewFactory"/>
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/DarculaTypeQL.icls"/>
         <additionalTextAttributes scheme="Dark" file="colorSchemes/DarkTypeQL.icls"/>
         <additionalTextAttributes scheme="Light" file="colorSchemes/LightTypeQL.icls"/>

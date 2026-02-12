@@ -34,9 +34,17 @@ class TypeQLFoldingBuilder : FoldingBuilderEx(), DumbAware {
                     }
                 }
                 '"' -> {
-                    // Skip string literals to avoid matching braces inside strings
+                    // Skip double-quoted string literals
                     i++
                     while (i < text.length && text[i] != '"') {
+                        if (text[i] == '\\') i++ // skip escaped char
+                        i++
+                    }
+                }
+                '\'' -> {
+                    // Skip single-quoted string literals
+                    i++
+                    while (i < text.length && text[i] != '\'') {
                         if (text[i] == '\\') i++ // skip escaped char
                         i++
                     }

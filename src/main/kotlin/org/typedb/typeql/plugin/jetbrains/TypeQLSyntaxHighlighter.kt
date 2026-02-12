@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
+import org.typedb.typeql.plugin.jetbrains.psi.TypeQLTypes
 
 class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
 
@@ -50,11 +51,11 @@ class TypeQLSyntaxHighlighter : SyntaxHighlighterBase() {
         TypeQLTokenSets.OPERATORS.contains(tokenType) -> OPERATOR_KEYS
         TypeQLTokenSets.NUMERICS.contains(tokenType) -> NUMERIC_KEYS
         TypeQLTokenSets.DATES.contains(tokenType) -> DATE_KEYS
-        tokenType == TypeQLTokenTypes.VARIABLE -> VARIABLE_KEYS
-        tokenType == TypeQLTokenTypes.ANNOTATION -> ANNOTATION_KEYS
-        tokenType == TypeQLTokenTypes.STRING_LITERAL -> STRING_KEYS
-        tokenType == TypeQLTokenTypes.LINE_COMMENT -> LINE_COMMENT_KEYS
-        tokenType == TypeQLTokenTypes.LABEL -> LABEL_KEYS
+        tokenType == TypeQLTypes.VARIABLE || tokenType == TypeQLTypes.VARIABLE_ANON -> VARIABLE_KEYS
+        tokenType == TypeQLTypes.ANNOTATION -> ANNOTATION_KEYS
+        tokenType == TypeQLTypes.STRING_LITERAL || tokenType == TypeQLTypes.SINGLE_STRING_LITERAL -> STRING_KEYS
+        tokenType == TypeQLTypes.LINE_COMMENT -> LINE_COMMENT_KEYS
+        tokenType == TypeQLTypes.LABEL -> LABEL_KEYS
         else -> EMPTY_KEYS
     }
 }
