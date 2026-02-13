@@ -1,9 +1,9 @@
 name: Build
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           VERSION="$(./gradlew properties --console=plain -q | grep '^version:' | cut -f2- -d ' ')"
-          ARTIFACT="$(ls build/distributions/*.zip)"
+          ARTIFACT="$(basename build/distributions/*.zip)"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "artifact=$ARTIFACT" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
@@ -76,6 +76,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - name: Remove Old Release Drafts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -83,11 +85,18 @@ jobs:
           gh api repos/{owner}/{repo}/releases \
             --jq '.[] | select(.draft == true) | .id' \
             | xargs -I '{}' gh api -X DELETE repos/{owner}/{repo}/releases/{}
+      - name: Delete existing tag if present
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ needs.build.outputs.version }}"
+          git push origin --delete "$TAG" 2>/dev/null || true
       - name: Create Release Draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "v${{ needs.build.outputs.version }}" \
             --draft \
+            --target "${{ github.sha }}" \
             --title "v${{ needs.build.outputs.version }}" \
             --notes "Release of TypeQL plugin v${{ needs.build.outputs.version }}"

@@ -9,7 +9,7 @@
 ## Features
 
 ### Editing
-- **Syntax highlighting** -- keywords, types, variables, annotations, literals, comments, with TypeDB-specific color schemes (Darcula, Smart, Light, Classic Light)
+- **Syntax highlighting** -- keywords, types, variables, annotations, literals, comments, with TypeDB-specific color schemes (Darcula, Dark, Light, Classic Light)
 - **Parse error highlighting** -- real-time error markers from a Grammar-Kit parser translated from the official TypeQL 3.x grammar
 - **Brace matching** -- `()`, `{}`, `[]`
 - **Code folding** -- collapse brace-delimited blocks
@@ -91,8 +91,8 @@ Regenerate the parser and lexer from grammars:
 | Lexer | `src/main/grammars/TypeQL.flex` (JFlex) | `TypeQLLexer.java` |
 | Parser | `src/main/grammars/TypeQL.bnf` (Grammar-Kit) | `TypeQLParser.java`, `TypeQLTypes.java`, `psi/*.java` |
 | Mixins | `src/main/kotlin/.../psi/impl/` (Kotlin) | Extend generated `*Impl` classes via BNF `mixin` attribute |
-| References | `src/main/kotlin/.../psi/` (Kotlin) | `PsiReferenceUtils` subclasses for type, function, variable resolution |
-| Hints | `src/main/kotlin/.../` (Kotlin) | -- |
+| References | `src/main/kotlin/.../psi/` (Kotlin) | `PsiReferenceBase` subclasses for type, function, variable resolution |
+| Plugin | `src/main/kotlin/.../` (Kotlin) | -- |
 
 Build order: `generateTypeQLParser` > `generateTypeQLLexer` > `compileKotlin`. The parser generates token type constants that the lexer imports. Grammar-Kit `mixin` attributes wire generated PSI implementations to hand-written Kotlin mixin classes that provide `PsiNamedElement` and `PsiReference` support.
 
@@ -106,7 +106,7 @@ Two GitHub Actions workflows automate validation and release:
 
 | Workflow | Trigger | Purpose |
 |---|---|---|
-| `build.yml` | Push to `master`, PRs | Validate (test, verify, build), draft-release |
+| `build.yml` | Push to `master`/`main`, PRs | Validate (test, verify, build), draft-release |
 | `release.yml` | Pre-release, release published | Sign plugin, publish to JetBrains Marketplace, upload release asset |
 
 **Build workflow** (`build.yml`):
@@ -139,11 +139,11 @@ Two GitHub Actions workflows automate validation and release:
 The plugin is published to the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/17912-typeql).
 
 **Release process:**
-1. **Draft creation** -- every push to `master` that passes CI creates a draft release tagged with the version (e.g., `3.0.9-alpha.1`). Old drafts are deleted first to avoid accumulation.
+1. **Draft creation** -- every push to `master`/`main` that passes CI creates a draft release tagged with the version. Old drafts are deleted first to avoid accumulation.
 2. **Publishing a release** -- navigate to GitHub > Releases > find the draft > edit title/description > click "Publish release" (or "Publish as pre-release" for alpha/beta). This triggers the `release.yml` workflow.
 3. **What happens on publish** -- the workflow checks out the tagged commit, builds the plugin, signs it with the PEM certificate, publishes it to JetBrains Marketplace, and uploads the ZIP as a release asset.
 4. **Channel routing** -- the Marketplace channel is derived from the version string: `3.0.9-alpha.1` publishes to the `alpha` channel, `3.0.9-beta.1` to `beta`, and `3.0.9` to the default (stable) channel.
-5. **Version bumps** -- to prepare a new release, update `pluginVersion` in `gradle.properties` and push to `master`. The next CI run creates a new draft with the updated version.
+5. **Version bumps** -- to prepare a new release, update `pluginVersion` in `gradle.properties` and push. The next CI run creates a new draft with the updated version.
 
 ## Roadmap
 
