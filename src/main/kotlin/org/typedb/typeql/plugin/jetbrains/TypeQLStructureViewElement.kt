@@ -59,23 +59,20 @@ class TypeQLStructureViewElement(private val element: NavigatablePsiElement) :
     private fun buildTypePresentation(): PresentationData {
         val typeDef = element as TypeQLTypeDefinition
         val kind = typeDef.kind?.text ?: ""
-        val name = typeDef.typeLabel.text
+        val name = typeDef.name ?: "?"
         val label = if (kind.isNotEmpty()) "$kind $name" else name
         return PresentationData(label, null, null, null)
     }
 
     private fun buildFunctionPresentation(): PresentationData {
         val funDef = element as TypeQLDefinitionFunction
-        val sig = funDef.functionSignature
-        val name = sig?.text?.substringBefore("(")?.trim() ?: "?"
+        val name = funDef.name ?: "?"
         return PresentationData("fun $name(...)", null, null, null)
     }
 
     private fun buildStructPresentation(): PresentationData {
         val structDef = element as TypeQLDefinitionStruct
-        val name = structDef.label?.text
-            ?: structDef.text?.substringAfter("struct")?.substringBefore(":")?.trim()
-            ?: "?"
+        val name = structDef.name ?: "?"
         return PresentationData("struct $name", null, null, null)
     }
 

@@ -206,7 +206,10 @@ annotation_category ::= ANNOTATION
 
 // ==================== TYPE DEFINITION ====================
 
-type_definition ::= kind? type_label type_capability_list?
+type_definition ::= kind? type_label type_capability_list? {
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLTypeDefinitionMixin"
+  implements="org.typedb.typeql.plugin.jetbrains.psi.TypeQLNamedElement"
+}
 private type_capability_list ::= (annotations | COMMA? type_capability) (COMMA type_capability)* COMMA?
 
 type_capability ::= type_capability_base annotations?
@@ -410,7 +413,10 @@ expression_list_index ::= var list_index
 list_index ::= LBRACKET expression_value RBRACKET
 
 expression_function ::= expression_function_name LPAREN expression_arguments? RPAREN
-expression_function_name ::= builtin_func_name | label_or_identifier
+expression_function_name ::= builtin_func_name | label_or_identifier {
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLExpressionFunctionNameMixin"
+  methods=[getReference]
+}
 private expression_arguments ::= expression (COMMA expression)* COMMA?
 
 expression_list ::= expression_list_subrange | expression_list_new
@@ -424,7 +430,11 @@ struct_key ::= label_or_identifier
 
 // ==================== FUNCTION DEFINITION ====================
 
-definition_function ::= FUN function_signature COLON function_block { pin=1 }
+definition_function ::= FUN function_signature COLON function_block {
+  pin=1
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLDefinitionFunctionMixin"
+  implements="org.typedb.typeql.plugin.jetbrains.psi.TypeQLNamedElement"
+}
 
 function_signature ::= label_or_identifier LPAREN function_arguments RPAREN ARROW function_output
 function_arguments ::= (function_argument (COMMA function_argument)* COMMA?)?
@@ -447,7 +457,11 @@ function_output_single ::= named_type_any (COMMA named_type_any)* COMMA?
 
 // ==================== STRUCT DEFINITION ====================
 
-definition_struct ::= STRUCT label_or_identifier COLON struct_fields SEMICOLON { pin=1 }
+definition_struct ::= STRUCT label_or_identifier COLON struct_fields SEMICOLON {
+  pin=1
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLDefinitionStructMixin"
+  implements="org.typedb.typeql.plugin.jetbrains.psi.TypeQLNamedElement"
+}
 private struct_fields ::= struct_field (COMMA struct_field)* COMMA?
 struct_field ::= label_or_identifier VALUE struct_field_value_type
 struct_field_value_type ::= value_type QUESTION?
@@ -498,11 +512,17 @@ private sign ::= PLUS | MINUS
 // ==================== VARIABLES ====================
 
 vars ::= var (COMMA var)* COMMA?
-var ::= VARIABLE_ANON | VARIABLE
+var ::= VARIABLE_ANON | VARIABLE {
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLVarMixin"
+  methods=[getReference]
+}
 
 // ==================== LABELS AND IDENTIFIERS ====================
 
-type_label ::= LABEL | unreserved_keyword
+type_label ::= LABEL | unreserved_keyword {
+  mixin="org.typedb.typeql.plugin.jetbrains.psi.impl.TypeQLTypeLabelMixin"
+  methods=[getReference]
+}
 label_list ::= type_label LBRACKET RBRACKET
 label_scoped ::= type_label COLON type_label
 

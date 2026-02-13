@@ -5,6 +5,9 @@ import org.typedb.typeql.plugin.jetbrains.psi.TypeQLTypes
 
 object TypeQLTokenSets {
     @JvmField
+    val IDENTIFIERS = TokenSet.create(TypeQLTypes.LABEL, TypeQLTypes.VARIABLE)
+
+    @JvmField
     val COMMENTS = TokenSet.create(TypeQLTypes.LINE_COMMENT)
 
     @JvmField

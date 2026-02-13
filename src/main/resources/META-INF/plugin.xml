@@ -23,6 +23,10 @@
                   implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFoldingBuilder"/>
         <lang.psiStructureViewFactory language="TypeQL"
                   implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLStructureViewFactory"/>
+        <lang.findUsagesProvider language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFindUsagesProvider"/>
+        <lang.refactoringSupport language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLRefactoringSupportProvider"/>
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/DarculaTypeQL.icls"/>
         <additionalTextAttributes scheme="Dark" file="colorSchemes/DarkTypeQL.icls"/>
         <additionalTextAttributes scheme="Light" file="colorSchemes/LightTypeQL.icls"/>
