@@ -2,7 +2,7 @@
     <id>org.typedb.typeql.plugin.jetbrains</id>
     <name>TypeQL</name>
     <vendor email="community@typedb.org" url="https://typedb.org">typedb-osi</vendor>
-    <description>TypeQL language support for TypeDB 3.x</description>
+    <description>TypeQL language support for JetBrains-based IDEs, targeting TypeDB 3.x</description>
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
