@@ -17,4 +17,6 @@ abstract class TypeQLTypeDefinitionMixin(node: ASTNode) : TypeQLCompositeElement
     }
 
     override fun getNameIdentifier(): PsiElement? = typeLabel?.node?.firstChildNode?.psi
+
+    override fun getTextOffset(): Int = nameIdentifier?.textOffset ?: super.getTextOffset()
 }

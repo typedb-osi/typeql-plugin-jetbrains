@@ -37,4 +37,6 @@ abstract class TypeQLDefinitionStructMixin(node: ASTNode) : TypeQLCompositeEleme
     }
 
     override fun getNameIdentifier(): PsiElement? = findNameNode()?.psi
+
+    override fun getTextOffset(): Int = nameIdentifier?.textOffset ?: super.getTextOffset()
 }

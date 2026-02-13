@@ -22,4 +22,6 @@ abstract class TypeQLDefinitionFunctionMixin(node: ASTNode) : TypeQLCompositeEle
     }
 
     override fun getNameIdentifier(): PsiElement? = functionSignature?.node?.firstChildNode?.psi
+
+    override fun getTextOffset(): Int = nameIdentifier?.textOffset ?: super.getTextOffset()
 }

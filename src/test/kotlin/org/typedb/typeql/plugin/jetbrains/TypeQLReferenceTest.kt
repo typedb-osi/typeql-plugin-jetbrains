@@ -113,6 +113,60 @@ class TypeQLReferenceTest : ParsingTestCase("", "tql", TypeQLParserDefinition())
         assertSame("Should resolve to its own TypeDefinition", typeDef, resolved)
     }
 
+    fun testDefinitionTextOffsetMatchesNameIdentifier() {
+        // When IntelliJ resolves a self-reference, it compares target.getTextOffset() with the
+        // caret position. If these don't match, IntelliJ navigates instead of showing usages.
+        // getTextOffset() must return the name identifier's offset, not the keyword's offset.
+        val file = parseText("define entity person sub entity;")
+        assertNoErrors(file)
+        val typeDef = PsiTreeUtil.findChildOfType(file, TypeQLTypeDefinition::class.java)!!
+        val nameIdentifier = typeDef.nameIdentifier!!
+        assertEquals(
+            "TypeDefinition.getTextOffset() should equal nameIdentifier.textOffset",
+            nameIdentifier.textOffset,
+            typeDef.textOffset
+        )
+        // Verify it's NOT the start of 'entity' keyword
+        assertFalse(
+            "getTextOffset() should not be the start of the element itself",
+            typeDef.node.startOffset == typeDef.textOffset
+        )
+    }
+
+    fun testFunctionDefinitionTextOffsetMatchesNameIdentifier() {
+        val file = parseText("""
+            define
+            fun my_func(${'$'}x: entity) -> string:
+                match ${'$'}x has name ${'$'}n;
+                return first ${'$'}n;
+        """.trimIndent())
+        assertNoErrors(file)
+        val funDef = PsiTreeUtil.findChildOfType(file, TypeQLDefinitionFunction::class.java)!!
+        val nameIdentifier = funDef.nameIdentifier!!
+        assertEquals(
+            "DefinitionFunction.getTextOffset() should equal nameIdentifier.textOffset",
+            nameIdentifier.textOffset,
+            funDef.textOffset
+        )
+    }
+
+    fun testStructDefinitionTextOffsetMatchesNameIdentifier() {
+        val file = parseText("""
+            define
+            struct coords:
+                lat value double,
+                lon value double;
+        """.trimIndent())
+        assertNoErrors(file)
+        val structDef = PsiTreeUtil.findChildOfType(file, TypeQLDefinitionStruct::class.java)!!
+        val nameIdentifier = structDef.nameIdentifier!!
+        assertEquals(
+            "DefinitionStruct.getTextOffset() should equal nameIdentifier.textOffset",
+            nameIdentifier.textOffset,
+            structDef.textOffset
+        )
+    }
+
     fun testSubTypeLabelHasReference() {
         val file = parseText("define entity employee sub person;")
         assertNoErrors(file)
