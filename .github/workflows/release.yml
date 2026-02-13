@@ -18,6 +18,9 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-home-cache-excludes: |
+            caches/modules-2/files-2.1/com.jetbrains
       - name: Publish Plugin
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

@@ -26,6 +26,9 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-home-cache-excludes: |
+            caches/modules-2/files-2.1/com.jetbrains
       - run: ./gradlew test
   verify:
     name: Verify Plugin
@@ -38,6 +41,9 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-home-cache-excludes: |
+            caches/modules-2/files-2.1/com.jetbrains
       - run: ./gradlew verifyPluginStructure verifyPlugin
   build:
     name: Build
@@ -53,6 +59,9 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-home-cache-excludes: |
+            caches/modules-2/files-2.1/com.jetbrains
       - run: ./gradlew buildPlugin
       - name: Export Properties
         id: properties
