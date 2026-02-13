@@ -101,13 +101,16 @@ class TypeQLReferenceTest : ParsingTestCase("", "tql", TypeQLParserDefinition())
 
     // ---- TypeLabel reference behavior ----
 
-    fun testDefinitionTypeLabelHasNoReference() {
+    fun testDefinitionTypeLabelResolvesToSelf() {
         val file = parseText("define entity person sub entity;")
         assertNoErrors(file)
         val typeDef = PsiTreeUtil.findChildOfType(file, TypeQLTypeDefinition::class.java)!!
         val nameLabel = typeDef.typeLabel
-        // The label that IS the definition should NOT have a reference
-        assertNull("Definition's own type_label should not have a reference", nameLabel.reference)
+        // The label that IS the definition should have a reference that resolves to its own TypeDefinition
+        val ref = nameLabel.reference
+        assertNotNull("Definition's type_label should have a reference", ref)
+        val resolved = ref!!.resolve()
+        assertSame("Should resolve to its own TypeDefinition", typeDef, resolved)
     }
 
     fun testSubTypeLabelHasReference() {
@@ -122,19 +125,40 @@ class TypeQLReferenceTest : ParsingTestCase("", "tql", TypeQLParserDefinition())
         assertTrue("Reference should be TypeQLTypeReference", ref is TypeQLTypeReference)
     }
 
-    fun testIsaTypeLabelHasReference() {
+    fun testIsaTypeLabelResolvesToDefinition() {
         val file = parseText("""
+            define
+            entity person sub entity;
+
             match
             ${'$'}p isa person;
         """.trimIndent())
         assertNoErrors(file)
+        val typeDef = PsiTreeUtil.findChildOfType(file, TypeQLTypeDefinition::class.java)!!
         val isaConstraint = PsiTreeUtil.findChildOfType(file, TypeQLIsaConstraint::class.java)!!
-        // type_ref -> type_label is inside isa
         val typeLabels = PsiTreeUtil.findChildrenOfType(isaConstraint, TypeQLTypeLabel::class.java)
         assertFalse("Expected at least one type label in isa constraint", typeLabels.isEmpty())
         val personLabel = typeLabels.first()
         val ref = personLabel.reference
         assertNotNull("Type label in isa should have a reference", ref)
+        val resolved = ref!!.resolve()
+        assertSame("isa person should resolve to the define entity person", typeDef, resolved)
+    }
+
+    fun testSubTypeLabelResolvesToDefinition() {
+        val file = parseText("""
+            define
+            entity person sub entity;
+            entity employee sub person;
+        """.trimIndent())
+        assertNoErrors(file)
+        val typeDefs = PsiTreeUtil.findChildrenOfType(file, TypeQLTypeDefinition::class.java).toList()
+        val personDef = typeDefs.find { it.name == "person" }!!
+        val employeeDef = typeDefs.find { it.name == "employee" }!!
+        val subDecl = PsiTreeUtil.findChildOfType(employeeDef, TypeQLSubDeclaration::class.java)!!
+        val subLabel = PsiTreeUtil.findChildOfType(subDecl, TypeQLTypeLabel::class.java)!!
+        val resolved = subLabel.reference?.resolve()
+        assertSame("sub person should resolve to entity person definition", personDef, resolved)
     }
 
     // ---- ExpressionFunctionName reference behavior ----
