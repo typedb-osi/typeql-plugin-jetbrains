@@ -1,107 +1,35 @@
-<!--
-  ~ Copyright (C) 2022 Vaticle
-  ~
-  ~ Licensed to the Apache Software Foundation (ASF) under one
-  ~ or more contributor license agreements.  See the NOTICE file
-  ~ distributed with this work for additional information
-  ~ regarding copyright ownership.  The ASF licenses this file
-  ~ to you under the Apache License, Version 2.0 (the
-  ~ "License"); you may not use this file except in compliance
-  ~ with the License.  You may obtain a copy of the License at
-  ~
-  ~   http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing,
-  ~ software distributed under the License is distributed on an
-  ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-  ~ KIND, either express or implied.  See the License for the
-  ~ specific language governing permissions and limitations
-  ~ under the License.
-  -->
-
 <idea-plugin>
     <id>org.typedb.typeql.plugin.jetbrains</id>
     <name>TypeQL</name>
     <vendor email="community@typedb.org" url="https://typedb.org">typedb-osi</vendor>
-
+    <description>TypeQL language support for TypeDB 3.x</description>
     <depends>com.intellij.modules.lang</depends>
 
-    <change-notes><![CDATA[
-        <h2 id="0-2-0">0.2.0</h2>
-        <h3 id="added">Added</h3>
-        <ul>
-        <li><code>.typeql</code> to supported extensions.</li>
-        <li>TypeDB Studio&#39;s color schemes available for import (check out the <a href="https://github.com/typedb-osi/typeql-plugin-jetbrains">official GitHub repo</a>).</li>
-        </ul>
-        <h3 id="fixed">Fixed</h3>
-        <ul>
-        <li>Updated TypeQL grammar based on the recent official releases.</li>
-        <li>Improved syntax highlighting, coloring, and referencing.</li>
-        <li>Fixed incorrect syntax error highlighting.</li>
-        <li>Enhanced referencing, including override constraints like owns as, plays as, relates as.</li>
-        <li>Improved Go To Declaration and Find Usages features work.</li>
-        <li>Stabilized Rename feature and a set of errors connected to it.</li>
-        </ul>
-        <h2 id="0-1-1">0.1.1</h2>
-        <h3 id="added">Added</h3>
-        <ul>
-        <li>Basic TypeQL support.</li>
-        </ul>
-    ]]>
-    </change-notes>
-
     <extensions defaultExtensionNs="com.intellij">
-        <fileType
-            name="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFileType"
-            fieldName="INSTANCE"
-            language="TypeQL"
-            extensions="tql;typeql"/>
-
-        <lang.parserDefinition
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition"/>
-
-        <lang.syntaxHighlighterFactory
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLSyntaxHighlighterFactory"/>
+        <fileType name="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFileType"
+                  fieldName="INSTANCE" language="TypeQL" extensions="tql;typeql"/>
+        <lang.parserDefinition language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLSyntaxHighlighterFactory"/>
         <colorSettingsPage
-            implementation="org.typedb.typeql.plugin.jetbrains.highlighter.TypeQLColorSettingsPage"/>
-
-        <psi.referenceContributor
-            language="TypeQL"
-            implementation="org.typedb.typeql.plugin.jetbrains.reference.TypeQLReferenceContributor"/>
-        <lang.findUsagesProvider
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.usage.TypeQLFindUsagesProvider"/>
-
-        <lang.refactoringSupport
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLRefactoringSupportProvider"/>
-        <lang.commenter
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLCommenter"/>
-
-<!--        TODO: Currently removed as the generic validation works better.-->
-<!--        <lang.namesValidator-->
-<!--            language="TypeQL"-->
-<!--            implementationClass="org.typedb.typeql.plugin.jetbrains.refactor.TypeQLNamesValidator"/>-->
-
-        <completion.contributor
-            language="TypeQL"
-            implementationClass="org.typedb.typeql.plugin.jetbrains.completion.TypeQLCompletionContributor"/>
-
-        <!-- inspections TODO: Temporarily turned off -->
-<!--        <inspectionToolProvider-->
-<!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.unusedDeclaration.TypeQLUnusedDeclarationProvider"/>-->
-<!--        <inspectionToolProvider-->
-<!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.undefinedDeclaration.TypeQLUndefinedDeclarationProvider"/>-->
-<!--        <inspectionToolProvider-->
-<!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.duplicateDeclaration.TypeQLDuplicateDeclarationProvider"/>-->
-<!--        <inspectionToolProvider-->
-<!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.unplayedRole.TypeQLUnplayedRoleProvider"/>-->
-<!--        <inspectionToolProvider-->
-<!--                implementation="org.typedb.typeql.plugin.jetbrains.inspection.invalidTypeUsage.TypeQLInvalidTypeUsageProvider"/>-->
+                  implementation="org.typedb.typeql.plugin.jetbrains.TypeQLColorSettingsPage"/>
+        <lang.braceMatcher language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLBraceMatcher"/>
+        <lang.commenter language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLCommenter"/>
+        <lang.foldingBuilder language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFoldingBuilder"/>
+        <lang.psiStructureViewFactory language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLStructureViewFactory"/>
+        <lang.findUsagesProvider language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLFindUsagesProvider"/>
+        <lang.refactoringSupport language="TypeQL"
+                  implementationClass="org.typedb.typeql.plugin.jetbrains.TypeQLRefactoringSupportProvider"/>
+        <additionalTextAttributes scheme="Darcula" file="colorSchemes/DarculaTypeQL.icls"/>
+        <additionalTextAttributes scheme="Dark" file="colorSchemes/DarkTypeQL.icls"/>
+        <additionalTextAttributes scheme="Light" file="colorSchemes/LightTypeQL.icls"/>
+        <additionalTextAttributes scheme="Default" file="colorSchemes/ClassicLightTypeQL.icls"/>
     </extensions>
-
 </idea-plugin>

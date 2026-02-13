@@ -1,3 +1,0 @@
-match
-p isa person, has name $n; # Not a variable
-fetch n;

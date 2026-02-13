@@ -1,7 +1,8 @@
 .gradle
 .idea
+.intellijPlatform
 .qodana
 build
 .vscode
 bin
-src/main/antlr/.antlr
+src/main/gen/
